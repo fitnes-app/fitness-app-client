@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="loginOptions" >
+        <item>App-Login</item>
+        <item>Google login</item>
+        <item>Facebook Login</item>
+    </string-array>
+</resources>
