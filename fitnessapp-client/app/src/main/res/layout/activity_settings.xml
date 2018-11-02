@@ -59,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:text="@string/language"
+                android:textColor="@color/black"
                 android:textSize="20dp" />
 
             <Spinner
@@ -83,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:text="@string/notificate"
+                android:textColor="@color/black"
                 android:textSize="20dp" />
 
             <TextView
@@ -92,6 +94,7 @@
                 android:layout_marginLeft="219dp"
                 android:layout_marginTop="30dp"
                 android:text="Date picked"
+                android:textColor="@color/black"
                 android:textSize="20dp" />
 
             <Button
