@@ -5,4 +5,10 @@
         <item>Google login</item>
         <item>Facebook Login</item>
     </string-array>
+
+    <string-array name="mainPageTable_headers" >
+        <item>Exercice</item>
+        <item>Number of times</item>
+        <item>Repetitions</item>
+    </string-array>
 </resources>
