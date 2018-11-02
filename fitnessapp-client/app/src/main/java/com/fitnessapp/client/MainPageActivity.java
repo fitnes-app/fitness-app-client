@@ -28,7 +28,7 @@ public class MainPageActivity extends AppCompatActivity {
     public void setTable(){
         Table tabla = new Table(this, (TableLayout)findViewById(R.id.tabla));
         tabla.agregarCabecera(R.array.mainPageTable_headers);
-        for(int i = 0; i < exercicesTmp.size() - 1; i++)
+        for(int i = 0; i < exercicesTmp.size() ; i++)
         {
             ArrayList<String> elementos = new ArrayList<>();
             elementos.add(exercicesTmp.get(i));

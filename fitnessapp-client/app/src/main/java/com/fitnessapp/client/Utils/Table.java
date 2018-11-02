@@ -49,6 +49,7 @@ public class Table {
             layoutCelda = new TableRow.LayoutParams(obtenerAnchoPixelesTexto(arraycabecera[i]), TableRow.LayoutParams.WRAP_CONTENT);
             texto.setText(arraycabecera[i]);
             texto.setGravity(Gravity.CENTER_HORIZONTAL);
+            texto.setBackgroundResource(R.color.grey);
             texto.setLayoutParams(layoutCelda);
 
             fila.addView(texto);
