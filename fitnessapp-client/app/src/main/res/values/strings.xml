@@ -32,4 +32,13 @@
     <string name="users">Users</string>
     <string name="trainingType">Training Type</string>
     <string name="bodyType">Body Type</string>
+    <string name="routineName">Routine Name</string>
+    <string name="routineType">Routine Type</string>
+    <string name="description">Description</string>
+    <string name="additionalTips">Additional Tips</string>
+    <string name="muscularGroup">Muscular Group</string>
+    <string name="series">Series</string>
+    <string name="repetitions">Repetitions</string>
+    <string name="addNewExercise">Add New Exercise</string>
+    <string name="save">Save</string>
 </resources>
