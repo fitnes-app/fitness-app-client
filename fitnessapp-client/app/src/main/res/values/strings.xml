@@ -36,4 +36,7 @@
     <string name="email">Email</string>
     <string name="role">Role:</string>
     <string name="speciality">Speciality:</string>
+    <string name="height">Height: </string>
+    <string name="weight">Weight: </string>
+    <string name="body_type">Body type: </string>
 </resources>
