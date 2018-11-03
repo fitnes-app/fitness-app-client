@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
-        android:text="REGISTER"
+        android:text="@string/register"
         android:textColor="@android:color/black"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="Username"
+            android:text="@string/username"
             android:textColor="@android:color/black" />
 
         <EditText
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Username"
+            android:hint="@string/username"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="Password"
+            android:text="@string/password"
             android:textColor="@android:color/black" />
 
         <EditText
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textSize="14sp" />
     </LinearLayout>
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="12"
-            android:text="Email"
+            android:text="@string/email"
             android:textColor="@android:color/black" />
 
         <EditText
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:textSize="14sp" />
     </LinearLayout>
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="Role:"
+            android:text="@string/role"
             android:textColor="@android:color/black" />
 
         <TextView
@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="Speciality:"
+            android:text="@string/speciality"
             android:textColor="@android:color/black" />
 
     </LinearLayout>
@@ -131,7 +131,8 @@
             android:id="@+id/spinnerRoles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:entries="@array/rolesOptions"/>
 
         <Spinner
             android:id="@+id/spinnerSpecialities"
@@ -151,14 +152,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Back" />
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Register" />
+            android:text="@string/register" />
     </LinearLayout>
 
 </LinearLayout>

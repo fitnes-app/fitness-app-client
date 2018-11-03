@@ -11,4 +11,15 @@
         <item>Number of times</item>
         <item>Repetitions</item>
     </string-array>
+    <string-array name="rolesOptions" >
+        <item>Trainer</item>
+        <item>Simple User</item>
+    </string-array>
+
+    <string-array name="specialitiesOptions" >
+        <item>Swimming</item>
+        <item>Crossfit</item>
+        <item>Athletism</item>
+        <item>Climbing</item>
+    </string-array>
 </resources>
