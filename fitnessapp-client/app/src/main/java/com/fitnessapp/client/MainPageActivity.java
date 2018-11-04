@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TableLayout;
 
+import com.fitnessapp.client.Utils.MenuNavigatorListener;
 import com.fitnessapp.client.Utils.Table;
 
 import java.util.ArrayList;
@@ -30,7 +31,8 @@ public class MainPageActivity extends AppCompatActivity {
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //navigationView.setNavigationItemSelectedListener(this);
+        MenuNavigatorListener myListener = new MenuNavigatorListener();
+        navigationView.setNavigationItemSelectedListener(myListener);
 
         initExercices();
         setTable();
