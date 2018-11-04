@@ -1,6 +1,7 @@
 package com.fitnessapp.client;
 
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +55,16 @@ public class MainPageActivity extends AppCompatActivity {
             elementos.add("Casilla [" + i + ", 1]");
             elementos.add("Casilla [" + i + ", 2]");
             tabla.agregarFilaTabla(elementos);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 }
