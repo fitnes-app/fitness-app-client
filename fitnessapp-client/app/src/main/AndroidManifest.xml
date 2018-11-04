@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".profile_trainer"
+            android:name=".ProfileTrainer"
             android:label="Trainer Profile"
             android:theme="@style/AppTheme">
             <intent-filter>
