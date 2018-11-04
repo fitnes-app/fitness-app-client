@@ -13,7 +13,7 @@ import com.fitnessapp.client.ProgressTrackerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.RoutinesActivity;
 import com.fitnessapp.client.Settings;
-import com.fitnessapp.client.Size_Tracker;
+import com.fitnessapp.client.SizeTracker;
 
 public class MenuNavigatorListener extends Activity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
@@ -24,7 +24,7 @@ public class MenuNavigatorListener extends Activity implements NavigationView.On
             i = new Intent(this, RoutinesActivity.class);
             startActivity(i);
         } else if (id == R.id.size_tr_it) {
-            i = new Intent(this, Size_Tracker.class);
+            i = new Intent(this, SizeTracker.class);
             startActivity(i);
 
         } else if (id == R.id.prog_tr_it) {
