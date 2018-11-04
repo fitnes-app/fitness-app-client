@@ -32,7 +32,7 @@ public class MainPageActivity extends AppCompatActivity {
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        MenuNavigatorListener myListener = new MenuNavigatorListener();
+        MenuNavigatorListener myListener = new MenuNavigatorListener(this);
         navigationView.setNavigationItemSelectedListener(myListener);
 
         initExercices();
