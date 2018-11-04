@@ -13,9 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-import com.fitnessapp.client.R;
-import com.fitnessapp.client.utils.MenuNavigatorListener;
-
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawer;
