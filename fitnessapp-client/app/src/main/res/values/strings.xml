@@ -26,6 +26,15 @@
     <string name="welcomeuser">WELCOME, USERNAME!</string>
     <string name="ttraining">Today\'s Training:</string>
     <string name="finaltext"> Good luck with your training.\n \n And remember... \n \n Tip of the day</string>
+    <string name="muscGroup">Muscular Group</string>
+    <string name="filter2">Filter 2</string>
+    <string name="titleActivitySizeTracker">Size Tracker</string>
+    <string name="titleActivityMainPage">Main Page</string>
+    <string name="titleActivityUserInfo">User Information</string>
+    <string name="titleActivityRoutines">Routines</string>
+    <string name="titleActivityRoutineDetail">Routine Detail</string>
+    <string name="kclBurnt">Avg KCl Burnt:                   5Kcl</string>
+    <string name="btl">BACK TO LIST</string>
     <string-array name="languages">
         <item>Spanish</item>
         <item>Catalan</item>
