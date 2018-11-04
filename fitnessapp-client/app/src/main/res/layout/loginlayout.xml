@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/black"
-    android:layout_paddingTop="20dp"
-    android:layout_paddingBottom="20dp"
-    android:layout_paddingLeft="20dp"
-    android:layout_paddingRight="20dp">
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    android:background="@color/black">
 
     <ImageView
         android:id="@+id/appLogo"

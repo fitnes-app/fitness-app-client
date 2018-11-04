@@ -5,4 +5,34 @@
         <item>Google login</item>
         <item>Facebook Login</item>
     </string-array>
+
+    <string-array name="mainPageTable_headers" >
+        <item>Exercice</item>
+        <item>Number of times</item>
+        <item>Repetitions</item>
+    </string-array>
+
+    <string-array name="routinesFilter1" >
+        <item>Chest</item>
+        <item>Legs</item>
+        <item>Back</item>
+    </string-array>
+
+    <string-array name="routinesFilter2" >
+        <item>Filter2.1</item>
+        <item>Filter2.2</item>
+        <item>Filter2.3</item>
+    </string-array>
+
+    <string-array name="rolesOptions" >
+        <item>Trainer</item>
+        <item>Simple User</item>
+    </string-array>
+
+    <string-array name="specialitiesOptions" >
+        <item>Swimming</item>
+        <item>Crossfit</item>
+        <item>Athletism</item>
+        <item>Climbing</item>
+    </string-array>
 </resources>
