@@ -14,7 +14,7 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -22,7 +22,7 @@
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -30,7 +30,7 @@
             android:label="@string/titleActivitySizeTracker"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -38,7 +38,7 @@
             android:label="Trainer Profile"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -55,7 +55,7 @@
             android:label="@string/titleActivityUserInfo"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -63,7 +63,7 @@
             android:label="@string/titleActivityRoutines"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -71,7 +71,7 @@
             android:label="@string/titleActivityRoutineDetail"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -79,14 +79,14 @@
             android:label="Progress Tracker"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".RegisterActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -94,7 +94,7 @@
             android:label="User Details"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -102,14 +102,14 @@
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter></activity>
         <activity
             android:name=".CheckUserProgress"
             android:label="Check User Progress"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -117,13 +117,24 @@
             android:label="Fit4You"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Utils.MenuNavigatorListener"
-            android:theme="@style/AppTheme">
-        </activity>
+        android:name="utils.MenuNavigatorListener"
+        android:theme="@style/AppTheme">
+        <intent-filter>
+            <action android:name=".MainPageActivity" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+    </activity>
+    <activity
+        android:name=".BaseDrawerActivity"
+        android:theme="@style/AppTheme">
+        <intent-filter>
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+    </activity>
     </application>
 
 </manifest>

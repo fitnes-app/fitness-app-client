@@ -35,6 +35,6 @@ repositories {
 
 dependencies {
 
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 
 }

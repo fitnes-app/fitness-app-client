@@ -1,26 +1,26 @@
-package com.fitnessapp.client.Utils;
+package com.fitnessapp.client.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.fitnessapp.client.CoachInformation;
-import com.fitnessapp.client.MainPageActivity;
 import com.fitnessapp.client.ProgressTrackerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.RoutinesActivity;
 import com.fitnessapp.client.Settings;
 import com.fitnessapp.client.SizeTracker;
 
-public class MenuNavigatorListener extends Activity implements NavigationView.OnNavigationItemSelectedListener {
+public class MenuNavigatorListener extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Context c;
 
+    public MenuNavigatorListener(){}
     public MenuNavigatorListener(Context aContext) {
         this.c = aContext;
     }

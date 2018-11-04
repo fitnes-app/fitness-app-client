@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TableLayout;
 
-import com.fitnessapp.client.Utils.Table;
+import com.fitnessapp.client.utils.Table;
 
 import java.util.ArrayList;
 
