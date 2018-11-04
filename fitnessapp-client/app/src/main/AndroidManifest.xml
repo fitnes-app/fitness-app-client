@@ -98,13 +98,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter></activity>
-        <activity
             android:name=".CheckUserProgress"
             android:label="Check User Progress"
             android:theme="@style/AppTheme">
@@ -122,6 +115,22 @@
         </activity>
         <activity
             android:name=".BaseDrawerActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CoachInformation"
+            android:label="@string/coachInfo"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ContractCoach"
+            android:label="@string/contractCoach"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />

@@ -7,14 +7,15 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
-public class RoutinesActivity extends AppCompatActivity {
+public class RoutinesActivity extends BaseDrawerActivity {
 
     private ArrayList<String> routines = new ArrayList<>();
     private GridView gv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_routines);
+        getLayoutInflater().inflate(R.layout.activity_list_routines, frameLayout);
+
         gv = findViewById(R.id.gv);
         setRoutines();
         ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, routines);

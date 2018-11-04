@@ -8,14 +8,14 @@ import com.fitnessapp.client.utils.Table;
 
 import java.util.ArrayList;
 
-public class RoutineDetailActivity extends AppCompatActivity {
+public class RoutineDetailActivity extends BaseDrawerActivity {
 
     private ArrayList<String> exercicesTmp = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_routine_detail);
+        getLayoutInflater().inflate(R.layout.activity_routine_detail, frameLayout);
         initExercices();
         setTable();
     }

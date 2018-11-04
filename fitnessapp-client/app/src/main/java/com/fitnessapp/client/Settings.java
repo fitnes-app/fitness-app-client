@@ -16,7 +16,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 
-public class Settings extends Activity implements AdapterView.OnItemSelectedListener {
+public class Settings extends BaseDrawerActivity implements AdapterView.OnItemSelectedListener {
 
     TextView mTv;
     Button mBtn;
@@ -26,7 +26,7 @@ public class Settings extends Activity implements AdapterView.OnItemSelectedList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        getLayoutInflater().inflate(R.layout.activity_settings, frameLayout);
 
         mTv = (TextView) findViewById(R.id.textView4);
         mBtn = (Button) findViewById(R.id.buttonPick);

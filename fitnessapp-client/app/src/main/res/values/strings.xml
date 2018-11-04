@@ -85,4 +85,6 @@
     <string name="input_training">Input training</string>
     <string name="routine_picker">Choose today routine: </string>
     <string name="notifications">Notifications</string>
+    <string name="coachInfo">Coach Information</string>
+    <string name="contractCoach">Contract Coach</string>
 </resources>

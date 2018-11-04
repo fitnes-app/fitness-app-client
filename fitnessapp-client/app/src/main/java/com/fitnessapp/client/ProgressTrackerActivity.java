@@ -19,12 +19,12 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 
-public class ProgressTrackerActivity extends AppCompatActivity {
+public class ProgressTrackerActivity extends BaseDrawerActivity {
     private LineChart mChart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_progress_tracker);
+        getLayoutInflater().inflate(R.layout.activity_progress_tracker, frameLayout);
 
         mChart = (LineChart) findViewById(R.id.linechart);
         // add data

@@ -3,11 +3,11 @@ package com.fitnessapp.client;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class CoachInformation extends AppCompatActivity {
+public class CoachInformation extends BaseDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.coach_information);
+        getLayoutInflater().inflate(R.layout.coach_information, frameLayout);
     }
 }
