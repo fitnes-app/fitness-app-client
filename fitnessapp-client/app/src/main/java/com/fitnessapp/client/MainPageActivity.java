@@ -1,7 +1,5 @@
 package com.fitnessapp.client;
 
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.widget.TableLayout;
 import com.fitnessapp.client.utils.Table;
