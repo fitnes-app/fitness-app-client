@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Size_Tracker"
+            android:name=".SizeTracker"
             android:label="@string/titleActivitySizeTracker"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".user_info"
+            android:name=".UserInfo"
             android:label="@string/titleActivityUserInfo"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -91,7 +91,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".User_details_activity"
+            android:name=".UserDetailsActivity"
             android:label="User Details"
             android:theme="@style/AppTheme">
             <intent-filter>
