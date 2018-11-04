@@ -41,4 +41,6 @@
     <string name="repetitions">Repetitions</string>
     <string name="addNewExercise">Add New Exercise</string>
     <string name="save">Save</string>
+    <string name="currently">Currently</string>
+    <string name="otherRoutines">Other Routines</string>
 </resources>
