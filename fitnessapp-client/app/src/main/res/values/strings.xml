@@ -43,6 +43,9 @@
     <string name="contractCoachTerms">
         Welcome dear user.\n\nThis page it\'s made to contract a personal trainer who fit\'s the specific type of training that you want to do.\n\nOur coach selector system will decide a group of coachs that can be better for you and select one of this group.\n\nThe cost is of just 20€, way cheaper than a gym.\n\n You will Even be able to contact directly with your coach to ask for diets personally or doubts about you training.
     </string>
+    <string name="becomePremium">
+        Welcome dear user.\n\nBy becoming premium you\'ll be able to have access to different features. \n\nYou\'ll be able to select more advanced routines, you\'ll be able to use the size tracker (which allows you to track the size of your muscles, seeing if they\'ve increased or decreased, depending on your objectives), and the most important thing, you\'ll be helping us with the maintenance costs. \n\nThe cost is only 10€.
+    </string>
     <string name="back">back</string>
     <string name="contract">Contract</string>
     <string name="experience">Experience</string>
