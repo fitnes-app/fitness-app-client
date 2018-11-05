@@ -23,10 +23,8 @@ public class CoachInformation extends BaseDrawerActivity {
         });
     }
     public void back(View view) {
-        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
-        Intent intent = new Intent(this, MainPageActivity.class);
-        //Efectua el cambi de activity
-        startActivity(intent);
+
+        super.onBackPressed();
     }
 
 }
