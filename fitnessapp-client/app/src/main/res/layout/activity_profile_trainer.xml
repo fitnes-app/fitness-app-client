@@ -57,7 +57,7 @@
 
     <TextView
         android:id="@+id/trainer_information"
-        android:layout_width="348dp"
+        android:layout_width="322dp"
         android:layout_height="310dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -78,8 +78,9 @@ Education: Nutrition and Health at University of Abeerden "
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainer_photo" />
+        app:layout_constraintTop_toBottomOf="@+id/trainer_photo"
+        app:layout_constraintVertical_bias="0.68" />
 
 </android.support.constraint.ConstraintLayout>

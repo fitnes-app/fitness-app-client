@@ -56,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void back(View view) {
         // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
-        Intent intent = new Intent(this, MainPageActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         //Efectua el cambi de activity
         startActivity(intent);
     }

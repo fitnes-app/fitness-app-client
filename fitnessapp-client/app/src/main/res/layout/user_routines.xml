@@ -14,7 +14,7 @@
     <ListView
         android:id="@+id/currentlyRoutines"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="67dp">
 
     </ListView>
 
@@ -27,5 +27,5 @@
     <ListView
         android:id="@+id/otherRoutines"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="258dp" />
 </LinearLayout>
