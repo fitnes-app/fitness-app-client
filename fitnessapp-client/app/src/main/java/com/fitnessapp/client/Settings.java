@@ -2,6 +2,7 @@ package com.fitnessapp.client;
 
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
@@ -27,6 +28,15 @@ public class Settings extends BaseDrawerActivity implements AdapterView.OnItemSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_settings, frameLayout);
+
+        Button buttonBack = (Button) findViewById(R.id.buttonMainMenu);
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back(v);
+            }
+        });
 
         mTv = (TextView) findViewById(R.id.textView4);
         mBtn = (Button) findViewById(R.id.buttonPick);
@@ -54,6 +64,13 @@ public class Settings extends BaseDrawerActivity implements AdapterView.OnItemSe
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+    }
+
+    public void back(View view) {
+        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+        Intent intent = new Intent(this, MainPageActivity.class);
+        //Efectua el cambi de activity
+        startActivity(intent);
     }
 
     @Override
