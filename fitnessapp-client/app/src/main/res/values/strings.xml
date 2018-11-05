@@ -87,4 +87,6 @@
     <string name="notifications">Notifications</string>
     <string name="coachInfo">Coach Information</string>
     <string name="contractCoach">Contract Coach</string>
+    <string name="profile">Profile</string>
+    <string name="asg_users">Asigned users</string>
 </resources>
