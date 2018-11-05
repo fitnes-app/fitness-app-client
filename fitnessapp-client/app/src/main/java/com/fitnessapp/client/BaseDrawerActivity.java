@@ -62,14 +62,14 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
             startActivity(i);
 
         } else if (id == R.id.bec_premium_it) {
-            i = new Intent(this, ContractCoach.class);
+            i = new Intent(this, BecomePremium.class);
             startActivity(i);
 
         }else if (id == R.id.contact_it) {
             i = new Intent(this, ContactWithUs.class);
             startActivity(i);
 
-        } else if (id == R.id.contact_it) {
+        } else if (id == R.id.main_page_it) {
             i = new Intent(this, MainPageActivity.class);
             startActivity(i);
 
