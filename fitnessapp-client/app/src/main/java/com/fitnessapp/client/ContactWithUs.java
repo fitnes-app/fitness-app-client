@@ -3,11 +3,11 @@ package com.fitnessapp.client;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class ContactWithUs extends AppCompatActivity {
+public class ContactWithUs extends BaseDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.contactwithus);
+        getLayoutInflater().inflate(R.layout.contactwithus, frameLayout);
     }
 }
