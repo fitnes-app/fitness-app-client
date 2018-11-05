@@ -1,7 +1,10 @@
 package com.fitnessapp.client;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 
 import com.fitnessapp.client.utils.Table;
@@ -18,6 +21,14 @@ public class RoutineDetailActivity extends BaseDrawerActivity {
         getLayoutInflater().inflate(R.layout.activity_routine_detail, frameLayout);
         initExercices();
         setTable();
+        Button buttonBack = (Button) findViewById(R.id.buttonBack);
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back(v);
+            }
+        });
     }
 
     public void initExercices(){
@@ -37,5 +48,11 @@ public class RoutineDetailActivity extends BaseDrawerActivity {
             elementos.add("Casilla [" + i + ", 2]");
             tabla.agregarFilaTabla(elementos);
         }
+    }
+    public void back(View view) {
+        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+        Intent intent = new Intent(this, RoutinesActivity.class);
+        //Efectua el cambi de activity
+        startActivity(intent);
     }
 }

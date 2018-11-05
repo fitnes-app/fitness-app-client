@@ -50,6 +50,7 @@
             android:text="@string/kclBurnt" />
 
         <Button
+            android:id="@+id/buttonBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btl"/>

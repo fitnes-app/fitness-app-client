@@ -2,6 +2,8 @@
 <resources>
     <string-array name="loginOptions" >
         <item>App-Login</item>
+        <item>User Login</item>
+        <item>Trainer Login</item>
         <item>Google login</item>
         <item>Facebook Login</item>
     </string-array>

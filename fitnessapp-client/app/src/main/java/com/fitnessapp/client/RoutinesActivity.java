@@ -1,6 +1,9 @@
 package com.fitnessapp.client;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
@@ -19,6 +22,16 @@ public class RoutinesActivity extends BaseDrawerActivity {
         setRoutines();
         ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, routines);
         gv.setAdapter(aa);
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+
+                openRoutineDetail(v);
+
+            }
+        });
+
     }
 
     public void setRoutines(){
@@ -31,5 +44,11 @@ public class RoutinesActivity extends BaseDrawerActivity {
         routines.add("Routine 7");
         routines.add("Routine 8");
         routines.add("Routine 9");
+    }
+    public void openRoutineDetail(View view){
+        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+        Intent intent = new Intent(this, RoutineDetailActivity.class);
+        //Efectua el cambi de activity
+        startActivity(intent);
     }
 }

@@ -1,8 +1,12 @@
 package com.fitnessapp.client;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,5 +24,51 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> spn,
+                                               android.view.View v,
+                                               int posicion,
+                                               long id) {
+
+
+                        if(spn.getItemAtPosition(posicion).toString().equals("User Login")){
+                            goUserMainPage(v);
+                        }
+                        if(spn.getItemAtPosition(posicion).toString().equals("Trainer Login")){
+                            goTrainerMainPage(v);
+                        }
+
+                    }
+                    public void onNothingSelected(AdapterView<?> spn) {
+                    }
+                });
+        Button button = (Button) findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register(v);
+            }
+        });
+    }
+    public void goUserMainPage(View view) {
+        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+        Intent intent = new Intent(this, MainPageActivity.class);
+        //Efectua el cambi de activity
+        startActivity(intent);
+    }
+    public void goTrainerMainPage(View view) {
+        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+        Intent intent = new Intent(this, TrainerMainPage.class);
+        //Efectua el cambi de activity
+        startActivity(intent);
+    }
+    public void register(View view) {
+        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+        Intent intent = new Intent(this, RegisterActivity.class);
+        //Efectua el cambi de activity
+        startActivity(intent);
     }
 }

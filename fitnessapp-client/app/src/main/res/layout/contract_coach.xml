@@ -30,8 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button"
-            tools:text="@string/back" />
+            android:text="@string/back" />
 
         <Button
             android:id="@+id/contract"
@@ -39,8 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:editable="false"
-            android:text="Button"
-            tools:text="@string/contract" />
+            android:text="@string/contract" />
     </LinearLayout>
 
 </LinearLayout>
