@@ -69,6 +69,10 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
             i = new Intent(this, ContactWithUs.class);
             startActivity(i);
 
+        } else if (id == R.id.contact_it) {
+            i = new Intent(this, MainPageActivity.class);
+            startActivity(i);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
