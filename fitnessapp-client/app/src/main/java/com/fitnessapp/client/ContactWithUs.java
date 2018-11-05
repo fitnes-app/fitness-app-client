@@ -9,5 +9,6 @@ public class ContactWithUs extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.contactwithus, frameLayout);
+        
     }
 }
