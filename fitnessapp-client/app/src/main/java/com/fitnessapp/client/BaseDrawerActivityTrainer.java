@@ -28,13 +28,13 @@ public class BaseDrawerActivityTrainer extends AppCompatActivity implements Navi
 
         frameLayout = (FrameLayout) findViewById(R.id.content_frame);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout_trainer);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_trainer);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
