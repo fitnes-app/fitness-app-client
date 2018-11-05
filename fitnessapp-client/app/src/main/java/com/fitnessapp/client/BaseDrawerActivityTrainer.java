@@ -42,30 +42,18 @@ public class BaseDrawerActivityTrainer extends AppCompatActivity implements Navi
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
         Intent i;
-        if (id == R.id.cons_rout_it) {
-            i = new Intent(this, RoutinesActivity.class);
+        if (id == R.id.asg_users_it) {
+            i = new Intent(this, AssignedUsers.class);
             startActivity(i);
-        } else if (id == R.id.size_tr_it) {
-            i = new Intent(this, SizeTracker.class);
-            startActivity(i);
-
-        } else if (id == R.id.prog_tr_it) {
-            i = new Intent(this, ProgressTrackerActivity.class);
-            startActivity(i);
-
-        } else if (id == R.id.coach_it) {
-            i = new Intent(this, CoachInformation.class);
+        } else if (id == R.id.profile_it) {
+            i = new Intent(this, ProfileTrainer.class);
             startActivity(i);
 
         } else if (id == R.id.settings_it) {
             i = new Intent(this, Settings.class);
             startActivity(i);
 
-        } else if (id == R.id.bec_premium_it) {
-            i = new Intent(this, ContractCoach.class);
-            startActivity(i);
-
-        }else if (id == R.id.contact_it) {
+        } else if (id == R.id.contact_it) {
             i = new Intent(this, ContactWithUs.class);
             startActivity(i);
 
