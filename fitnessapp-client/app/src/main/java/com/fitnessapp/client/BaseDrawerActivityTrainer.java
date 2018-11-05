@@ -63,7 +63,7 @@ public class BaseDrawerActivityTrainer extends AppCompatActivity implements Navi
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_trainer);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -71,7 +71,7 @@ public class BaseDrawerActivityTrainer extends AppCompatActivity implements Navi
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_trainer);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
