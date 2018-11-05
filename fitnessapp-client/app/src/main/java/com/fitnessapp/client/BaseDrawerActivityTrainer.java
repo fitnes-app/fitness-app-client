@@ -57,6 +57,10 @@ public class BaseDrawerActivityTrainer extends AppCompatActivity implements Navi
             i = new Intent(this, ContactWithUs.class);
             startActivity(i);
 
+        }else if (id == R.id.tr_main_page_it) {
+            i = new Intent(this, TrainerMainPage.class);
+            startActivity(i);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

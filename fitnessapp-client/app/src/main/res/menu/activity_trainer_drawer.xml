@@ -4,6 +4,10 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/tr_main_page_it"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/main_page" />
+        <item
             android:id="@+id/asg_users_it"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/asg_users" />
