@@ -17,7 +17,7 @@
         android:text="@string/contact" />
 
     <Button
-        android:id="@+id/buttonShare"
+        android:id="@+id/buttonUserDetails"
         android:layout_width="330dp"
         android:layout_height="64dp"
 
@@ -25,7 +25,7 @@
         android:text="@string/user_details" />
 
     <Button
-        android:id="@+id/buttonShare2"
+        android:id="@+id/buttonUserProgress"
         android:layout_width="330dp"
         android:layout_height="64dp"
         android:layout_marginTop="48dp"
@@ -33,7 +33,7 @@
    />
 
     <Button
-        android:id="@+id/buttonShare3"
+        android:id="@+id/buttonUserRoutines"
         android:layout_width="330dp"
         android:layout_height="64dp"
         android:layout_marginTop="48dp"
