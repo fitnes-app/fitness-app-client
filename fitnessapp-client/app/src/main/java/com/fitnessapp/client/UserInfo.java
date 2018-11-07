@@ -6,27 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class UserInfo extends AppCompatActivity {
+public class UserInfo extends BaseDrawerActivityTrainer{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_info);
-        Button buttonBack = (Button) findViewById(R.id.buttonBack);
-
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                back(v);
-            }
-        });
+        getLayoutInflater().inflate(R.layout.activity_user_info, frameLayout);
+    }
 
     }
 
-    public void back(View view) {
-        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
-        Intent intent = new Intent(this, MainPageActivity.class);
-        //Efectua el cambi de activity
-        startActivity(intent);
-    }
-}
