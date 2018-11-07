@@ -94,4 +94,5 @@
     <string name="asg_users">Asigned users</string>
     <string name="main_page">Main Page</string>
     <string name="user_routines">User Routines</string>
+    <string name="addNewRoutine">Create New Routine</string>
 </resources>
