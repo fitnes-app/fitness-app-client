@@ -32,7 +32,17 @@ public class AssignedUsers extends BaseDrawerActivityTrainer {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (position == 0) {
+                            //code specific to first list item
+                            Intent myIntent = new Intent(view.getContext(), UserInfo.class);
+                            startActivityForResult(myIntent, 0);
+                        }
                         if (position == 1) {
+                            //code specific to first list item
+                            Intent myIntent = new Intent(view.getContext(), UserInfo.class);
+                            startActivityForResult(myIntent, 0);
+                        }
+                        if (position == 2) {
                             //code specific to first list item
                             Intent myIntent = new Intent(view.getContext(), UserInfo.class);
                             startActivityForResult(myIntent, 0);
