@@ -18,7 +18,7 @@ public class AssignedUsers extends BaseDrawerActivityTrainer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.assigned_users);
+        getLayoutInflater().inflate(R.layout.assigned_users, frameLayout);
 
         ArrayList<String> example = new ArrayList<String>();
         example.add("User 1");
@@ -32,7 +32,17 @@ public class AssignedUsers extends BaseDrawerActivityTrainer {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (position == 0) {
+                            //code specific to first list item
+                            Intent myIntent = new Intent(view.getContext(), UserInfo.class);
+                            startActivityForResult(myIntent, 0);
+                        }
                         if (position == 1) {
+                            //code specific to first list item
+                            Intent myIntent = new Intent(view.getContext(), UserInfo.class);
+                            startActivityForResult(myIntent, 0);
+                        }
+                        if (position == 2) {
                             //code specific to first list item
                             Intent myIntent = new Intent(view.getContext(), UserInfo.class);
                             startActivityForResult(myIntent, 0);
@@ -40,18 +50,8 @@ public class AssignedUsers extends BaseDrawerActivityTrainer {
                     }
                 }
         );
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.users, options);
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-        String imageType = options.outMimeType;
+
     }
 
-    public void openUserInfo(View view){
-        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
-        Intent intent = new Intent(this, UserInfo.class);
-        //Efectua el cambi de activity
-        startActivity(intent);
     }
-}
+

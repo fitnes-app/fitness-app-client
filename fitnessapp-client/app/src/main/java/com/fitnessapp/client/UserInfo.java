@@ -6,27 +6,56 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class UserInfo extends AppCompatActivity {
+public class UserInfo extends BaseDrawerActivityTrainer{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_info);
-        Button buttonBack = (Button) findViewById(R.id.buttonBack);
+        getLayoutInflater().inflate(R.layout.activity_user_info, frameLayout);
 
-        buttonBack.setOnClickListener(new View.OnClickListener() {
+        Button buttonUserDetails = (Button) findViewById(R.id.buttonUserDetails);
+
+        buttonUserDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                back(v);
+                openUserDetails(v);
             }
         });
 
-    }
+        Button buttonUserProgress = (Button) findViewById(R.id.buttonUserProgress);
 
-    public void back(View view) {
+        buttonUserProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openUserProgress(v);
+            }
+        });
+        Button buttonUserRoutines = (Button) findViewById(R.id.buttonUserRoutines);
+
+        buttonUserRoutines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openUserRoutines(v);
+            }
+        });
+    }
+    public void openUserDetails(View view) {
         // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
-        Intent intent = new Intent(this, MainPageActivity.class);
+        Intent intent = new Intent(this, UserDetailsActivity.class);
         //Efectua el cambi de activity
         startActivity(intent);
     }
-}
+    public void openUserProgress(View view) {
+        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+        Intent intent = new Intent(this, CheckUserProgress.class);
+        //Efectua el cambi de activity
+        startActivity(intent);
+    }
+    public void openUserRoutines(View view) {
+        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+        Intent intent = new Intent(this, UserRoutines.class);
+        //Efectua el cambi de activity
+        startActivity(intent);
+    }
+    }
+

@@ -17,50 +17,29 @@
         android:text="@string/contact" />
 
     <Button
-        android:id="@+id/buttonShare"
+        android:id="@+id/buttonUserDetails"
         android:layout_width="330dp"
         android:layout_height="64dp"
 
         android:layout_marginTop="75dp"
-        android:drawableLeft="@drawable/user_drawable"
-        android:drawableRight="@drawable/info_drawable"
         android:text="@string/user_details" />
 
     <Button
-        android:id="@+id/buttonShare2"
+        android:id="@+id/buttonUserProgress"
         android:layout_width="330dp"
         android:layout_height="64dp"
         android:layout_marginTop="48dp"
-
-        android:drawableLeft="@drawable/user_drawable"
-        android:drawableRight="@drawable/info_drawable"
         android:text="@string/user_progress"
    />
 
     <Button
-        android:id="@+id/buttonShare3"
+        android:id="@+id/buttonUserRoutines"
         android:layout_width="330dp"
         android:layout_height="64dp"
         android:layout_marginTop="48dp"
-        android:drawableLeft="@drawable/user_drawable"
-        android:drawableRight="@drawable/info_drawable"
         android:text="@string/routines_management"
 
  />
 
-    <Button
-        android:id="@+id/buttonBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:text="@string/back"
-
-        app:layout_constraintVertical_bias="1.0" />
 </LinearLayout>
 
