@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String nameText  = username.getText().toString();
         final String roleText = role.getSelectedItem().toString();
         final String specialityText = speciality.getSelectedItem().toString();
-        if(!emailText.equals("") && !passwordText.equals("") && validateEmailFormat(emailText)) {
+        if(!emailText.equals("") && !passwordText.equals("") && validateEmailFormat(emailText) && validatePassword(passwordText)) {
 
             mAuth.createUserWithEmailAndPassword(emailText, passwordText)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -121,8 +121,21 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
+
+    private boolean validatePassword(String passwordText) {
+        if(passwordText.length() < 6){
+            Toast.makeText(RegisterActivity.this, getString(R.string.shortPassword), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     private boolean validateEmailFormat(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
-        return pattern.matcher(email).matches();
+        if(!pattern.matcher(email).matches()){
+            Toast.makeText(RegisterActivity.this, getString(R.string.invalidEmail), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }
