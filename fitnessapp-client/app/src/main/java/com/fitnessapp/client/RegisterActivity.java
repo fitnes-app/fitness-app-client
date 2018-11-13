@@ -98,7 +98,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 User userObj = new User(nameText, emailText, passwordText, roleText, specialityText);
                                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                System.out.println(user.getUid());
                                 mDatabase.child("Users").child(user.getUid()).setValue(userObj);
                                 try {
                                     Thread.sleep(1000);
