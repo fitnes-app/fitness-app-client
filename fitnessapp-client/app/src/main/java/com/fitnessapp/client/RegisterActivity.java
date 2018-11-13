@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.fitnessapp.client.utils.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -82,11 +83,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        String emailText = email.getText().toString();
-        String passwordText = password.getText().toString();
-        String nameText  = password.getText().toString();
-        String roleText = password.getText().toString();
-        String specialityText = password.getText().toString();
+        final String emailText = email.getText().toString();
+        final String passwordText = password.getText().toString();
+        final String nameText  = username.getText().toString();
+        final String roleText = role.getSelectedItem().toString();
+        final String specialityText = speciality.getSelectedItem().toString();
         if(!emailText.equals("") && !passwordText.equals("") && validateEmailFormat(emailText)) {
 
             mAuth.createUserWithEmailAndPassword(emailText, passwordText)
@@ -97,7 +98,16 @@ public class RegisterActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("REGISTER: ", "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                User userObj = new User();
+                                User userObj = new User(nameText, emailText, passwordText, roleText, specialityText);
+                                DatabaseReference mDatabase = db.getReference();
+                                mDatabase.child("Users").child(user.getUid()).setValue(userObj);
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Intent in = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(in);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("REGISTER: ", "createUserWithEmail:failure", task.getException());
