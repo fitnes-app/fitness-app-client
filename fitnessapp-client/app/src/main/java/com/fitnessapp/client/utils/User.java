@@ -51,4 +51,10 @@ public class User {
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
     }
+
+    @Override
+    public String toString(){
+        return name + " " + email;
+    }
+
 }

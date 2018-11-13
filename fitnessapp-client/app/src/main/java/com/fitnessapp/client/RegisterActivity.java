@@ -29,14 +29,12 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText username,password,email;
     private Spinner role,speciality;
-    private FirebaseDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
 
         username = findViewById(R.id.editTextUser);
         password = findViewById(R.id.editTextPwd);
@@ -99,7 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 Log.d("REGISTER: ", "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 User userObj = new User(nameText, emailText, passwordText, roleText, specialityText);
-                                DatabaseReference mDatabase = db.getReference();
+                                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                                System.out.println(user.getUid());
                                 mDatabase.child("Users").child(user.getUid()).setValue(userObj);
                                 try {
                                     Thread.sleep(1000);
