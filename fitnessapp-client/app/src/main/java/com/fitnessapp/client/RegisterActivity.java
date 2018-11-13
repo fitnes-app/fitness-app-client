@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,12 +21,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private EditText username,password,email;
+    private Spinner role,speciality;
     private FirebaseDatabase db;
-    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +36,23 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.register);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
-        myRef = db.getReference();
+
         username = findViewById(R.id.editTextUser);
         password = findViewById(R.id.editTextPwd);
         email = findViewById(R.id.editTextEmail);
-        Spinner spinnerRoles = (Spinner) findViewById(R.id.spinnerRoles);
+        role = findViewById(R.id.spinnerRoles);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapterRoles = ArrayAdapter.createFromResource(this, R.array.rolesOptions, android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
         adapterRoles.setDropDownViewResource(android.R.layout.simple_spinner_item);
         // Apply the adapter to the spinner
-        spinnerRoles.setAdapter(adapterRoles);
+        role.setAdapter(adapterRoles);
 
-        Spinner spinnerSpecialities = (Spinner) findViewById(R.id.spinnerSpecialities);
+        speciality = findViewById(R.id.spinnerSpecialities);
         ArrayAdapter<CharSequence> adapterSpecialities = ArrayAdapter.createFromResource(this, R.array.specialitiesOptions, android.R.layout.simple_spinner_item);
         adapterSpecialities.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerSpecialities.setAdapter(adapterSpecialities);
+        speciality.setAdapter(adapterSpecialities);
 
         Button buttonBack = (Button) findViewById(R.id.buttonBack);
 
@@ -73,29 +76,43 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void back(View view) {
 
-        mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("REGISTER: ", "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("REGISTER: ", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
     }
 
     public void register(View view) {
+        String emailText = email.getText().toString();
+        String passwordText = password.getText().toString();
+        String nameText  = password.getText().toString();
+        String roleText = password.getText().toString();
+        String specialityText = password.getText().toString();
+        if(!emailText.equals("") && !passwordText.equals("") && validateEmailFormat(emailText)) {
 
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+            mAuth.createUserWithEmailAndPassword(emailText, passwordText)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("REGISTER: ", "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                User userObj = new User();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("REGISTER: ", "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }else{
+            Toast.makeText(RegisterActivity.this, getText(R.string.inputData),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+    private boolean validateEmailFormat(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 }

@@ -95,4 +95,5 @@
     <string name="main_page">Main Page</string>
     <string name="user_routines">User Routines</string>
     <string name="addNewRoutine">Create New Routine</string>
+    <string name="inputData">INPUT MISSING DATA</string>
 </resources>
