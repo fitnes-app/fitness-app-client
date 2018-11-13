@@ -2,20 +2,34 @@ package com.fitnessapp.client;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+    private EditText username,password,email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-
+        mAuth = FirebaseAuth.getInstance();
+        username = findViewById(R.id.editTextUser);
+        password = findViewById(R.id.editTextPwd);
+        email = findViewById(R.id.editTextEmail);
         Spinner spinnerRoles = (Spinner) findViewById(R.id.spinnerRoles);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapterRoles = ArrayAdapter.createFromResource(this, R.array.rolesOptions, android.R.layout.simple_spinner_item);
@@ -26,12 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
         spinnerRoles.setAdapter(adapterRoles);
 
         Spinner spinnerSpecialities = (Spinner) findViewById(R.id.spinnerSpecialities);
-        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapterSpecialities = ArrayAdapter.createFromResource(this, R.array.specialitiesOptions, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
         adapterSpecialities.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        // Apply the adapter to the spinner
         spinnerSpecialities.setAdapter(adapterSpecialities);
 
         Button buttonBack = (Button) findViewById(R.id.buttonBack);
@@ -55,16 +65,30 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void back(View view) {
-        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
-        Intent intent = new Intent(this, MainActivity.class);
-        //Efectua el cambi de activity
-        startActivity(intent);
+
+        mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("REGISTER: ", "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("REGISTER: ", "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
     }
 
     public void register(View view) {
-        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
-        Intent intent = new Intent(this, MainActivity.class);
-        //Efectua el cambi de activity
+
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

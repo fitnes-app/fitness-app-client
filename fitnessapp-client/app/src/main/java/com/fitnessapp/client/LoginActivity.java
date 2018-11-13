@@ -9,13 +9,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+
+public class LoginActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginlayout);
-
         Spinner spinner = findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -53,22 +55,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     public void goUserMainPage(View view) {
-        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+
         Intent intent = new Intent(this, MainPageActivity.class);
-        //Efectua el cambi de activity
         startActivity(intent);
     }
+
     public void goTrainerMainPage(View view) {
-        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+
         Intent intent = new Intent(this, TrainerMainPage.class);
         //Efectua el cambi de activity
         startActivity(intent);
     }
+
     public void register(View view) {
-        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+
         Intent intent = new Intent(this, RegisterActivity.class);
-        //Efectua el cambi de activity
         startActivity(intent);
     }
 }
