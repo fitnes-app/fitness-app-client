@@ -51,7 +51,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         String email = emailET.getText().toString();
         String password = passwdET.getText().toString();
-        if(!email.equals("") && password.equals("")){
+        System.out.println("IOASJBFIAFASLKDJFASBDLFHAGSVBHF GHJBHJNMK,");
+        if(!email.equals("") && !password.equals("")){
             switch(view.getId()) {
                 case R.id.loginButton:
                     mAuth.signInWithEmailAndPassword(email, password)
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
+                                        System.out.println("IOASJBFIAFASLKDJFASBDLFHAGSVBHF GHJBHJNMK,3");
 
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         System.out.println(myRef.child("Users").child(user.getUid()).getKey());
