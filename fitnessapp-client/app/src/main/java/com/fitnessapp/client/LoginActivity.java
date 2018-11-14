@@ -25,24 +25,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button registerButton, loginButton;
     private EditText emailET, passwdET;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
+    private FirebaseDatabase mDatabase;
     private DatabaseReference myRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout2);
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
+        mDatabase = FirebaseDatabase.getInstance();
+        myRef = mDatabase.getReference();
 
         emailET = findViewById(R.id.loginEmailET);
         passwdET = findViewById(R.id.loginPasswrdET);
 
-        registerButton = findViewById(R.id.registerButton);
         loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);
 
-        registerButton.setOnClickListener(this);
         loginButton.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
 
 
     }
@@ -51,7 +51,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         String email = emailET.getText().toString();
         String password = passwdET.getText().toString();
-        System.out.println("IOASJBFIAFASLKDJFASBDLFHAGSVBHF GHJBHJNMK,");
         if(!email.equals("") && !password.equals("")){
             switch(view.getId()) {
                 case R.id.loginButton:
@@ -60,10 +59,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        System.out.println("IOASJBFIAFASLKDJFASBDLFHAGSVBHF GHJBHJNMK,3");
 
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        System.out.println(myRef.child("Users").child(user.getUid()).getKey());
+                                        System.out.println(myRef.child("Users").child(user.getUid()));
 
                                     } else {
 
@@ -72,25 +70,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     }
                                 }
                             });
+                    break;
                 case R.id.registerButton:
                     register();
+                default:
+                    break;
             }
         }
     }
 
-    public void goUserMainPage() {
+    private void goUserMainPage() {
 
         Intent intent = new Intent(this, MainPageActivity.class);
         startActivity(intent);
     }
 
-    public void goTrainerMainPage() {
+    private void goTrainerMainPage() {
 
         Intent intent = new Intent(this, TrainerMainPage.class);
         startActivity(intent);
     }
 
-    public void register() {
+    private void register() {
 
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
