@@ -98,4 +98,5 @@
     <string name="inputData">INPUT MISSING DATA</string>
     <string name="invalidEmail">Invalid email.</string>
     <string name="shortPassword">Password too short.</string>
+    <string name="login">Log in</string>
 </resources>
