@@ -17,8 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference myRef;
+    public String roleValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +65,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     if (task.isSuccessful()) {
 
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        System.out.println(myRef.child("Users").child(user.getUid()));
+                                        myRef.child("Users").child(user.getUid()).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                roleValue = dataSnapshot.getValue().toString();
+                                                if(roleValue.equals("Simple User")){
+                                                    goUserMainPage();
+                                                }else{
+                                                    goTrainerMainPage();
+                                                }
+                                            }
 
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            }
+                                        });
                                     } else {
 
                                         Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -75,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     register();
                 default:
                     break;
-            }
+            };
         }
     }
 
