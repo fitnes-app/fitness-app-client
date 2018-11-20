@@ -1,4 +1,4 @@
-package com.fitnessapp.client.utils;
+package com.fitnessapp.client.Utils;
 
 import android.app.Activity;
 import android.content.res.Resources;

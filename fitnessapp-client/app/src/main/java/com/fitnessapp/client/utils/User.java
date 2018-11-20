@@ -1,8 +1,9 @@
-package com.fitnessapp.client.utils;
+package com.fitnessapp.client.Utils;
 
 public class User {
 
-    private String name, email, password, role, speciality;
+    private String name, email, password, role, speciality,address,bodyType, telNum;
+    private float height, weigth;
 
     public User(String name,String email,String password,String role,String speciality){
         this.name = name;
@@ -10,6 +11,11 @@ public class User {
         this.password = password;
         this.role = role;
         this.speciality = speciality;
+        this.address = "";
+        this.bodyType ="";
+        this.telNum = "";
+        this.height = 0f;
+        this.weigth = 0f;
     }
 
     public String getName() {
@@ -50,6 +56,46 @@ public class User {
 
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getBodyType() {
+        return bodyType;
+    }
+
+    public void setBodyType(String bodyType) {
+        this.bodyType = bodyType;
+    }
+
+    public String getTelNum() {
+        return telNum;
+    }
+
+    public void setTelNum(String telNum) {
+        this.telNum = telNum;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getWeigth() {
+        return weigth;
+    }
+
+    public void setWeigth(float weigth) {
+        this.weigth = weigth;
     }
 
     @Override

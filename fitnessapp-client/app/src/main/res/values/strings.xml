@@ -99,4 +99,8 @@
     <string name="invalidEmail">Invalid email.</string>
     <string name="shortPassword">Password too short.</string>
     <string name="login">Log in</string>
+    <string name="name">Name </string>
+    <string name="address">Address</string>
+    <string name="telNum">Phone number</string>
+    <string name="confChanges">Confirm Changes</string>
 </resources>

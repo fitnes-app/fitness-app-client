@@ -2,7 +2,7 @@ package com.fitnessapp.client;
 
 import android.os.Bundle;
 import android.widget.TableLayout;
-import com.fitnessapp.client.utils.Table;
+import com.fitnessapp.client.Utils.Table;
 
 import java.util.ArrayList;
 

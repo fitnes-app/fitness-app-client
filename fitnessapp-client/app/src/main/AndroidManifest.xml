@@ -137,7 +137,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".BaseDrawerActivityTrainer"
+        <activity
+            android:name=".BaseDrawerActivityTrainer"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -151,33 +152,45 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".BecomePremium"
+        <activity
+            android:name=".BecomePremium"
             android:label="@string/become_premium"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ContactWithUs"
+        <activity
+            android:name=".ContactWithUs"
             android:label="@string/contactwithus"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserRoutines"
+        <activity
+            android:name=".UserRoutines"
             android:label="@string/user_routines"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateNewRoutine"
+        <activity
+            android:name=".CreateNewRoutine"
             android:label="@string/addNewRoutine"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ProfileActivity"
+            android:label="@string/profile"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
     </application>
 
