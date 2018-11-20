@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.fitnessapp.client.Utils.User;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +20,7 @@ public class ProfileActivity extends BaseDrawerActivity {
     private Button confChangesbutton;
     private EditText nameET, emailET, passwordET, addressET, telNumET, heightET, weightET;
     private FirebaseUser user;
+    private User cUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +34,29 @@ public class ProfileActivity extends BaseDrawerActivity {
         weightET = findViewById(R.id.profile_weight_et);
         confChangesbutton = findViewById(R.id.confirmChangesbutton);
         user = mAuth.getCurrentUser();
-        retrieveDataFromDB();
-        putDataIntoETs();
-        System.out.println(user.getEmail().toString());
+        //retrieveDataFromDB();
+        retrieveUserFromDB();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //putDataIntoETs();
+        System.out.println(cUser.getName());
         System.out.println("ODA");
+    }
+
+    private void retrieveUserFromDB() {
+        myRef.child("Users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                cUser = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void putDataIntoETs() {
@@ -44,7 +65,7 @@ public class ProfileActivity extends BaseDrawerActivity {
         passwordET.setText(password);
         addressET.setText(address);
         telNumET.setText(telNum);
-        //heightET.setText(Float.toString(height));
+        heightET.setText(Float.toString(height));
         weightET.setText(Float.toString(weigth));
     }
 
