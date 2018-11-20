@@ -55,45 +55,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         String email = emailET.getText().toString();
         String password = passwdET.getText().toString();
-        if(!email.equals("") && !password.equals("")){
             switch(view.getId()) {
                 case R.id.loginButton:
-                    mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
+                    if(!email.equals("") && !password.equals("")) {
+                        mAuth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
 
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        myRef.child("Users").child(user.getUid()).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                roleValue = dataSnapshot.getValue().toString();
-                                                if(roleValue.equals("Simple User")){
-                                                    goUserMainPage();
-                                                }else{
-                                                    goTrainerMainPage();
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            myRef.child("Users").child(user.getUid()).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    roleValue = dataSnapshot.getValue().toString();
+                                                    if (roleValue.equals("Simple User")) {
+                                                        goUserMainPage();
+                                                    } else {
+                                                        goTrainerMainPage();
+                                                    }
                                                 }
-                                            }
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                            }
-                                        });
-                                    } else {
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                }
+                                            });
+                                        } else {
 
-                                        Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
+                                });
+                    }
                     break;
                 case R.id.registerButton:
                     register();
                 default:
                     break;
             };
-        }
     }
 
     private void goUserMainPage() {
