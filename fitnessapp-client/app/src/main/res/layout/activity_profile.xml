@@ -10,6 +10,7 @@
     android:layout_marginRight="20dp"
     tools:context=".ProfileActivity">
     <ScrollView
+        android:id="@+id/scrollID"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -139,7 +140,12 @@
         </LinearLayout>
     </ScrollView>
     <Button
+        android:id="@+id/confirmChangesbutton"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="@string/confChanges"/>
+        android:layout_height="wrap_content"
+        android:text="@string/confChanges"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollID"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

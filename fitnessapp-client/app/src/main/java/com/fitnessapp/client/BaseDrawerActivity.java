@@ -12,6 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawer;
@@ -19,13 +23,19 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     FrameLayout frameLayout;
     NavigationView navigationView;
 
+    protected FirebaseAuth mAuth;
+    protected FirebaseDatabase mDatabase;
+    protected DatabaseReference myRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
+        myRef = mDatabase.getReference();
         frameLayout = (FrameLayout) findViewById(R.id.content_frame);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
