@@ -45,6 +45,9 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.main_page_it);
+        Fragment fragment = new MainPageFragment();
+        displaySelectedFragment(fragment);
     }
 
     @Override
@@ -89,16 +92,11 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    /**
-     * Loads the specified fragment to the frame
-     *
-     * @param fragment
-     */
     private void displaySelectedFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, fragment);

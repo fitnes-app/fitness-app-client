@@ -35,7 +35,7 @@ public class ProfileActivity extends BaseDrawerActivity {
         confChangesbutton = findViewById(R.id.confirmChangesbutton);
         user = mAuth.getCurrentUser();
         //retrieveDataFromDB();
-        retrieveUserFromDB();
+        //retrieveUserFromDB();
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -46,7 +46,7 @@ public class ProfileActivity extends BaseDrawerActivity {
         System.out.println("ODA");
     }
 
-    private void retrieveUserFromDB() {
+   /* private void retrieveUserFromDB() {
         myRef.child("Users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -57,7 +57,7 @@ public class ProfileActivity extends BaseDrawerActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-    }
+    }*/
 
     private void putDataIntoETs() {
         nameET.setText(name);
@@ -69,7 +69,7 @@ public class ProfileActivity extends BaseDrawerActivity {
         weightET.setText(Float.toString(weigth));
     }
 
-    private void retrieveDataFromDB() {
+    /*private void retrieveDataFromDB() {
         getUserName();
         getUserEmail();
         getUserPassword();
@@ -176,6 +176,6 @@ public class ProfileActivity extends BaseDrawerActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-    }
+    }*/
 
 }
