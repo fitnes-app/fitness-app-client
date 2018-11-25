@@ -24,7 +24,7 @@ public class ProfileActivity extends BaseDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.activity_profile, frameLayout);
+        //getLayoutInflater().inflate(R.layout.activity_profile, frameLayout);
         nameET = findViewById(R.id.profile_name_et);
         emailET = findViewById(R.id.profile_email_et);
         passwordET = findViewById(R.id.profile_password_et);

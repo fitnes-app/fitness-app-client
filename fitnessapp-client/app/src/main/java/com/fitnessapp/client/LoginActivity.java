@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void goUserMainPage() {
 
-        Intent intent = new Intent(this, MainPageActivity.class);
+        Intent intent = new Intent(this, BaseDrawerActivity.class);
         startActivity(intent);
     }
 

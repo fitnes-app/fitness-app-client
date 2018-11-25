@@ -15,19 +15,22 @@ import java.util.ArrayList;
 public class MainPageFragment extends Fragment {
 
     private ArrayList<String> exercicesTmp = new ArrayList<>();
+    private Table tabla;
+
+    public MainPageFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Home");
-        initExercices();
-        setTable();
+        getActivity().setTitle("Main Page");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_page, container, false);
+        View RootView = inflater.inflate(R.layout.fragment_main_page, container, false);
+        initExercices();
+        setTable(RootView);
+        return RootView;
     }
 
     public void initExercices(){
@@ -36,8 +39,8 @@ public class MainPageFragment extends Fragment {
         exercicesTmp.add("Bulgarian Training Bag");
     }
 
-    public void setTable(){
-        Table tabla = new Table(getActivity(), (TableLayout) getActivity().findViewById(R.id.tabla));
+    public void setTable(View rootView){
+        tabla = new Table(getActivity(), (TableLayout) rootView.findViewById(R.id.tabla));
         tabla.agregarCabecera(R.array.mainPageTable_headers);
         for(int i = 0; i < exercicesTmp.size() ; i++)
         {
