@@ -26,7 +26,7 @@ public class ProgressTrackerActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_progress_tracker, frameLayout);
 
-        mChart = (LineChart) findViewById(R.id.linechart);
+        mChart = findViewById(R.id.linechart);
         // add data
         setData();
 

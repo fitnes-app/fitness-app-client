@@ -21,7 +21,7 @@ public class UserRoutines extends BaseDrawerActivityTrainer {
         currentRoutines.add("Routine X");
 
         ArrayAdapter<String> adapterCurrent = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,currentRoutines);
-        ListView currentlyRoutines = (ListView) findViewById(R.id.currentlyRoutines);
+        ListView currentlyRoutines = findViewById(R.id.currentlyRoutines);
         currentlyRoutines.setAdapter(adapterCurrent);
 
         currentlyRoutines.setOnItemClickListener(
