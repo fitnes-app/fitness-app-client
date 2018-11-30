@@ -31,14 +31,5 @@ public class ProfileActivity extends BaseDrawerActivity {
         telNumET = findViewById(R.id.profile_telNum_et);
         heightET = findViewById(R.id.profile_height_et);
         weightET = findViewById(R.id.profile_weight_et);
-        confChangesbutton = findViewById(R.id.confirmChangesbutton);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //putDataIntoETs();
-        System.out.println(cUser.getName());
-        System.out.println("ODA");
-    }
+        confChangesbutton = findViewById(R.id.confirmChangesbutton);}
 }

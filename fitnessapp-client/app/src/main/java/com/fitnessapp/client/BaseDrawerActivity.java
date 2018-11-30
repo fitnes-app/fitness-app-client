@@ -14,26 +14,37 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.fitnessapp.client.Fragments.AssignedUsersFragment;
 import com.fitnessapp.client.Fragments.BecomePremiumFragment;
 import com.fitnessapp.client.Fragments.CoachInformationFragment;
 import com.fitnessapp.client.Fragments.ConsultRoutinesFragment;
 import com.fitnessapp.client.Fragments.ContactWithUsFragment;
 import com.fitnessapp.client.Fragments.MainPageFragment;
+import com.fitnessapp.client.Fragments.MainPageTrainerFragment;
 import com.fitnessapp.client.Fragments.ProfileFragment;
+import com.fitnessapp.client.Fragments.ProfileTrainerFragment;
 import com.fitnessapp.client.Fragments.ProgressTrackerFragment;
 import com.fitnessapp.client.Fragments.SettingsFragment;
 import com.fitnessapp.client.Fragments.SizeTrackerFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    DrawerLayout drawer;
-    Toolbar toolbar;
-    FrameLayout frameLayout;
-    NavigationView navigationView;
-
+    protected DrawerLayout drawer;
+    protected Toolbar toolbar;
+    protected FrameLayout frameLayout;
+    protected NavigationView navigationView;
     protected FirebaseAuth mAuth;
+    protected FirebaseDatabase mDatabase;
+    protected DatabaseReference myRef;
 
+    public String roleValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +52,9 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
+        myRef = mDatabase.getReference();
+        getUserType();
         frameLayout = findViewById(R.id.content_frame);
 
         drawer = findViewById(R.id.drawer_layout);
@@ -52,8 +66,29 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.main_page_it);
-        Fragment fragment = new MainPageFragment();
-        displaySelectedFragment(fragment);
+    }
+
+    private void getUserType() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        myRef.child("Users").child(user.getUid()).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                roleValue = dataSnapshot.getValue().toString();
+                if (roleValue.equals("Simple User")) {
+                    Fragment fragment = new MainPageFragment();
+                    displaySelectedFragment(fragment);
+                    //Cargar dinàmicamente el menú del Sample user
+                } else {
+                    Fragment fragment = new MainPageTrainerFragment();
+                    displaySelectedFragment(fragment);
+                    //Cargar dinàmicamente el menú del Trainer
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override
@@ -94,8 +129,14 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         } else if (id == R.id.profile_it) {
             fragment = new ProfileFragment();
             displaySelectedFragment(fragment);
-        }
+        } else if (id == R.id.asg_users_it) {
+            fragment = new AssignedUsersFragment();
+            displaySelectedFragment(fragment);
 
+        } else if (id == R.id.profile_it) {
+            fragment = new ProfileTrainerFragment();
+            displaySelectedFragment(fragment);
+        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
