@@ -27,12 +27,6 @@ import com.fitnessapp.client.Fragments.ProgressTrackerFragment;
 import com.fitnessapp.client.Fragments.SettingsFragment;
 import com.fitnessapp.client.Fragments.SizeTrackerFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,22 +35,22 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     protected FrameLayout frameLayout;
     protected NavigationView navigationView;
     protected FirebaseAuth mAuth;
-    protected FirebaseDatabase mDatabase;
-    protected DatabaseReference myRef;
 
     public String roleValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent i = getIntent();
+        if(i != null){
+            Bundle b = i.getBundleExtra("bundle");
+            roleValue = b.getString("userType");
+        }
         setContentView(R.layout.activity_menu);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance();
-        myRef = mDatabase.getReference();
-        getUserType();
         frameLayout = findViewById(R.id.content_frame);
-
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -64,33 +58,15 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         toggle.syncState();
 
         navigationView = findViewById(R.id.nav_view);
+        if(("Trainer").equals(roleValue)){
+            navigationView.inflateMenu(R.menu.activity_trainer_drawer);
+            navigationView.setCheckedItem(R.id.tr_main_page_it);
+        }else{
+            navigationView.inflateMenu(R.menu.activity_user_drawer);
+            navigationView.setCheckedItem(R.id.main_page_it);
+        }
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.main_page_it);
     }
-
-    private void getUserType() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        myRef.child("Users").child(user.getUid()).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                roleValue = dataSnapshot.getValue().toString();
-                if (roleValue.equals("Simple User")) {
-                    Fragment fragment = new MainPageFragment();
-                    displaySelectedFragment(fragment);
-                    //Cargar dinàmicamente el menú del Sample user
-                } else {
-                    Fragment fragment = new MainPageTrainerFragment();
-                    displaySelectedFragment(fragment);
-                    //Cargar dinàmicamente el menú del Trainer
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
@@ -133,8 +109,16 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
             fragment = new AssignedUsersFragment();
             displaySelectedFragment(fragment);
 
-        } else if (id == R.id.profile_it) {
+        } else if (id == R.id.profile_trainer_it) {
             fragment = new ProfileTrainerFragment();
+            displaySelectedFragment(fragment);
+
+        } else if (id == R.id.tr_main_page_it) {
+            fragment = new MainPageTrainerFragment();
+            displaySelectedFragment(fragment);
+
+        }else if (id == R.id.asg_users_it) {
+            fragment = new AssignedUsersFragment();
             displaySelectedFragment(fragment);
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

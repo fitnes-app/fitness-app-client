@@ -12,7 +12,7 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/asg_users" />
         <item
-            android:id="@+id/profile_it"
+            android:id="@+id/profile_trainer_it"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/profile" />
         <item

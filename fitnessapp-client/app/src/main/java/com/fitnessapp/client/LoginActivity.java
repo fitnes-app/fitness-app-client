@@ -97,14 +97,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void goUserMainPage() {
-
+        Bundle b = new Bundle();
+        b.putString("userType","Simple User");
         Intent intent = new Intent(this, BaseDrawerActivity.class);
+        intent.putExtra("bundle",b);
         startActivity(intent);
     }
 
     private void goTrainerMainPage() {
-
+        Bundle b = new Bundle();
+        b.putString("userType","Trainer");
         Intent intent = new Intent(this, BaseDrawerActivity.class);
+        intent.putExtra("bundle",b);
         startActivity(intent);
     }
 
