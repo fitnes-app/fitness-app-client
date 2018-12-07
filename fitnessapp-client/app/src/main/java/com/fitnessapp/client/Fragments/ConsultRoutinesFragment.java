@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.CreateNewRoutine;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.RoutineDetailActivity;
@@ -69,6 +70,8 @@ public class ConsultRoutinesFragment extends Fragment {
 
     public void openRoutineDetail(View view){
         Fragment fragment = new RoutineDetailFragment();
+        BaseDrawerActivity bda = (BaseDrawerActivity)getActivity();
+        bda.displaySelectedFragment(fragment);
         //Move to routineDetailFragment ??
     }
 }

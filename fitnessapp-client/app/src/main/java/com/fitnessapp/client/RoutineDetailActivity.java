@@ -20,7 +20,7 @@ public class RoutineDetailActivity extends BaseDrawerActivity {
         getLayoutInflater().inflate(R.layout.activity_routine_detail, frameLayout);
         initExercices();
         setTable();
-        Button buttonBack = (Button) findViewById(R.id.buttonBack);
+        Button buttonBack = findViewById(R.id.buttonBack);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
