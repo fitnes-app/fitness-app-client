@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Fit4u</string>
+    <string name="str_next">Next</string>
+    <string name="str_questionnaire">Questionnaire</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="language">Language:</string>
