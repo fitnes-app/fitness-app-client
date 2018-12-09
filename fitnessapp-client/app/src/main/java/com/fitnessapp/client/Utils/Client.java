@@ -1,18 +1,15 @@
 package com.fitnessapp.client.Utils;
 
-import java.io.Serializable;
+public class Client {
 
-public class User implements Serializable {
-
-    private String name, email, password, role, speciality,address,bodyType, telNum;
+    private String name, email, password, address,bodyType, telNum;
     private float height, weigth;
-    public User(){}
-    public User(String name,String email,String password,String role,String speciality){
+
+    public Client(){}
+    public Client(String name,String email,String password,String role,String speciality){
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role = role;
-        this.speciality = speciality;
         this.address = "";
         this.bodyType ="";
         this.telNum = "";
@@ -42,22 +39,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getSpeciality() {
-        return speciality;
-    }
-
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
     }
 
     public String getAddress() {
@@ -104,5 +85,4 @@ public class User implements Serializable {
     public String toString(){
         return name + " " + email;
     }
-
 }

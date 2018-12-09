@@ -1,9 +1,8 @@
-package com.fitnessapp.client;
+package com.fitnessapp.client.Utils;
 
 public class QuestionLibrary {
 
     private String mQuestions [] = {
-            "Soy: ",
             "Mis hombros son:",
             "Unos pantalones normales me quedan:",
             "Mis antebrazos son:",
@@ -14,7 +13,6 @@ public class QuestionLibrary {
     };
 
     private String mChoices [][] = {
-            {"Hombre", "Mujer"},
             {"Más anchos que mis caderas", "Iguales que mis caderas", "Más estrechos que mis caderas"},
             {"Apretados a mis glúteos", "Perfectos en mis glúteos", "Largos en mis glúteos"},
             {"Grandes", "Medios", "Pequeños"},
@@ -28,7 +26,7 @@ public class QuestionLibrary {
     private String mEndomorphAnswers[] = {"Más anchos que mis caderas", "Largos en mis glúteos", "Grandes",
             "Engordar fácilmente", "Redondo y suave", "El pulgar y el dedo corazón no se tocan", "110 cm o más"};
 
-    private String mEctomorphAnswers[] = {"Más estrechos que mis caderas", "Apretados en mis glúteos", "Pequeños",
+    private String mEctomorphAnswers[] = {"Más estrechos que mis caderas", "Apretados aT mis glúteos", "Pequeños",
             "Adelgazar fácilmente", "Largo y estrecho", "El pulgar y el dedo corazón se sobrepasan", "93 cm o menos"};
 
     private String mMesomorphAnswers[] = {"Iguales que mis caderas", "Perfectos en mis glúteos", "Medios",

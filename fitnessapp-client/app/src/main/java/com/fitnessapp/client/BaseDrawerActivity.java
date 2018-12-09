@@ -56,15 +56,18 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        Fragment f = null;
         navigationView = findViewById(R.id.nav_view);
         if(("Trainer").equals(roleValue)){
             navigationView.inflateMenu(R.menu.activity_trainer_drawer);
             navigationView.setCheckedItem(R.id.tr_main_page_it);
+            f = new MainPageTrainerFragment();
         }else{
             navigationView.inflateMenu(R.menu.activity_user_drawer);
             navigationView.setCheckedItem(R.id.main_page_it);
+            f = new MainPageFragment();
         }
+        displaySelectedFragment(f);
         navigationView.setNavigationItemSelectedListener(this);
     }
     @Override
@@ -126,7 +129,7 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         return true;
     }
 
-    private void displaySelectedFragment(Fragment fragment) {
+    public void displaySelectedFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, fragment);
         fragmentTransaction.commit();

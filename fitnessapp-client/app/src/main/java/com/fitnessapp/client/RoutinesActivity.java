@@ -46,9 +46,8 @@ public class RoutinesActivity extends BaseDrawerActivity {
         routines.add("Routine 9");
     }
     public void openRoutineDetail(View view){
-        // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
+
         Intent intent = new Intent(this, RoutineDetailActivity.class);
-        //Efectua el cambi de activity
         startActivity(intent);
     }
 }
