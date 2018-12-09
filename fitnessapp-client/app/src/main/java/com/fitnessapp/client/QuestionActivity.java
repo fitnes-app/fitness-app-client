@@ -46,6 +46,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private int mesoScore = 0;
     private int ectoScore = 0;
     private int bodyTypeId = 0;
+    private int questionsAnswered = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,24 +77,40 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == mButtonChoice1.getId()) {
-            updateScores(mButtonChoice1);
+        if ( questionsAnswered < 7) {
+            if (id == mButtonChoice1.getId()) {
+                updateScores(mButtonChoice1);
+                questionsAnswered++;
 
-        } else if (id == mButtonChoice2.getId()) {
-            updateScores(mButtonChoice2);
+            } else if (id == mButtonChoice2.getId()) {
+                updateScores(mButtonChoice2);
+                questionsAnswered++;
 
-        } else if (id == mButtonChoice3.getId()) {
-            updateScores(mButtonChoice3);
+            } else if (id == mButtonChoice3.getId()) {
+                updateScores(mButtonChoice3);
+                questionsAnswered++;
 
-        } else if (id == mButtonTransient.getId()){
-            String height = heightET.getText().toString();
-            String weight = weightET.getText().toString();
-            if(height != null && weight != null) {
-                lastData.setVisibility(View.GONE);
-                questionary.setVisibility(View.VISIBLE);
-                user.setWeigth(Float.parseFloat(weight));
-                user.setHeight(Float.parseFloat(height));
+            } else if (id == mButtonTransient.getId()) {
+                String height = heightET.getText().toString();
+                String weight = weightET.getText().toString();
+                if (height != null && weight != null) {
+                    lastData.setVisibility(View.GONE);
+                    questionary.setVisibility(View.VISIBLE);
+                    user.setWeigth(Float.parseFloat(weight));
+                    user.setHeight(Float.parseFloat(height));
+                }
             }
+        }else{
+            List<Integer> bdyTypes = new ArrayList<>();
+            bdyTypes.add(mesoScore);
+            bdyTypes.add(endoScore);
+            bdyTypes.add(ectoScore);
+            Integer maxVal = Collections.max(bdyTypes);
+            bodyTypeId = bdyTypes.indexOf(maxVal);
+            UrlConnectorCreateClient uccc = new UrlConnectorCreateClient();
+            uccc.execute();
+            Intent i = new Intent(this,LoginActivity.class);
+            startActivity(i);
         }
     }
 
@@ -107,18 +124,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         } else if (mButtonChoice.getText().toString() == mAnswer3) {
             endoScore = endoScore + 1;
             updateQuestion();
-        }
-        if(mesoScore + endoScore + ectoScore == 7){
-            List<Integer> bdyTypes = new ArrayList<>();
-            bdyTypes.add(mesoScore);
-            bdyTypes.add(endoScore);
-            bdyTypes.add(ectoScore);
-            Integer maxVal = Collections.max(bdyTypes);
-            bodyTypeId = bdyTypes.indexOf(maxVal);
-            UrlConnectorCreateClient uccc = new UrlConnectorCreateClient();
-            uccc.execute();
-            Intent i = new Intent(this,LoginActivity.class);
-            startActivity(i);
         }
     }
 

@@ -21,7 +21,6 @@
             android:layout_marginBottom="40dp"
             android:id="@+id/question"/>
 
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,14 +48,6 @@
             android:layout_marginBottom="24dp"
             android:id="@+id/choice3"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#B71C1C"
-            android:textColor="#fff"
-            android:padding="8dp"
-            android:layout_marginBottom="24dp"
-            android:id="@+id/quit"/>
     </LinearLayout>
 
     <LinearLayout
