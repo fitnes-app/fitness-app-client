@@ -1,4 +1,4 @@
-package com.fitnessapp.client;
+package com.fitnessapp.client.Utils;
 
 public class QuestionLibrary {
 
@@ -14,7 +14,7 @@ public class QuestionLibrary {
     };
 
     private String mChoices [][] = {
-            {"Hombre", "Mujer"},
+            {"Hombre", "Mujer", "No se sae"},
             {"Más anchos que mis caderas", "Iguales que mis caderas", "Más estrechos que mis caderas"},
             {"Apretados a mis glúteos", "Perfectos en mis glúteos", "Largos en mis glúteos"},
             {"Grandes", "Medios", "Pequeños"},

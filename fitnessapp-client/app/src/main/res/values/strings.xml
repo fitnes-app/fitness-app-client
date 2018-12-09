@@ -105,4 +105,5 @@
     <string name="telNum">Phone number</string>
     <string name="confChanges">Confirm Changes</string>
     <string name="trainerProfile">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
+    <string name="needSmt">We still need some information. After it, we will proceed with a Questionnaire to set your body type</string>
 </resources>

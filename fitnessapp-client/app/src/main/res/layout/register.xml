@@ -96,6 +96,52 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="12"
+            android:text="@string/address"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/editTextAddres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/address"
+            android:textSize="14sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textViewTelNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="12"
+            android:text="@string/telNum"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/editTextTelNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/telNum"
+            android:textSize="14sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
         android:padding="10dp">
@@ -107,38 +153,12 @@
             android:layout_weight="10"
             android:text="@string/role"
             android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/textViewSpeciality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:text="@string/speciality"
-            android:textColor="@android:color/black" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:paddingLeft="30dp"
-        android:paddingTop="10dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="10dp">
-
         <Spinner
             android:id="@+id/spinnerRoles"
-            android:layout_width="match_parent"
+            android:layout_width="143dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/rolesOptions"/>
-
-        <Spinner
-            android:id="@+id/spinnerSpecialities"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:entries="@array/rolesOptions" />
     </LinearLayout>
 
     <LinearLayout
