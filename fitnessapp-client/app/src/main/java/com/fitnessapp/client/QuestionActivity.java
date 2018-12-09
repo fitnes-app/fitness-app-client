@@ -34,7 +34,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private Button mButtonChoice2;
     private Button mButtonChoice3;
     private Button mButtonTransient;
-    private String ipserver = "http://bbf33947.ngrok.io/fitness-app-api-web/api/";
+    private String ipserver = "http://localhost:8080/fitness-app-api-web/api";
     private User user;
     private LinearLayout questionary, lastData;
     private EditText weightET, heightET;
@@ -77,7 +77,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if ( questionsAnswered < 7) {
+        if ( questionsAnswered < 6) {
             if (id == mButtonChoice1.getId()) {
                 updateScores(mButtonChoice1);
                 questionsAnswered++;
@@ -168,7 +168,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         .put("telephone", user.getTelNum())
                         .put("address", user.getAddress())
                         .toString();
-
                 System.out.println(jsonString);
                 OutputStream os = conn.getOutputStream();
                 os.write(jsonString.getBytes());
