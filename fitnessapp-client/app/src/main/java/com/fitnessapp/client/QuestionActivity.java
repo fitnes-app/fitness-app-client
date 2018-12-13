@@ -45,7 +45,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private Button mButtonChoice2;
     private Button mButtonChoice3;
     private Button mButtonTransient;
+    private UrlConnectorCreateClient uccc;
     private String ipserver = "http://localhost:8080/fitness-app-api-web/api";
+    private HttpURLConnection conn;
     private User user;
     private LinearLayout questionary, lastData;
     private EditText weightET, heightET;
@@ -145,7 +147,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                             }
                         }
                     });
-            UrlConnectorCreateClient uccc = new UrlConnectorCreateClient();
+            uccc = new UrlConnectorCreateClient();
             uccc.execute();
             toBaseDrawerActivity();
         }
@@ -184,7 +186,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         mAnswer3 = mQuestionLibrary.getAnswerEndo(mQuestionNumber);
         mQuestionNumber++;
     }
-
+    @Override
+    public void onDestroy(){
+        if(!uccc.isCancelled()){
+            uccc.cancel(true);
+        }
+        super.onDestroy();
+    }
 
     private class UrlConnectorCreateClient extends AsyncTask<Void,Void,Void> {
 
@@ -194,7 +202,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             try {
                 //CREATE CLIENT IN DB
                 URL url = new URL(ipserver  + "/client/");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
@@ -214,7 +222,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         .put("telephone", user.getTelNum())
                         .put("address", user.getAddress())
                         .toString();
-                System.out.println(jsonString);
+
                 OutputStream os = conn.getOutputStream();
                 os.write(jsonString.getBytes());
                 os.flush();
