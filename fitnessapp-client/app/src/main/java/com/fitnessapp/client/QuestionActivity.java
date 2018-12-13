@@ -75,6 +75,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    public void onBackPressed() {}
+
+    @Override
     public void onClick(View view) {
         int id = view.getId();
         if ( questionsAnswered < 6) {

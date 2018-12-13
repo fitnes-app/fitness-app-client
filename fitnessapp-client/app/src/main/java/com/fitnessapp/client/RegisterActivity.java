@@ -75,6 +75,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {}
 
     public void back(View view) {
 

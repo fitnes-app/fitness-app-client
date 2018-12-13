@@ -52,6 +52,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    public void onBackPressed() {}
+
+    @Override
     public void onClick(View view) {
         String email = emailET.getText().toString();
         String password = passwdET.getText().toString();
