@@ -91,43 +91,54 @@ public class RegisterActivity extends AppCompatActivity {
         final String passwordText = password.getText().toString();
         final String nameText  = username.getText().toString();
         final String roleText = role.getSelectedItem().toString();
-        if(!emailText.equals("") && !passwordText.equals("") && validateEmailFormat(emailText) && validatePassword(passwordText)) {
+        if(!emailText.equals("") && !passwordText.equals("") && validateEmailFormat(emailText) && validatePassword(passwordText) && roleText != null) {
+            User userObj = new User(nameText, emailText, passwordText, roleText, null);
+            userObj.setAddress(address.getText().toString());
+            userObj.setTelNum(telNum.getText().toString());
+            final User userObj2 = userObj;
+            if (roleText.equals("Trainer")) {
+                mAuth.createUserWithEmailAndPassword(emailText, passwordText)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("REGISTER: ", "createUserWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                                    mDatabase.child("Users").child(user.getUid()).setValue(userObj2);
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Intent in = new Intent(RegisterActivity.this, QuestionActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putSerializable("userType", roleText);
+                                    in.putExtra("bundle", b);
+                                    startActivity(in);
+                                    finish();
 
-            mAuth.createUserWithEmailAndPassword(emailText, passwordText)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("REGISTER: ", "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                User userObj = new User(nameText, emailText, passwordText, roleText, null);
-                                userObj.setAddress(address.getText().toString());
-                                userObj.setTelNum(telNum.getText().toString());
-                                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                mDatabase.child("Users").child(user.getUid()).setValue(userObj);
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("REGISTER: ", "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
                                 }
-                                Intent in = new Intent(RegisterActivity.this, QuestionActivity.class);
-                                Bundle b = new Bundle();
-                                b.putSerializable("user",userObj);
-                                in.putExtra("b",b);
-                                startActivity(in);
-                                finish();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w("REGISTER: ", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    });
-        }else{
+                        });
+            } else {
+                Intent in = new Intent(RegisterActivity.this, QuestionActivity.class);
+                Bundle b = new Bundle();
+                b.putSerializable("user", userObj);
+                in.putExtra("b", b);
+                startActivity(in);
+                finish();
+            }
+        } else {
             Toast.makeText(RegisterActivity.this, getText(R.string.inputData),
                     Toast.LENGTH_SHORT).show();
+
         }
     }
 
