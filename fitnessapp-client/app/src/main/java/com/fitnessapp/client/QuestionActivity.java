@@ -112,8 +112,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             bodyTypeId = bdyTypes.indexOf(maxVal);
             UrlConnectorCreateClient uccc = new UrlConnectorCreateClient();
             uccc.execute();
-            Intent i = new Intent(this,LoginActivity.class);
+            Intent i = new Intent(this,BaseDrawerActivity.class);
             startActivity(i);
+            finish();
         }
     }
 

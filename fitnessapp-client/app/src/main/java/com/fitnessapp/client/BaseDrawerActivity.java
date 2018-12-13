@@ -145,5 +145,6 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     @Override
     public void onDestroy(){
         super.onDestroy();
+        mAuth.signOut();
     }
 }

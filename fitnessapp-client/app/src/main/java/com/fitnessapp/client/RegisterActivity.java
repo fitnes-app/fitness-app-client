@@ -82,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
 
     }
 
@@ -115,6 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 b.putSerializable("user",userObj);
                                 in.putExtra("b",b);
                                 startActivity(in);
+                                finish();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("REGISTER: ", "createUserWithEmail:failure", task.getException());
