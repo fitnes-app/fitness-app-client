@@ -35,6 +35,7 @@
     <string name="titleActivityUserInfo">Informacion de usuario</string>
     <string name="titleActivityRoutines">Routinas</string>
     <string name="titleActivityRoutineDetail">Detalle de la rutina</string>
+    <string name="titleActivityContactWithUs">Contacta con el equipo</string>
     <string name="kclBurnt">Media de KCal quemadas:                   5Kcl</string>
     <string name="btl">BACK TO LIST</string>
     <string-array name="languages">
@@ -106,4 +107,6 @@
     <string name="telNum">Numero de telefono</string>
     <string name="confChanges">Confirmar cambios</string>
     <string name="trainerProfile">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
+    <string name="needSmt">Aun necesitamos mas información, ahora procederemos a realizar un questionario.</string>
+    <string name="subject"> Tema </string>
 </resources>

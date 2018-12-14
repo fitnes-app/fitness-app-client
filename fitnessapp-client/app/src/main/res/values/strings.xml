@@ -34,6 +34,7 @@
     <string name="titleActivityUserInfo">User Information</string>
     <string name="titleActivityRoutines">Routines</string>
     <string name="titleActivityRoutineDetail">Routine Detail</string>
+    <string name="titleActivityContactWithUs">Contact with us</string>
     <string name="kclBurnt">Avg KCl Burnt:                   5Kcl</string>
     <string name="btl">BACK TO LIST</string>
     <string-array name="languages">
@@ -106,4 +107,5 @@
     <string name="confChanges">Confirm Changes</string>
     <string name="trainerProfile">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
     <string name="needSmt">We still need some information. After it, we will proceed with a Questionnaire to set your body type</string>
+    <string name="subject">Subject</string>
 </resources>
