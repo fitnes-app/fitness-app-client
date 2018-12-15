@@ -24,7 +24,7 @@ import java.net.URL;
 
 public class CoachInformationFragment extends Fragment implements View.OnClickListener {
 
-    private UrlConnectorGetTrainerEmail uccc;
+    private UrlConnectorGetTrainerEmail ucgte;
     private HttpURLConnection conn;
     private URL url;
     private BaseDrawerActivity activity;
@@ -35,6 +35,7 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Coach Information");
+        trainerMail = "";
     }
 
     @Override
@@ -42,6 +43,7 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                              Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.fragment_coach_information, container, false);
         activity = (BaseDrawerActivity) getActivity();
+        ucgte.execute();
         sendEmailButton = RootView.findViewById(R.id.contactWithCoach);
         sendEmailButton.setOnClickListener(this);
         return RootView;
@@ -49,11 +51,12 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-
-        Intent mailIntent = new Intent(Intent.ACTION_VIEW);
-        Uri data = Uri.parse("mailto:&to=" + trainerMail);
-        mailIntent.setData(data);
-        startActivity(Intent.createChooser(mailIntent, "Send mail..."));
+        if(!("").equals(trainerMail)) {
+            Intent mailIntent = new Intent(Intent.ACTION_VIEW);
+            Uri data = Uri.parse("mailto:&to=" + trainerMail);
+            mailIntent.setData(data);
+            startActivity(Intent.createChooser(mailIntent, "Send mail..."));
+        }
     }
 
     private class UrlConnectorGetTrainerEmail extends AsyncTask<Void,Void,Void> {
