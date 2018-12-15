@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fitnessapp.client.Utils.QuestionLibrary;
+import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -46,7 +47,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private Button mButtonChoice3;
     private Button mButtonTransient;
     private UrlConnectorCreateClient uccc;
-    private String ipserver = "http://localhost:8080/fitness-app-api-web/api";
     private HttpURLConnection conn;
     private User user;
     private LinearLayout questionary, lastData;
@@ -201,7 +201,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         protected Void doInBackground(Void... params) {
             try {
                 //CREATE CLIENT IN DB
-                URL url = new URL(ipserver  + "/client/");
+                URL url = new URL(StaticStrings.ipserver + "/client/");
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
