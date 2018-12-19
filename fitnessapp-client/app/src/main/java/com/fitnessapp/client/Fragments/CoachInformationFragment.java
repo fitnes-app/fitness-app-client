@@ -65,7 +65,7 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                //CREATE CLIENT IN DB
+                //LA URL ES INCORRECTA, la activity no pille el ID corresponent, s'ha de fer un get abans.
                 url = new URL(StaticStrings.ipserver  + "/asignee/findByClientId/" + activity.mAuth);
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
