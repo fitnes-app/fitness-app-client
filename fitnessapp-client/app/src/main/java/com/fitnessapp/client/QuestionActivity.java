@@ -123,7 +123,14 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             bdyTypes.add(endoScore);
             bdyTypes.add(ectoScore);
             Integer maxVal = Collections.max(bdyTypes);
-            bodyTypeId = bdyTypes.indexOf(maxVal);
+            //bodyTypeId = bdyTypes.indexOf(maxVal);
+            if(maxVal==mesoScore){
+                bodyTypeId=1;
+            }else if(maxVal==endoScore){
+                bodyTypeId=2;
+            }else if(maxVal==ectoScore){
+                bodyTypeId=3;
+            }
             mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -230,7 +237,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 System.out.println("CONNECTION CODE: " + conn.getResponseCode());
                 conn.disconnect();
             } catch (Exception e) {
-                System.out.println("User could not be created:" + e);
+                System.out.println("User could not be created: ");
+                e.printStackTrace();
             }
             return null;
         }
