@@ -112,11 +112,11 @@ public class RegisterActivity extends AppCompatActivity {
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
-                                    Intent in = new Intent(RegisterActivity.this, QuestionActivity.class);
+                                    Intent i = new Intent(RegisterActivity.this, BaseDrawerActivity.class);
                                     Bundle b = new Bundle();
-                                    b.putSerializable("userType", roleText);
-                                    in.putExtra("bundle", b);
-                                    startActivity(in);
+                                    b.putSerializable("userType", userObj2.getRole());
+                                    i.putExtra("bundle", b);
+                                    startActivity(i);
                                     finish();
 
                                 } else {
@@ -128,6 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         });
             } else {
+                mAuth.signOut();
                 Intent in = new Intent(RegisterActivity.this, QuestionActivity.class);
                 Bundle b = new Bundle();
                 b.putSerializable("user", userObj);

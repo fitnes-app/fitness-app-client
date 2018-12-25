@@ -26,6 +26,7 @@ import com.fitnessapp.client.Fragments.ProfileTrainerFragment;
 import com.fitnessapp.client.Fragments.ProgressTrackerFragment;
 import com.fitnessapp.client.Fragments.SettingsFragment;
 import com.fitnessapp.client.Fragments.SizeTrackerFragment;
+import com.fitnessapp.client.Utils.User;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,7 +37,7 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     protected NavigationView navigationView;
 
     public FirebaseAuth mAuth;
-
+    public User user;
     public String roleValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

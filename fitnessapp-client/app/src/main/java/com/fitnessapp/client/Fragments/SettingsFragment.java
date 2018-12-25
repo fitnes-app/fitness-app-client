@@ -1,7 +1,10 @@
 package com.fitnessapp.client.Fragments;
 
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.provider.DocumentsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +27,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     private Button mBtn;
     private Calendar c;
     private DatePickerDialog dpd;
-
+    private SharedPreferences sp;
+    private SharedPreferences.Editor spEditor;
     public SettingsFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,12 +41,14 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
                              Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.fragment_settings, container, false);
         load(RootView);
+        sp = PreferenceManager.getDefaultSharedPreferences(RootView.getContext());
+        spEditor = sp.edit();
         return RootView;
     }
 
     private void load(View rootView){
-        mTv = (TextView) rootView.findViewById(R.id.textView4);
-        mBtn = (Button) rootView.findViewById(R.id.buttonPick);
+        mTv = rootView.findViewById(R.id.textView4);
+        mBtn = rootView.findViewById(R.id.buttonPick);
 
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +78,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String text = adapterView.getItemAtPosition(i).toString();
+        spEditor.putString("LANGUAJE", text);
+        //String loadedString = prefs.getString("LANGUAJE", null);
         Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 

@@ -138,14 +138,12 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("REGISTER: ", "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                FirebaseUser fbUser = mAuth.getCurrentUser();
                                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                mDatabase.child("Users").child(user.getUid()).setValue(user);
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                                mDatabase.child("Users").child(fbUser.getUid()).setValue(user);
+                                uccc = new UrlConnectorCreateClient();
+                                uccc.execute();
+                                toBaseDrawerActivity();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("REGISTER: ", "createUserWithEmail:failure", task.getException());
@@ -154,9 +152,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                             }
                         }
                     });
-            uccc = new UrlConnectorCreateClient();
-            uccc.execute();
-            toBaseDrawerActivity();
         }
     }
 
