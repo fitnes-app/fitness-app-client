@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
+import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.Table;
 import com.fitnessapp.client.Utils.User;
 
@@ -38,6 +39,7 @@ public class MainPageFragment extends Fragment {
     private User user;
 
     private String username;
+    private String userEmail;
 
     public MainPageFragment(){}
     @Override
@@ -51,14 +53,10 @@ public class MainPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.fragment_main_page, container, false);
-  /*      Intent i = getIntent();
-        if(i!=null){
-            Bundle b = i.getBundleExtra("b");
-            user = (User) b.getSerializable("user");
-        }*/
         activity = (BaseDrawerActivity) getActivity();
         welcome = RootView.findViewById(R.id.welcomeuser);
         username="";
+        userEmail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
         userData = new UrlConnectorGetUserData();
         userData.execute();
         initExercices();
@@ -91,8 +89,8 @@ public class MainPageFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                String userEmail = getActivity().getIntent().getExtras().getString("userEmail");
-                url = new URL("http://localhost:8080/fitness-app-api-web/api"  + "/client/findByEmail/" + userEmail);
+
+                url = new URL(StaticStrings.ipserver  + "/client/findByEmail/" + userEmail);
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Accept", "application/json");
@@ -100,19 +98,24 @@ public class MainPageFragment extends Fragment {
 
                 int clientID = -1;
                 String clientUsername = "";
-                if(conn.getResponseCode() == 200){
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    String output = br.readLine();
-                    JSONArray arr = new JSONArray(output);
-                    JSONObject client = arr.getJSONObject(0);
-                    clientID = client.getInt("clientID");
-                    clientUsername = client.getString("userName");
-                    System.out.println("CLIENT ID: " + clientID);
-                    System.out.println("CLIENT USERNAME: " + clientUsername);
-                    br.close();
-                }else{
-                    System.out.println("COULD NOT FIND THE ASIGNATION");
-                    return null;
+                try {
+                    if (conn.getResponseCode() == 200) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String output = br.readLine();
+                        JSONArray arr = new JSONArray(output);
+                        JSONObject client = arr.getJSONObject(0);
+                        clientID = client.getInt("clientID");
+                        clientUsername = client.getString("userName");
+                        System.out.println("CLIENT ID: " + clientID);
+                        System.out.println("CLIENT USERNAME: " + clientUsername);
+                        welcome.setText("Welcome, " + clientUsername);
+                        br.close();
+                    } else {
+                        System.out.println("COULD NOT FIND THE ASIGNATION");
+                        return null;
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
                 }
                 conn.disconnect();
                 if(clientID == -1) {
