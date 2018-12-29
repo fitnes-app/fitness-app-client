@@ -43,7 +43,7 @@
         <item>English</item>
     </string-array>
     <string name="contractCoachTerms">
-        Welcome dear user.\n\nThis page it\'s made to contract a personal trainer who fit\'s the specific type of training that you want to do.\n\nOur coach selector system will decide a group of coachs that can be better for you and select one of this group.\n\nThe cost is of just 20€, way cheaper than a gym.\n\n You will Even be able to contact directly with your coach to ask for diets personally or doubts about you training.
+        Welcome dear user.\n\nThis page it\'s made to contract a personal trainer who fits the specific type of training that you want to do.\n\nOur coach selector system will decide a group of coachs that can be better for you and select one of this group.\n\nThe cost is just 20€, way cheaper than a gym\'s one.\n\n You will even be able to contact directly with your coach to ask for diets personally or doubts about you training.
     </string>
     <string name="becomePremium">
         Welcome dear user.\n\nBy becoming premium you\'ll be able to have access to different features. \n\nYou\'ll be able to select more advanced routines, you\'ll be able to use the size tracker (which allows you to track the size of your muscles, seeing if they\'ve increased or decreased, depending on your objectives), and the most important thing, you\'ll be helping us with the maintenance costs. \n\nThe cost is only 10€.
@@ -108,4 +108,5 @@
     <string name="trainerProfile">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
     <string name="needSmt">We still need some information. After it, we will proceed with a Questionnaire to set your body type</string>
     <string name="subject">Subject</string>
+    <string name="title_activity_coach_list">CoachList</string>
 </resources>

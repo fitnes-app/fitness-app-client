@@ -111,7 +111,7 @@ public class MainPageFragment extends Fragment {
                         welcome.setText("Welcome, " + clientUsername);
                         br.close();
                     } else {
-                        System.out.println("COULD NOT FIND THE ASIGNATION");
+                        System.out.println("COULD NOT FIND THE ASSIGNATION");
                         return null;
                     }
                 }catch(Exception e){

@@ -22,10 +22,16 @@ public class ContractCoach extends BaseDrawerActivity {
         });
     }
 
+    public void onClick(View view){
+        Intent intent = new Intent(this, CoachList.class);
+
+        startActivity(intent);
+    }
+
     public void back(View view) {
         // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
         Intent intent = new Intent(this, MainPageActivity.class);
-        //Efectua el cambi de activity
+        //Efectua el canvi de activity
         startActivity(intent);
     }
 }

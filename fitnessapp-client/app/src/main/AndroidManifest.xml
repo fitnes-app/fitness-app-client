@@ -38,7 +38,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuestionActivity"
+        <activity
+            android:name=".QuestionActivity"
             android:label="@string/str_questionnaire"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -46,6 +47,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CoachList"
+            android:label="@string/title_activity_coach_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
