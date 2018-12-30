@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
@@ -19,12 +20,10 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Random;
 import java.io.OutputStreamWriter;
-import java.io.BufferedWriter;
 
 public class CoachInformationFragment extends Fragment implements View.OnClickListener {
 
@@ -33,9 +32,24 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
     private HttpURLConnection postConn;
     private URL url;
     private BaseDrawerActivity activity;
-    private String trainerMail;
     private Button sendEmailButton;
     private String userEmail;
+
+    View RootView;
+    String trainerAdd;
+    String trainerMail;
+    JSONObject trainerSpec;
+    String spec;
+    String trainerTel;
+    String trainerName;
+    String trainerPass;
+
+    TextView tw1;
+    TextView tw2;
+    TextView tw3;
+    TextView tw4;
+    TextView tw5;
+    int assignedUsersToTrainer;
     public CoachInformationFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,11 +63,16 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View RootView = inflater.inflate(R.layout.fragment_coach_information, container, false);
+        RootView = inflater.inflate(R.layout.fragment_coach_information, container, false);
         activity = (BaseDrawerActivity) getActivity();
         ucgte.execute();
         sendEmailButton = RootView.findViewById(R.id.contactWithCoach);
         sendEmailButton.setOnClickListener(this);
+        tw1 = (TextView) RootView.findViewById(R.id.textView);
+        tw2 = (TextView) RootView.findViewById(R.id.textView5);
+        tw3 = (TextView) RootView.findViewById(R.id.textView6);
+        tw4 = (TextView) RootView.findViewById(R.id.textView7);
+        tw5 = (TextView) RootView.findViewById(R.id.textUsers);
         return RootView;
     }
 
@@ -120,13 +139,6 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
 
                 // Secondly, we get the trainer list and decide which one will be assigned to the client
                 int trainerID = 0;
-                String trainerAdd;
-                String trainerMail;
-                JSONObject trainerSpec;
-                String trainerTel;
-                String trainerName;
-                String trainerPass;
-
 
                 url = new URL(StaticStrings.ipserver  + "/trainer");
                 conn = (HttpURLConnection) url.openConnection();
@@ -148,6 +160,7 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                     trainerName = rec.getString("userName");
                     trainerPass = rec.getString("userPassword");
                     trainerSpec = rec.getJSONObject("specialityId");
+                    spec = trainerSpec.getString("specialityName");
                     trainerTel = rec.getString("telephone");
                     trainerAdd = rec.getString("address");
 
@@ -162,6 +175,47 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                 if(trainerID == -1 || trainerMail.equals("")) {
                     System.out.println("TRAINER DOESN'T EXIST");
                     return null;
+                }
+
+                // Before continuing we have to check that the client isn't assigned yet
+                int tmpClientID = -1;
+                int tmpTrainerID = -1;
+                JSONObject tmpJSONBodyType;
+                String tmpBodyType;
+                url = new URL(StaticStrings.ipserver  + "/assigned");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+                if(conn.getResponseCode() == 200){
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String output = br.readLine();
+                    JSONArray check = new JSONArray(output);
+                    int j = 0;
+                    assignedUsersToTrainer = 0;
+                    for(int i = 0; i < check.length(); i++){
+                        JSONObject assig = check.getJSONObject(i);
+                        JSONObject tr = assig.getJSONObject("trainerId");
+                        tmpTrainerID = tr.getInt("id");
+
+                        System.out.println(tmpTrainerID + "  " + trainerID);
+                        if (tmpTrainerID == trainerID){
+                            assignedUsersToTrainer++;
+                        }
+                    }
+
+                    publishProgress();
+                    System.out.println(j);
+
+                    for(int i = 0; i < check.length(); i++){
+                        JSONObject assig = check.getJSONObject(i);
+                        JSONObject cl = assig.getJSONObject("clientId");
+                        tmpClientID = cl.getInt("id");
+                        System.out.println(tmpClientID + " " + clientID);
+                        if (tmpClientID == clientID){ // If the client is already assigned we just stop here
+                            System.out.println("THE CLIENT IS ALREADY ASSIGNED");
+                            return null;
+                        }
+                    }
                 }
 
                 // Finally, we assign the trainer to the client by posting the values to the "assigned" table
@@ -219,6 +273,11 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
 
         @Override
         protected void onPostExecute(Void result) {
+            tw1.setText(trainerName);
+            tw2.setText(trainerMail);
+            tw3.setText(trainerTel);
+            tw4.setText("Trainer's speciality: " + spec);
+            tw5.setText("Number of assigned users to him: " + assignedUsersToTrainer);
             super.onPostExecute(result);
         }
     }
