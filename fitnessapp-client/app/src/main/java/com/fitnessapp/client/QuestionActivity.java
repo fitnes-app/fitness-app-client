@@ -60,6 +60,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private int ectoScore = 0;
     private int bodyTypeId = 0;
     private int questionsAnswered = 0;
+    private String userEmail="";
+    private Boolean isPremium=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +161,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         Intent i = new Intent(this, BaseDrawerActivity.class);
         Bundle b = new Bundle();
         b.putSerializable("userType", user.getRole());
+        b.putString("userEmail",user.getEmail());
+        b.putBoolean("isPremium",isPremium);
         i.putExtra("bundle", b);
         startActivity(i);
         finish();
@@ -223,7 +227,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         .put("bodyTypeId", subjson)
                         .put("telephone", user.getTelNum())
                         .put("address", user.getAddress())
-                        .put("is_Premium", false)
+                        .put("is_Premium", isPremium)
                         .toString();
 
                 OutputStream os = conn.getOutputStream();

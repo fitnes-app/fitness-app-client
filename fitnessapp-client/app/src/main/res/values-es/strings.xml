@@ -109,4 +109,5 @@
     <string name="trainerProfile">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
     <string name="needSmt">Aun necesitamos mas información, ahora procederemos a realizar un questionario.</string>
     <string name="subject"> Tema </string>
+    <string name="noResultsMessage">NO SE ENCONTRARON RESULTADOS</string>
 </resources>

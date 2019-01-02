@@ -46,6 +46,7 @@ public class MainPageFragment extends Fragment {
 
     private String userEmail;
     private String workoutId = "";
+    private Boolean isPremium;
 
     public MainPageFragment(){}
     @Override
@@ -65,6 +66,7 @@ public class MainPageFragment extends Fragment {
         userEmail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
         userData = new UrlConnectorGetUserData();
         userData.execute();
+
         return RootView;
     }
 
@@ -105,7 +107,6 @@ public class MainPageFragment extends Fragment {
                 conn.setRequestProperty("Accept", "application/json");
 
                 String clientUsername = "";
-                Boolean isPremium;
                 String workoutDuration = "";
 
                 try {
@@ -119,6 +120,15 @@ public class MainPageFragment extends Fragment {
                         welcome.setText("Welcome, " + clientUsername);
 
                         isPremium = client.getBoolean("is_Premium");
+                        getActivity().runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Bundle b = getActivity().getIntent().getExtras().getBundle("bundle");
+                                b.putBoolean("isPremium",isPremium);
+                                getActivity().getIntent().putExtra("bundle",b);
+                            }
+                        });
                         if(!isPremium && client.has("basicWorkout")){
                             workout = client.getJSONObject("basicWorkout");
                             workoutDuration = workout.getString("duration");
@@ -291,7 +301,8 @@ public class MainPageFragment extends Fragment {
                 }
                 conn.disconnect();
             }catch(Exception e){
-
+                System.out.println("ERROR: Something went wrong");
+                e.printStackTrace();
             }
         }
 
@@ -366,7 +377,8 @@ public class MainPageFragment extends Fragment {
                  }
                  conn.disconnect();
              }catch(Exception e){
-
+                 System.out.println("ERROR: Something went wrong");
+                 e.printStackTrace();
              }
          }
     }
