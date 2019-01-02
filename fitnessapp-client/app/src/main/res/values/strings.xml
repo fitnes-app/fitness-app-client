@@ -109,4 +109,7 @@
     <string name="needSmt">We still need some information. After it, we will proceed with a Questionnaire to set your body type</string>
     <string name="subject">Subject</string>
     <string name="noResultsMessage">NO RESULTS WHERE FOUND</string>
+    <string name="consultRoutinesDuration">Duration</string>
+    <string name="consultRoutinesFilterBy">Filter by:</string>
+    <string name="consultRoutinesListTitle">Those are the able routines:</string>
 </resources>

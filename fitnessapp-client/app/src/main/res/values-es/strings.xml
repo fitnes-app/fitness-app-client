@@ -110,4 +110,7 @@
     <string name="needSmt">Aun necesitamos mas información, ahora procederemos a realizar un questionario.</string>
     <string name="subject"> Tema </string>
     <string name="noResultsMessage">NO SE ENCONTRARON RESULTADOS</string>
+    <string name="consultRoutinesDuration">Duración</string>
+    <string name="consultRoutinesFilterBy">Filtrar por:</string>
+    <string name="consultRoutinesListTitle">Estas són las rutinas disponibles:</string>
 </resources>
