@@ -27,7 +27,7 @@
     <string name="sendemail">ENVIA UN EMAIL</string>
     <string name="welcomeuser">BIENVENIDO, USERNAME!</string>
     <string name="ttraining">Entrenamiento del dia:</string>
-    <string name="finaltext"> Suerte con tu entrenamiento!\n \n Y recuerda... \n \n Tip of the day</string>
+    <string name="finaltext"> Suerte con tu entrenamiento!\n \n Y recuerda...</string>
     <string name="muscGroup">Grupo Muscular</string>
     <string name="filter2">Filtro 2</string>
     <string name="titleActivitySizeTracker">Size Tracker</string>
@@ -109,4 +109,5 @@
     <string name="trainerProfile">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
     <string name="needSmt">Aun necesitamos mas información, ahora procederemos a realizar un questionario.</string>
     <string name="subject"> Tema </string>
+    <string name="noResultsMessage">NO SE ENCONTRARON RESULTADOS</string>
 </resources>

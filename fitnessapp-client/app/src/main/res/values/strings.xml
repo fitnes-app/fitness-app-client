@@ -26,7 +26,7 @@
     <string name="sendemail">SEND EMAIL</string>
     <string name="welcomeuser">WELCOME, USERNAME!</string>
     <string name="ttraining">Today\'s Training:</string>
-    <string name="finaltext"> Good luck with your training.\n \n And remember... \n \n Tip of the day</string>
+    <string name="finaltext"> Good luck with your training.\n \n And remember...</string>
     <string name="muscGroup">Muscular Group</string>
     <string name="filter2">Filter 2</string>
     <string name="titleActivitySizeTracker">Size Tracker</string>
@@ -108,4 +108,5 @@
     <string name="trainerProfile">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
     <string name="needSmt">We still need some information. After it, we will proceed with a Questionnaire to set your body type</string>
     <string name="subject">Subject</string>
+    <string name="noResultsMessage">NO RESULTS WHERE FOUND</string>
 </resources>

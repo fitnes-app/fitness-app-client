@@ -31,10 +31,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public DrawerLayout drawer;
-    public Toolbar toolbar;
-    public FrameLayout frameLayout;
-    public NavigationView navigationView;
+    protected DrawerLayout drawer;
+    protected Toolbar toolbar;
+    protected FrameLayout frameLayout;
+    protected NavigationView navigationView;
+
     public FirebaseAuth mAuth;
     public User user;
     public String roleValue;

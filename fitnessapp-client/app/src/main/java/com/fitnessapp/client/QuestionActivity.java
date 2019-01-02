@@ -60,6 +60,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private int ectoScore = 0;
     private int bodyTypeId = 0;
     private int questionsAnswered = 0;
+    private String userEmail="";
+    private Boolean isPremium=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +125,14 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             bdyTypes.add(endoScore);
             bdyTypes.add(ectoScore);
             Integer maxVal = Collections.max(bdyTypes);
-            bodyTypeId = bdyTypes.indexOf(maxVal);
+            //bodyTypeId = bdyTypes.indexOf(maxVal);
+            if(maxVal==mesoScore){
+                bodyTypeId=1;
+            }else if(maxVal==endoScore){
+                bodyTypeId=2;
+            }else if(maxVal==ectoScore){
+                bodyTypeId=3;
+            }
             mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -152,6 +161,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         Intent i = new Intent(this, BaseDrawerActivity.class);
         Bundle b = new Bundle();
         b.putSerializable("userType", user.getRole());
+        b.putString("userEmail",user.getEmail());
+        b.putBoolean("isPremium",isPremium);
         i.putExtra("bundle", b);
         startActivity(i);
         finish();
@@ -216,6 +227,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         .put("bodyTypeId", subjson)
                         .put("telephone", user.getTelNum())
                         .put("address", user.getAddress())
+                        .put("is_Premium", isPremium)
                         .toString();
 
                 OutputStream os = conn.getOutputStream();
@@ -225,7 +237,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 System.out.println("CONNECTION CODE: " + conn.getResponseCode());
                 conn.disconnect();
             } catch (Exception e) {
-                System.out.println("User could not be created:" + e);
+                System.out.println("User could not be created: ");
+                e.printStackTrace();
             }
             return null;
         }
