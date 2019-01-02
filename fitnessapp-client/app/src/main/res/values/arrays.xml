@@ -9,11 +9,16 @@
     </string-array>
 
     <string-array name="mainPageTable_headers" >
-        <item>Exercice</item>
-        <item>Number of times</item>
+        <item>Exercise</item>
+        <item>Sets</item>
         <item>Repetitions</item>
     </string-array>
-
+    <string-array name="mainPageTable_restDayLabel" >
+        <item>REST DAY</item>
+    </string-array>
+    <string-array name="mainPageTable_noWorkoutLabel" >
+        <item>You have none workouts assigned yet. \n\n Pick one from our list and start training!</item>
+    </string-array>
     <string-array name="routinesFilter1" >
         <item>Chest</item>
         <item>Legs</item>

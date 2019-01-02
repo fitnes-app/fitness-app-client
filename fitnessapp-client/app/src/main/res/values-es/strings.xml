@@ -27,7 +27,7 @@
     <string name="sendemail">ENVIA UN EMAIL</string>
     <string name="welcomeuser">BIENVENIDO, USERNAME!</string>
     <string name="ttraining">Entrenamiento del dia:</string>
-    <string name="finaltext"> Suerte con tu entrenamiento!\n \n Y recuerda... \n \n Tip of the day</string>
+    <string name="finaltext"> Suerte con tu entrenamiento!\n \n Y recuerda...</string>
     <string name="muscGroup">Grupo Muscular</string>
     <string name="filter2">Filtro 2</string>
     <string name="titleActivitySizeTracker">Size Tracker</string>

@@ -115,6 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     Intent i = new Intent(RegisterActivity.this, BaseDrawerActivity.class);
                                     Bundle b = new Bundle();
                                     b.putSerializable("userType", userObj2.getRole());
+                                    b.putString("userEmail",emailText);
                                     i.putExtra("bundle", b);
                                     startActivity(i);
                                     finish();
@@ -132,6 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent in = new Intent(RegisterActivity.this, QuestionActivity.class);
                 Bundle b = new Bundle();
                 b.putSerializable("user", userObj);
+                b.putString("userEmail",emailText);
                 in.putExtra("b", b);
                 startActivity(in);
                 finish();

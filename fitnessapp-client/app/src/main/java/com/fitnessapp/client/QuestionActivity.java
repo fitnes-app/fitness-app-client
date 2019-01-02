@@ -223,6 +223,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         .put("bodyTypeId", subjson)
                         .put("telephone", user.getTelNum())
                         .put("address", user.getAddress())
+                        .put("is_Premium", false)
                         .toString();
 
                 OutputStream os = conn.getOutputStream();
