@@ -35,6 +35,7 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Coach Information");
+            ucgte = new UrlConnectorGetTrainerEmail();
         trainerMail = "";
     }
 
