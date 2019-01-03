@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.fitnessapp.client.Fragments.MainPageTrainerFragment;
+
 public class BaseDrawerActivityTrainer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     DrawerLayout drawer;
@@ -58,7 +60,7 @@ public class BaseDrawerActivityTrainer extends AppCompatActivity implements Navi
             startActivity(i);
 
         }else if (id == R.id.tr_main_page_it) {
-            i = new Intent(this, TrainerMainPage.class);
+            i = new Intent(this, MainPageTrainerFragment.class);
             startActivity(i);
 
         }
