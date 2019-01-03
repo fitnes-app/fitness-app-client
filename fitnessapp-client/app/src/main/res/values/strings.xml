@@ -10,7 +10,7 @@
     <string name="input">INPUT NEW IMPROVEMENT</string>
     <string name="notificate">Notificate me on: </string>
     <string name="user_details">Check user Details</string>
-    <string name="Trainer_list_header">Here you\'ll be able to see all the user\'s information</string>
+    <string name="trainer_list_header">Here you\'ll be able to see all the user\'s information</string>
     <string name="user_progress">Check User Progress</string>
     <string name="routines_management">User Routines Management</string>
     <string name="Pick">Pick Date</string>
