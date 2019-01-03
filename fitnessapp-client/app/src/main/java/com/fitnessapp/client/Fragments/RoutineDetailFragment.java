@@ -380,23 +380,6 @@ public class RoutineDetailFragment extends Fragment {
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
 
-
-                /*JSONObject subjson = new JSONObject()
-                        .put("id", bodyTypeId)
-                        .put("body_type_value", bodyTypeId);
-                *//*{"userName":"asdf3", "userPassword":"asdf2", "mail":"asdf@asdf.com","weight":2,"height":2,"bodyTypeId":{"id":1,"body_type_value":1},"telephone":"asdf", "address":"asdfdsd"}*//*
-                String jsonString = new JSONObject()
-                        .put("userName", user.getName())
-                        .put("userPassword", user.getPassword())
-                        .put("mail", user.getEmail())
-                        .put("weight", user.getWeigth())
-                        .put("height", user.getHeight())
-                        .put("bodyTypeId", subjson)
-                        .put("telephone", user.getTelNum())
-                        .put("address", user.getAddress())
-                        .put("is_Premium", isPremium)
-                        .toString();*/
-
                 if(isPremium){
                     client.put("advancedWorkout",workout);
                     client.put("basicWorkout",null);
@@ -404,6 +387,13 @@ public class RoutineDetailFragment extends Fragment {
                     client.put("basicWorkout",workout);
                     client.put("advancedWorkout",null);
                 }
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        buttonAssign.setVisibility(View.GONE);
+                    }
+                });
                 String jsonString = client.toString();
                 OutputStream os = conn.getOutputStream();
                 os.write(jsonString.getBytes());
