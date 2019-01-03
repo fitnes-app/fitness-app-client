@@ -113,4 +113,8 @@
     <string name="consultRoutinesDuration">Duración</string>
     <string name="consultRoutinesFilterBy">Filtrar por:</string>
     <string name="consultRoutinesListTitle">Estas són las rutinas disponibles:</string>
+    <string name="workoutDurationLabel">Duración: </string>
+    <string name="workoutNameLabel">Nombre: </string>
+    <string name="dailiesListTitle">Entrenamientos diarios: </string>
+    <string name="assignButtonLabel">Escógela!</string>
 </resources>

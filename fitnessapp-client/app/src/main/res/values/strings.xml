@@ -112,4 +112,9 @@
     <string name="consultRoutinesDuration">Duration</string>
     <string name="consultRoutinesFilterBy">Filter by:</string>
     <string name="consultRoutinesListTitle">Those are the able routines:</string>
+    <string name="workoutDurationLabel">Duration: </string>
+    <string name="workoutNameLabel">Name: </string>
+    <string name="dailiesListTitle">Daily workouts: </string>
+    <string name="assignButtonLabel">Pick it!</string>
+
 </resources>

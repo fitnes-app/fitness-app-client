@@ -38,6 +38,7 @@ public class ConsultRoutinesFragment extends Fragment {
     private Spinner durationSpinner;
 
     private Boolean isPremium;
+    private String userEmail="";
     private HashMap<String, Integer> routinesIdLog = new HashMap<String, Integer>();
     private int workoutDuration;
 
@@ -59,7 +60,7 @@ public class ConsultRoutinesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         RootView = inflater.inflate(R.layout.fragment_consult_routines, container, false);
-
+        userEmail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
         durationSpinner = RootView.findViewById(R.id.durationFilter);
         ArrayAdapter<CharSequence> adapterRoles = ArrayAdapter.createFromResource(getActivity(), R.array.routinesDurationFilter, android.R.layout.simple_spinner_item);
         adapterRoles.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -109,8 +110,7 @@ public class ConsultRoutinesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-
-                openRoutineDetail(v);
+                openRoutineDetail(v, position);
 
             }
         });
@@ -118,22 +118,21 @@ public class ConsultRoutinesFragment extends Fragment {
 
     public void setRoutines() {
         routines = new ArrayList<String>(routinesIdLog.keySet());
-/*        routines.add("Routine 1");
-        routines.add("Routine 2");
-        routines.add("Routine 3");
-        routines.add("Routine 4");
-        routines.add("Routine 5");
-        routines.add("Routine 6");
-        routines.add("Routine 7");
-        routines.add("Routine 8");
-        routines.add("Routine 9");*/
     }
 
-    public void openRoutineDetail(View view) {
+    public void openRoutineDetail(View view, int position) {
         Fragment fragment = new RoutineDetailFragment();
+        ArrayList<String> keys = new ArrayList<String>(routinesIdLog.keySet());
+        String neededKey = keys.get(position);
+        int selectedWorkoutId = routinesIdLog.get(neededKey);
+        Bundle b = new Bundle();
+        b.putBoolean("isPremium",isPremium);
+        b.putInt("selectedWorkoutId",selectedWorkoutId);
+        b.putString("userEmail",userEmail);
+        fragment.setArguments(b);
         BaseDrawerActivity bda = (BaseDrawerActivity) getActivity();
         bda.displaySelectedFragment(fragment);
-        //Move to routineDetailFragment ??
+
     }
 
     private void setNoResultsMessage(View rootView) {

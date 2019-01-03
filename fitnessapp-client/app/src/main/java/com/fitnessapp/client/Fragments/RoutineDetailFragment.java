@@ -1,24 +1,76 @@
 package com.fitnessapp.client.Fragments;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
 import com.fitnessapp.client.BaseDrawerActivity;
+import com.fitnessapp.client.PopupRoutineDetailsFragment;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.RoutinesActivity;
+import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.Table;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class RoutineDetailFragment extends Fragment {
 
     private ArrayList<String> exercicesTmp = new ArrayList<>();
+    private HashMap<Integer, Integer> dailiesIdLog = new HashMap<Integer, Integer>();
+
+    private View RootView;
+    private TextView workoutNameText;
+    private TextView workoutDurationText;
+    private TextView kcltv;
+    private ListView lv;
+    private Button buttonAssign;
+
+    private Boolean isPremium;
+    private String userEmail="";
+    private int workoutId;
+    private int assignedWorkoutId;
+    private int userId;
+    private String workoutName = "";
+    private int workoutDuration = 0;
+    private int avgKcal;
+
+    private UrlConnectorGetWorkoutDetails workoutDetails;
+    private UrlConnectorUpdateUser updateUser;
+    private HttpURLConnection conn;
+    private URL url;
+    private JSONObject client;
+    private JSONObject workout;
+
     public RoutineDetailFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,42 +82,345 @@ public class RoutineDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View RootView = inflater.inflate(R.layout.fragment_routine_detail, container, false);
-        initExercices();
-        setTable(RootView);
-        Button buttonBack = RootView.findViewById(R.id.buttonBack);
+        RootView = inflater.inflate(R.layout.fragment_routine_detail, container, false);
+        isPremium = getArguments().getBoolean("isPremium");
+        workoutId = getArguments().getInt("selectedWorkoutId");
+        userEmail = getArguments().getString("userEmail");
+        workoutNameText = RootView.findViewById(R.id.workoutNameText);
+        workoutDurationText = RootView.findViewById(R.id.workoutDurationText);
+        buttonAssign = RootView.findViewById(R.id.buttonAssign);
+        kcltv = RootView.findViewById(R.id.kcltv);
 
+        Button buttonBack = RootView.findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 back(v);
             }
         });
+        buttonAssign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateUser = new UrlConnectorUpdateUser();
+                updateUser.execute();
+            }
+        });
+        workoutDetails = new UrlConnectorGetWorkoutDetails();
+        workoutDetails.execute();
+
         return RootView;
     }
 
-    public void initExercices(){
-        exercicesTmp.add("Push ups");
-        exercicesTmp.add("Medicine ball");
-        exercicesTmp.add("Bulgarian Training Bag");
-    }
-
-    public void setTable(View v){
-        Table tabla = new Table(getActivity(), (TableLayout)v.findViewById(R.id.tabla));
-        tabla.agregarCabecera(R.array.mainPageTable_headers);
-        for(int i = 0; i < exercicesTmp.size() ; i++)
-        {
-            ArrayList<String> elementos = new ArrayList<>();
-            elementos.add(exercicesTmp.get(i));
-            elementos.add("Casilla [" + i + ", 1]");
-            elementos.add("Casilla [" + i + ", 2]");
-            tabla.agregarFilaTabla(elementos);
-        }
-    }
     public void back(View view) {
 
         Fragment fragment = new ConsultRoutinesFragment();
         BaseDrawerActivity bda = (BaseDrawerActivity)getActivity();
         bda.displaySelectedFragment(fragment);
     }
-}
+    public void openDailyDetail(View view, int position) {
+
+        FragmentManager fragmentManager = getFragmentManager();
+
+        PopupRoutineDetailsFragment popupFragment =  PopupRoutineDetailsFragment.newInstance();
+
+        Bundle b = new Bundle();
+        b.putBoolean("isPremium",isPremium);
+        int dailyId = dailiesIdLog.get(position+1);
+        b.putInt("dailyId",dailyId);
+        popupFragment.setArguments(b);
+        popupFragment.show(fragmentManager,"details");
+    }
+    private class UrlConnectorGetWorkoutDetails extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                if (isPremium) {
+                    getAdvancedWorkoutDetails();
+                } else {
+                    getBasicWorkoutDetails();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        workoutNameText.setText("\t" + workoutName);
+                        workoutDurationText.setText("\t" + workoutDuration + " days");
+                        kcltv.setText("Avg. Burnt Kcal: " + avgKcal);
+                        String[] dailiesTitles = {};
+                        if (workoutDuration == 3) {
+                            dailiesTitles = getActivity().getResources().getStringArray(R.array.threeDaysWorkoutTitles);
+                        } else if (workoutDuration == 5) {
+                            dailiesTitles = getActivity().getResources().getStringArray(R.array.fiveDaysWorkoutTitles);
+                        }
+                        lv = RootView.findViewById(R.id.dailiesList);
+                        ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, dailiesTitles);
+                        lv.setAdapter(aa);
+                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View v,
+                                                    int position, long id) {
+
+                                openDailyDetail(v, position);
+                            }
+                        });
+
+                        if (workoutId == assignedWorkoutId) {
+                            buttonAssign.setVisibility(View.GONE);
+                        } else {
+                            buttonAssign.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                System.out.println("ERROR: Something went wrong");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+
+        protected void getAdvancedWorkoutDetails() {
+            try {
+
+                url = new URL(StaticStrings.ipserver + "/client/findByEmail/" + userEmail);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+
+                try {
+                    if (conn.getResponseCode() == 200) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String output = br.readLine();
+                        JSONArray arr = new JSONArray(output);
+
+                        client = arr.getJSONObject(0);
+                        userId = client.getInt("id");
+                        if (client.has("advancedWorkout")) {
+                            assignedWorkoutId = client.getJSONObject("advancedWorkout").getInt("id");
+                        }
+
+                        br.close();
+                    } else {
+                        System.out.println("COULD NOT FIND THE CLIENT");
+                        System.out.println("ERROR CODE -> " + conn.getResponseCode());
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                url = new URL(StaticStrings.ipserver + "/advancedworkout/" + workoutId);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+
+                try {
+                    if (conn.getResponseCode() == 200) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String output = br.readLine();
+
+                        workout = new JSONObject(output);
+                        workoutName = workout.getString("name");
+                        workoutDuration = workout.getInt("duration");
+
+                        getDailyAdvancedWorkouts();
+                        br.close();
+                    } else {
+                        System.out.println("COULD NOT FIND THE Advanced_workout");
+                        System.out.println("ERROR CODE -> " + conn.getResponseCode());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                conn.disconnect();
+            } catch (Exception e) {
+                System.out.println("ERROR: Something went wrong");
+                e.printStackTrace();
+            }
+        }
+
+        protected void getBasicWorkoutDetails() {
+            try {
+
+                url = new URL(StaticStrings.ipserver + "/client/findByEmail/" + userEmail);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+
+                try {
+                    if (conn.getResponseCode() == 200) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String output = br.readLine();
+                        JSONArray arr = new JSONArray(output);
+
+                        client = arr.getJSONObject(0);
+                        userId = client.getInt("id");
+                        if (client.has("basicWorkout")) {
+                            assignedWorkoutId = client.getJSONObject("basicWorkout").getInt("id");
+                        }
+
+                        br.close();
+                    } else {
+                        System.out.println("COULD NOT FIND THE CLIENT");
+                        System.out.println("ERROR CODE -> " + conn.getResponseCode());
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                url = new URL(StaticStrings.ipserver + "/basicworkout/" + workoutId);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+
+                try {
+                    if (conn.getResponseCode() == 200) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String output = br.readLine();
+
+                        workout = new JSONObject(output);
+                        workoutName = workout.getString("name");
+                        workoutDuration = workout.getInt("duration");
+
+                        getDailyBasicWorkouts();
+                        br.close();
+                    } else {
+                        System.out.println("COULD NOT FIND THE Basic_workout");
+                        System.out.println("ERROR CODE -> " + conn.getResponseCode());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                conn.disconnect();
+            } catch (Exception e) {
+                System.out.println("ERROR: Something went wrong");
+                e.printStackTrace();
+            }
+        }
+
+        protected void getDailyAdvancedWorkouts() {
+            try {
+
+                JSONArray currentDailyExercises = new JSONArray();
+                url = new URL(StaticStrings.ipserver + "/dailyadvancedworkout/findByAdvancedWorkoutId/" + workoutId);
+                conn = (HttpURLConnection) url.openConnection();
+
+                if (conn.getResponseCode() == 200) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String output = br.readLine();
+                    JSONArray arr = new JSONArray(output);
+
+                    for (int i = 0; i < arr.length(); i++) {
+                        Integer dailyWeekDay = arr.getJSONObject(i).getInt("week_day");
+                        Integer dailyId = arr.getJSONObject(i).getInt("id");
+                        dailiesIdLog.put(dailyWeekDay, dailyId);
+                        currentDailyExercises = arr.getJSONObject(i).getJSONArray("advancedExercises");
+                        for (int j = 0; j < currentDailyExercises.length(); j++) {
+                            avgKcal += currentDailyExercises.getJSONObject(j).getInt("kcal");
+                        }
+                    }
+
+                    br.close();
+                } else {
+                    System.out.println("COULD NOT FIND THE Advanced_Workout");
+                }
+                conn.disconnect();
+            } catch (Exception e) {
+                System.out.println("ERROR: Something went wrong");
+                e.printStackTrace();
+            }
+        }
+
+        protected void getDailyBasicWorkouts() {
+            try {
+
+                JSONArray currentDailyExercises = new JSONArray();
+                url = new URL(StaticStrings.ipserver + "/dailybasicworkout/findByBasicWorkoutId/" + workoutId);
+                conn = (HttpURLConnection) url.openConnection();
+
+                if (conn.getResponseCode() == 200) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String output = br.readLine();
+                    JSONArray arr = new JSONArray(output);
+
+                    for (int i = 0; i < arr.length(); i++) {
+                        Integer dailyWeekDay = arr.getJSONObject(i).getInt("week_day");
+                        Integer dailyId = arr.getJSONObject(i).getInt("id");
+                        dailiesIdLog.put(dailyWeekDay, dailyId);
+                        currentDailyExercises = arr.getJSONObject(i).getJSONArray("basicExercises");
+                        for (int j = 0; j < currentDailyExercises.length(); j++) {
+                            avgKcal += currentDailyExercises.getJSONObject(j).getInt("kcal");
+                        }
+                    }
+
+                    br.close();
+                } else {
+                    System.out.println("COULD NOT FIND THE Basic_Workout");
+                }
+                conn.disconnect();
+            } catch (Exception e) {
+                System.out.println("ERROR: Something went wrong");
+                e.printStackTrace();
+            }
+        }
+    }
+    private class UrlConnectorUpdateUser extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+
+                URL url = new URL(StaticStrings.ipserver + "/client/" + userId);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("PUT");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+
+                /*JSONObject subjson = new JSONObject()
+                        .put("id", bodyTypeId)
+                        .put("body_type_value", bodyTypeId);
+                *//*{"userName":"asdf3", "userPassword":"asdf2", "mail":"asdf@asdf.com","weight":2,"height":2,"bodyTypeId":{"id":1,"body_type_value":1},"telephone":"asdf", "address":"asdfdsd"}*//*
+                String jsonString = new JSONObject()
+                        .put("userName", user.getName())
+                        .put("userPassword", user.getPassword())
+                        .put("mail", user.getEmail())
+                        .put("weight", user.getWeigth())
+                        .put("height", user.getHeight())
+                        .put("bodyTypeId", subjson)
+                        .put("telephone", user.getTelNum())
+                        .put("address", user.getAddress())
+                        .put("is_Premium", isPremium)
+                        .toString();*/
+
+                if(isPremium){
+                    client.put("advancedWorkout",workout);
+                    client.put("basicWorkout",null);
+                }else{
+                    client.put("basicWorkout",workout);
+                    client.put("advancedWorkout",null);
+                }
+                String jsonString = client.toString();
+                OutputStream os = conn.getOutputStream();
+                os.write(jsonString.getBytes());
+                os.flush();
+                os.close();
+                System.out.println("CONNECTION CODE: " + conn.getResponseCode());
+                conn.disconnect();
+            } catch (Exception e) {
+                System.out.println("User could not be updated: ");
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+    }
+    }
+

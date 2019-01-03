@@ -47,4 +47,16 @@
         <item>5 days</item>
         <item>3 days</item>
     </string-array>
+    <string-array name="threeDaysWorkoutTitles">
+        <item>Monday</item>
+        <item>Wednesday</item>
+        <item>Friday</item>
+    </string-array>
+    <string-array name="fiveDaysWorkoutTitles">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+    </string-array>
 </resources>
