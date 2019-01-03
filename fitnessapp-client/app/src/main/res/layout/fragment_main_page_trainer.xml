@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="15dp"
-            android:text="@string/"
+            android:text="@string/trainer_header"
             android:textColor="@android:color/black" />
 
         <ListView
@@ -28,19 +28,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/lis1"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/next"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="Next Activity" />
-        </LinearLayout>
 
     </LinearLayout>
 
