@@ -1,17 +1,18 @@
 package com.fitnessapp.client.Fragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.fitnessapp.client.BaseDrawerActivity;
-import com.fitnessapp.client.BaseDrawerActivityTrainer;
 import com.fitnessapp.client.R;
+import com.fitnessapp.client.TrainerUserList;
 import com.fitnessapp.client.Utils.StaticStrings;
 
 import org.json.JSONArray;
@@ -20,7 +21,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -34,7 +34,12 @@ public class MainPageTrainerFragment extends Fragment {
     private String trainerMail;
     private int trainerID;
     ArrayList<String> assignedUsers = new ArrayList<String>();
-    ArrayList<String> listItems=new ArrayList<String>();
+    ArrayList<Integer> userIds = new ArrayList<Integer>();
+    ArrayList<String> userMails = new ArrayList<String>();
+    ArrayList<Integer> userWeights = new ArrayList<Integer>();
+    ArrayList<Integer> userHeights = new ArrayList<Integer>();
+    ArrayList<String> userTels = new ArrayList<String>();
+    ArrayList<String> userAdds = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     private ListView lw;
 
@@ -56,6 +61,20 @@ public class MainPageTrainerFragment extends Fragment {
         adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,
                 assignedUsers);
+        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), TrainerUserList.class);
+                intent.putExtra("keyUser",assignedUsers.get(i));
+                intent.putExtra("keyID",userIds.get(i));
+                intent.putExtra("keyMail",userMails.get(i));
+                intent.putExtra("keyAdd",userAdds.get(i));
+                intent.putExtra("keyHeight",userHeights.get(i));
+                intent.putExtra("keyWeight",userWeights.get(i));
+                intent.putExtra("keyTel",userTels.get(i));
+                startActivity(intent);
+            }
+        });
         lw.setAdapter(adapter);
         return RootView;
     }
@@ -97,6 +116,12 @@ public class MainPageTrainerFragment extends Fragment {
                     int j = 0;
                     int tmpTrainerID;
                     String tmpUser;
+                    int tmpId;
+                    String tmpMail;
+                    int tmpH;
+                    int tmpW;
+                    String tmpTel;
+                    String tmpAdd;
                     System.out.println("Length: " + check.length());
 
                     for (int i = 0; i < check.length(); i++) {
@@ -108,8 +133,19 @@ public class MainPageTrainerFragment extends Fragment {
                         if (tmpTrainerID == trainerID) {
                             JSONObject cl = assig.getJSONObject("clientId");
                             tmpUser = cl.getString("userName");
-                            System.out.println(tmpUser);
-                            assignedUsers.add(tmpUser);
+                            tmpId = cl.getInt("id");
+                            tmpMail = cl.getString("mail");
+                            tmpW = cl.getInt("weight");
+                            tmpH = cl.getInt("height");
+                            tmpTel = cl.getString("telephone");
+                            tmpAdd = cl.getString("address");
+                            assignedUsers.add("User's name: " + tmpUser);
+                            userMails.add(tmpMail);
+                            userWeights.add(tmpW);
+                            userHeights.add(tmpH);
+                            userTels.add(tmpTel);
+                            userAdds.add(tmpAdd);
+                            userIds.add(tmpId);
                         }
                     }
                 }
