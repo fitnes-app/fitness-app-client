@@ -10,6 +10,7 @@
     <string name="trainer_rating">Puntuaje: 3/5</string>
     <string name="input">INTRODUCE NUEVA MEJORA</string>
     <string name="notificate">Notíficame el: </string>
+    <string name="trainer_header">Aqui podrás ver tus usuarios asignados</string>
     <string name="user_details">Revisa los detalles de usuario</string>
     <string name="user_progress">Revisa el progreso del usuario</string>
     <string name="routines_management">Administrar las rutinas del usuario</string>

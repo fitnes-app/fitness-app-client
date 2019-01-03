@@ -180,8 +180,6 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                 // Before continuing we have to check that the client isn't assigned yet
                 int tmpClientID = -1;
                 int tmpTrainerID = -1;
-                JSONObject tmpJSONBodyType;
-                String tmpBodyType;
                 url = new URL(StaticStrings.ipserver  + "/assigned");
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
