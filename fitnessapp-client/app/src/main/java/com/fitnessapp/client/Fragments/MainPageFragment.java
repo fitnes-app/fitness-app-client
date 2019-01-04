@@ -42,8 +42,6 @@ public class MainPageFragment extends Fragment {
     private URL url;
     private BaseDrawerActivity activity;
 
-    private User user;
-
     private String userEmail;
     private String workoutId = "";
     private Boolean isPremium;
@@ -63,7 +61,8 @@ public class MainPageFragment extends Fragment {
         activity = (BaseDrawerActivity) getActivity();
         welcome = RootView.findViewById(R.id.welcomeuser);
         dailyTipLabel = RootView.findViewById(R.id.dailyTipLabel);
-        userEmail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
+        activity.userMail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
+        userEmail = activity.userMail;
         userData = new UrlConnectorGetUserData();
         userData.execute();
 
@@ -118,7 +117,7 @@ public class MainPageFragment extends Fragment {
                         client = arr.getJSONObject(0);
                         clientUsername = client.getString("userName");
                         welcome.setText("Welcome, " + clientUsername);
-
+                        activity.userId = client.getInt("id");
                         isPremium = client.getBoolean("is_Premium");
                         getActivity().runOnUiThread(new Runnable() {
 

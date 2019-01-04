@@ -67,7 +67,7 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
         protected Void doInBackground(Void... params) {
             try {
                 //LA URL ES INCORRECTA, la activity no pille el ID corresponent, s'ha de fer un get abans.
-                url = new URL(StaticStrings.ipserver  + "/asignee/findByClientId/" + activity.mAuth);
+                url = new URL(StaticStrings.ipserver  + "/assigned/findByClientId/" + activity.userId);
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Accept", "application/json");
