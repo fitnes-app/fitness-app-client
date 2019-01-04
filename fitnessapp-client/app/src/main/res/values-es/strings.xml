@@ -10,6 +10,7 @@
     <string name="trainer_rating">Puntuaje: 3/5</string>
     <string name="input">INTRODUCE NUEVA MEJORA</string>
     <string name="notificate">Notíficame el: </string>
+    <string name="trainer_header">Aqui podrás ver tus usuarios asignados</string>
     <string name="user_details">Revisa los detalles de usuario</string>
     <string name="user_progress">Revisa el progreso del usuario</string>
     <string name="routines_management">Administrar las rutinas del usuario</string>
@@ -18,6 +19,7 @@
     <string name="MainMenu">MENU PRINCIPAL</string>
     <string name="Share">Comparte nuestra aplicación</string>
     <string name="type">Escribe aqui</string>
+    <string name="trainer_list_header">Aqui podrás ver toda la información del usuario</string>
     <string name="ictproject">ICT Project</string>
     <string name="register">Registrar</string>
     <string name="contactwithus">Contacta con el equipo :)</string>
@@ -110,4 +112,13 @@
     <string name="needSmt">Aun necesitamos mas información, ahora procederemos a realizar un questionario.</string>
     <string name="subject"> Tema </string>
     <string name="noResultsMessage">NO SE ENCONTRARON RESULTADOS</string>
+    <string name="consultRoutinesDuration">Duración</string>
+    <string name="consultRoutinesFilterBy">Filtrar por:</string>
+    <string name="consultRoutinesListTitle">Estas són las rutinas disponibles:</string>
+    <string name="workoutDurationLabel">Duración: </string>
+    <string name="workoutNameLabel">Nombre: </string>
+    <string name="dailiesListTitle">Entrenamientos diarios: </string>
+    <string name="assignButtonLabel">Escógela!</string>
+    <string name="noUsersAssignedMessage">TODAVÍA NO TIENES NINGÚN USUARIO ASIGNADO!</string>
+
 </resources>

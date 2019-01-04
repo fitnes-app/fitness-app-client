@@ -10,6 +10,7 @@
     <string name="input">INPUT NEW IMPROVEMENT</string>
     <string name="notificate">Notificate me on: </string>
     <string name="user_details">Check user Details</string>
+    <string name="trainer_list_header">Here you\'ll be able to see all the user\'s information</string>
     <string name="user_progress">Check User Progress</string>
     <string name="routines_management">User Routines Management</string>
     <string name="Pick">Pick Date</string>
@@ -42,71 +43,83 @@
         <item>Catalan</item>
         <item>English</item>
     </string-array>
-    <string name="contractCoachTerms">
-        Welcome dear user.\n\nThis page it\'s made to contract a personal trainer who fit\'s the specific type of training that you want to do.\n\nOur coach selector system will decide a group of coachs that can be better for you and select one of this group.\n\nThe cost is of just 20€, way cheaper than a gym.\n\n You will Even be able to contact directly with your coach to ask for diets personally or doubts about you training.
+    <string name="contractCoachTerms" translatable="false">
+        Welcome dear user.\n\nThis page it\'s made to contract a personal trainer who fits the specific type of training that you want to do.\n\nOur coach selector system will decide a group of coachs that can be better for you and select one of this group.\n\nThe cost is just 20€, way cheaper than a gym\'s one.\n\n You will even be able to contact directly with your coach to ask for diets personally or doubts about you training.
     </string>
-    <string name="becomePremium">
+    <string name="becomePremium" translatable="false">
         Welcome dear user.\n\nBy becoming premium you\'ll be able to have access to different features. \n\nYou\'ll be able to select more advanced routines, you\'ll be able to use the size tracker (which allows you to track the size of your muscles, seeing if they\'ve increased or decreased, depending on your objectives), and the most important thing, you\'ll be helping us with the maintenance costs. \n\nThe cost is only 10€.
     </string>
-    <string name="back">back</string>
-    <string name="contract">Contract</string>
-    <string name="experience">Experience</string>
-    <string name="outAppCV">Out App CV</string>
-    <string name="users">Users</string>
-    <string name="trainingType">Training Type</string>
-    <string name="bodyType">Body Type</string>
-    <string name="routineName">Routine Name</string>
-    <string name="routineType">Routine Type</string>
-    <string name="description">Description</string>
-    <string name="additionalTips">Additional Tips</string>
-    <string name="muscularGroup">Muscular Group</string>
-    <string name="series">Series</string>
-    <string name="repetitions">Repetitions</string>
-    <string name="addNewExercise">Add New Exercise</string>
-    <string name="save">Save</string>
-    <string name="currently">Currently</string>
-    <string name="otherRoutines">Other Routines</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
-    <string name="role">Role:</string>
-    <string name="speciality">Speciality:</string>
-    <string name="height">Height: </string>
-    <string name="weight">Weight: </string>
-    <string name="body_type">Body type: </string>
-    <string name="title_activity_testing">testing</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="consu_rout">Consult routines</string>
-    <string name="size_tracker">Size tracker</string>
-    <string name="progress_tracker">Progress Tracker</string>
-    <string name="coach">Coach</string>
-    <string name="become_premium">Become Premium</string>
-    <string name="input_training">Input training</string>
-    <string name="routine_picker">Choose today routine: </string>
-    <string name="notifications">Notifications</string>
-    <string name="coachInfo">Coach Information</string>
-    <string name="contractCoach">Contract Coach</string>
-    <string name="profile">Profile</string>
-    <string name="asg_users">Asigned users</string>
-    <string name="main_page">Main Page</string>
-    <string name="user_routines">User Routines</string>
-    <string name="addNewRoutine">Create New Routine</string>
-    <string name="inputData">INPUT MISSING DATA</string>
-    <string name="invalidEmail">Invalid email.</string>
-    <string name="shortPassword">Password too short.</string>
-    <string name="login">Log in</string>
-    <string name="name">Name </string>
-    <string name="address">Address</string>
-    <string name="telNum">Phone number</string>
-    <string name="confChanges">Confirm Changes</string>
-    <string name="trainerProfile">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
-    <string name="needSmt">We still need some information. After it, we will proceed with a Questionnaire to set your body type</string>
-    <string name="subject">Subject</string>
     <string name="noResultsMessage">NO RESULTS WHERE FOUND</string>
+    <string name="consultRoutinesDuration">Duration</string>
+    <string name="consultRoutinesFilterBy">Filter by:</string>
+    <string name="consultRoutinesListTitle">Those are the able routines:</string>
+    <string name="workoutDurationLabel">Duration: </string>
+    <string name="workoutNameLabel">Name: </string>
+    <string name="dailiesListTitle">Daily workouts: </string>
+    <string name="assignButtonLabel">Pick it!</string>
+    <string name="back" translatable="false">back</string>
+    <string name="contract" translatable="false">Contract</string>
+    <string name="experience" translatable="false">Experience</string>
+    <string name="outAppCV" translatable="false">Out App CV</string>
+    <string name="users" translatable="false">Users</string>
+    <string name="trainingType" translatable="false">Training Type</string>
+    <string name="bodyType" translatable="false">Body Type</string>
+    <string name="routineName" translatable="false">Routine Name</string>
+    <string name="routineType" translatable="false">Routine Type</string>
+    <string name="description" translatable="false">Description</string>
+    <string name="additionalTips" translatable="false">Additional Tips</string>
+    <string name="muscularGroup" translatable="false">Muscular Group</string>
+    <string name="series" translatable="false">Series</string>
+    <string name="repetitions" translatable="false">Repetitions</string>
+    <string name="addNewExercise" translatable="false">Add New Exercise</string>
+    <string name="save" translatable="false">Save</string>
+    <string name="currently" translatable="false">Currently</string>
+    <string name="otherRoutines" translatable="false">Other Routines</string>
+    <string name="username" translatable="false">Username: </string>
+    <string name="password" translatable="false">Password</string>
+    <string name="email" translatable="false">Email: </string>
+    <string name="role" translatable="false">Role:</string>
+    <string name="speciality" translatable="false">Speciality:</string>
+    <string name="height" translatable="false">Height: </string>
+    <string name="weight" translatable="false">Weight: </string>
+    <string name="body_type" translatable="false">Body type: </string>
+    <string name="title_activity_testing" translatable="false">testing</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="title_activity_main2" translatable="false">Main2Activity</string>
+    <string name="consu_rout" translatable="false">Consult routines</string>
+    <string name="size_tracker" translatable="false">Size tracker</string>
+    <string name="progress_tracker" translatable="false">Progress Tracker</string>
+    <string name="coach" translatable="false">Coach</string>
+    <string name="become_premium" translatable="false">Become Premium</string>
+    <string name="input_training" translatable="false">Input training</string>
+    <string name="routine_picker" translatable="false">Choose today routine: </string>
+    <string name="notifications" translatable="false">Notifications</string>
+    <string name="trainer_header">Here you can see all your assigned users</string>
+    <string name="coachInfo" translatable="false">Coach Information</string>
+    <string name="contractCoach" translatable="false">Contract Coach</string>
+    <string name="profile" translatable="false">Profile</string>
+    <string name="asg_users" translatable="false">Asigned users</string>
+    <string name="main_page" translatable="false">Main Page</string>
+    <string name="user_routines" translatable="false">User Routines</string>
+    <string name="addNewRoutine" translatable="false">Create New Routine</string>
+    <string name="inputData" translatable="false">INPUT MISSING DATA</string>
+    <string name="invalidEmail" translatable="false">Invalid email.</string>
+    <string name="shortPassword" translatable="false">Password too short.</string>
+    <string name="login" translatable="false">Log in</string>
+    <string name="name" translatable="false">Name </string>
+    <string name="address" translatable="false">Address</string>
+    <string name="telNum" translatable="false">Phone number: </string>
+    <string name="confChanges" translatable="false">Confirm Changes</string>
+    <string name="trainerProfile" translatable="false">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
+    <string name="needSmt" translatable="false">We still need some information. After it, we will proceed with a Questionnaire to set your body type</string>
+    <string name="subject" translatable="false">Subject</string>
+    <string name="title_activity_coach_list" translatable="false">CoachList</string>
+    <string name="title_activity_trainer_user_list" translatable="false">TrainerUserList</string>
+    <string name="noUsersAssignedMessage">YOU HAVE NO USERS ASSIGNED YET!</string>
+
 </resources>
