@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.TrainerUserList;
 import com.fitnessapp.client.Utils.StaticStrings;
@@ -23,14 +24,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainPageTrainerFragment extends Fragment {
 
-
+    private View RootView;
     private UrlConnectorGetTrainerEmail ucgte;
     private HttpURLConnection conn;
     private URL url;
-
+    private HashMap<String, Integer> clientsIdLog = new HashMap<String, Integer>();
+    ArrayList<String> clientNames;
     private String trainerMail;
     private int trainerID;
     ArrayList<String> assignedUsers = new ArrayList<String>();
@@ -46,7 +49,6 @@ public class MainPageTrainerFragment extends Fragment {
     public MainPageTrainerFragment(){}
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        ucgte = new UrlConnectorGetTrainerEmail();
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Trainer Main Page");
         trainerMail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
@@ -55,30 +57,48 @@ public class MainPageTrainerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View RootView = inflater.inflate(R.layout.fragment_main_page_trainer, container, false);
+        RootView = inflater.inflate(R.layout.fragment_main_page_trainer, container, false);
+        ucgte = new UrlConnectorGetTrainerEmail();
         ucgte.execute();
-        lw = (ListView) RootView.findViewById(R.id.lis1);
-        adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1,
-                assignedUsers);
-        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), TrainerUserList.class);
-                intent.putExtra("keyUser",assignedUsers.get(i));
-                intent.putExtra("keyID",userIds.get(i));
-                intent.putExtra("keyMail",userMails.get(i));
-                intent.putExtra("keyAdd",userAdds.get(i));
-                intent.putExtra("keyHeight",userHeights.get(i));
-                intent.putExtra("keyWeight",userWeights.get(i));
-                intent.putExtra("keyTel",userTels.get(i));
-                startActivity(intent);
-            }
-        });
-        lw.setAdapter(adapter);
+
         return RootView;
     }
+    private void loadClients(View rootView) {
+        lw = (ListView) rootView.findViewById(R.id.assignedUsersList);
+        setClientNames();
+        ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, clientNames);
+        lw.setAdapter(aa);
+        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                openUserDetail(v, position);
 
+            }
+        });
+    }
+    public void setClientNames() {
+        clientNames = new ArrayList<String>(clientsIdLog.keySet());
+    }
+    private void setNoResultsMessage(View rootView) {
+        lw = rootView.findViewById(R.id.assignedUsersList);
+        clientNames = new ArrayList<String>();
+        clientNames.add(getActivity().getResources().getString(R.string.noUsersAssignedMessage));
+        ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, clientNames);
+        lw.setAdapter(aa);
+    }
+    public void openUserDetail(View view, int position) {
+        Fragment fragment = new UserDetailsFragment();
+        ArrayList<String> keys = new ArrayList<String>(clientsIdLog.keySet());
+        String neededKey = keys.get(position);
+        int selectedUserId = clientsIdLog.get(neededKey);
+        Bundle b = new Bundle();
+        b.putInt("selectedUserId",selectedUserId);
+        fragment.setArguments(b);
+        BaseDrawerActivity bda = (BaseDrawerActivity) getActivity();
+        bda.displaySelectedFragment(fragment);
+
+    }
     private class UrlConnectorGetTrainerEmail extends AsyncTask<Void,Void,Void> {
 
         @Override
@@ -89,11 +109,11 @@ public class MainPageTrainerFragment extends Fragment {
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Accept", "application/json");
-                if(conn.getResponseCode() == 200){
+                if (conn.getResponseCode() == 200) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     String output = br.readLine();
                     JSONArray arr = new JSONArray(output);
-                    if (arr.length() == 0){
+                    if (arr.length() == 0) {
                         System.out.println("The trainer isn't in the DB");
                         return null;
                     }
@@ -101,10 +121,15 @@ public class MainPageTrainerFragment extends Fragment {
 
                     trainerID = tra.getInt("id");
                     System.out.println(trainerID);
+                    br.close();
                 }
-
-
-                url = new URL(StaticStrings.ipserver + "/assigned");
+            }catch(Exception e) {
+                System.out.println("Something went wrong");
+                e.printStackTrace();
+            }
+            conn.disconnect();
+            try{
+                url = new URL(StaticStrings.ipserver + "/assigned/findByTrainerId/" + trainerID);
 
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
@@ -112,45 +137,43 @@ public class MainPageTrainerFragment extends Fragment {
                 if (conn.getResponseCode() == 200) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     String output = br.readLine();
-                    JSONArray check = new JSONArray(output);
-                    int j = 0;
-                    int tmpTrainerID;
-                    String tmpUser;
-                    int tmpId;
-                    String tmpMail;
-                    int tmpH;
-                    int tmpW;
-                    String tmpTel;
-                    String tmpAdd;
-                    System.out.println("Length: " + check.length());
-
-                    for (int i = 0; i < check.length(); i++) {
-                        JSONObject assig = check.getJSONObject(i);
-                        JSONObject tr = assig.getJSONObject("trainerId");
-                        tmpTrainerID = tr.getInt("id");
-
-                        System.out.println(tmpTrainerID + "  " + trainerID);
-                        if (tmpTrainerID == trainerID) {
-                            JSONObject cl = assig.getJSONObject("clientId");
-                            tmpUser = cl.getString("userName");
-                            tmpId = cl.getInt("id");
-                            tmpMail = cl.getString("mail");
-                            tmpW = cl.getInt("weight");
-                            tmpH = cl.getInt("height");
-                            tmpTel = cl.getString("telephone");
-                            tmpAdd = cl.getString("address");
-                            assignedUsers.add("User's name: " + tmpUser);
-                            userMails.add(tmpMail);
-                            userWeights.add(tmpW);
-                            userHeights.add(tmpH);
-                            userTels.add(tmpTel);
-                            userAdds.add(tmpAdd);
-                            userIds.add(tmpId);
+                    JSONArray arr = new JSONArray(output);
+                    if(arr.length()>0) {
+                        for (int i = 0; i < arr.length(); i++) {
+                            JSONObject client = arr.getJSONObject(i).getJSONObject("clientId");
+                            String clientName = client.getString("userName");
+                            int clientId = client.getInt("id");
+                            clientsIdLog.put(clientName, clientId);
                         }
-                    }
-                }
+                            getActivity().runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+
+                                    loadClients(RootView);
+
+                                }
+                            });
+                        } else {
+                            //Advanced_workouts not found
+                            getActivity().runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+
+                                    setNoResultsMessage(RootView);
+
+                                }
+                            });
+                        }
+                        br.close();
+                } else {
+                    System.out.println("ERROR GETTING Users");
+                    System.out.println("ERROR CODE -> " + conn.getResponseCode());
+            }
 
             } catch (Exception e) {
+                System.out.println("Something went wrong");
                 e.printStackTrace();
             }
             return null;
@@ -158,7 +181,6 @@ public class MainPageTrainerFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
-            adapter.notifyDataSetChanged();
             super.onPostExecute(result);
         }
     }

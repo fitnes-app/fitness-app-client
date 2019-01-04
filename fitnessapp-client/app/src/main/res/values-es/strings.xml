@@ -119,5 +119,6 @@
     <string name="workoutNameLabel">Nombre: </string>
     <string name="dailiesListTitle">Entrenamientos diarios: </string>
     <string name="assignButtonLabel">Escógela!</string>
+    <string name="noUsersAssignedMessage">TODAVÍA NO TIENES NINGÚN USUARIO ASIGNADO!</string>
 
 </resources>

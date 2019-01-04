@@ -45,7 +45,6 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class RoutineDetailFragment extends Fragment {
 
-    private ArrayList<String> exercicesTmp = new ArrayList<>();
     private HashMap<Integer, Integer> dailiesIdLog = new HashMap<Integer, Integer>();
 
     private View RootView;

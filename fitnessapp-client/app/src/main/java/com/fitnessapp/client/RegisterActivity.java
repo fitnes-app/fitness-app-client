@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +40,9 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText username,password,email,address, telNum;
     private Spinner role;
+
+    private UrlConnectorCreateTrainer trainerData;
+    private HttpURLConnection conn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +116,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
+                                    trainerData = new UrlConnectorCreateTrainer();
+                                    trainerData.execute();
                                     Intent i = new Intent(RegisterActivity.this, BaseDrawerActivity.class);
                                     Bundle b = new Bundle();
                                     b.putSerializable("userType", userObj2.getRole());
@@ -160,5 +166,44 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+    private class UrlConnectorCreateTrainer extends AsyncTask<Void,Void,Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                //CREATE CLIENT IN DB
+                URL url = new URL(StaticStrings.ipserver + "/trainer/");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                String jsonString = new JSONObject()
+                        .put("userName", username.getText().toString())
+                        .put("userPassword", password.getText().toString())
+                        .put("mail", email.getText().toString())
+                        .put("telephone", telNum.getText().toString())
+                        .put("address", address.getText().toString())
+                        .toString();
+
+                OutputStream os = conn.getOutputStream();
+                os.write(jsonString.getBytes());
+                os.flush();
+                os.close();
+                System.out.println("CONNECTION CODE: " + conn.getResponseCode());
+                conn.disconnect();
+            } catch (Exception e) {
+                System.out.println("User could not be created: ");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
     }
 }

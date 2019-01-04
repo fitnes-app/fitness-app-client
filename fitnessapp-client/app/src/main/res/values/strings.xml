@@ -75,9 +75,9 @@
     <string name="save" translatable="false">Save</string>
     <string name="currently" translatable="false">Currently</string>
     <string name="otherRoutines" translatable="false">Other Routines</string>
-    <string name="username" translatable="false">Username</string>
+    <string name="username" translatable="false">Username: </string>
     <string name="password" translatable="false">Password</string>
-    <string name="email" translatable="false">Email</string>
+    <string name="email" translatable="false">Email: </string>
     <string name="role" translatable="false">Role:</string>
     <string name="speciality" translatable="false">Speciality:</string>
     <string name="height" translatable="false">Height: </string>
@@ -113,12 +113,13 @@
     <string name="login" translatable="false">Log in</string>
     <string name="name" translatable="false">Name </string>
     <string name="address" translatable="false">Address</string>
-    <string name="telNum" translatable="false">Phone number</string>
+    <string name="telNum" translatable="false">Phone number: </string>
     <string name="confChanges" translatable="false">Confirm Changes</string>
     <string name="trainerProfile" translatable="false">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
     <string name="needSmt" translatable="false">We still need some information. After it, we will proceed with a Questionnaire to set your body type</string>
     <string name="subject" translatable="false">Subject</string>
     <string name="title_activity_coach_list" translatable="false">CoachList</string>
     <string name="title_activity_trainer_user_list" translatable="false">TrainerUserList</string>
+    <string name="noUsersAssignedMessage">YOU HAVE NO USERS ASSIGNED YET!</string>
 
 </resources>

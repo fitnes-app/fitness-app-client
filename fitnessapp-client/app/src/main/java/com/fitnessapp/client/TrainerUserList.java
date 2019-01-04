@@ -20,7 +20,7 @@ public class TrainerUserList extends BaseDrawerActivityTrainer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trainer_list_element);
 
-        TextView tw1 = (TextView) findViewById(R.id.tv1);
+       /* TextView tw1 = (TextView) findViewById(R.id.tv1);
         TextView tw2 = (TextView) findViewById(R.id.tv2);
         TextView tw3 = (TextView) findViewById(R.id.tv3);
         TextView tw4 = (TextView) findViewById(R.id.tv4);
@@ -49,6 +49,6 @@ public class TrainerUserList extends BaseDrawerActivityTrainer {
             public void onClick(View v) {
                 // DO SOMETHING
             }
-        });
+        });*/
     }
 }
