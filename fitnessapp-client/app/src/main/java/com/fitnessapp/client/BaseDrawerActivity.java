@@ -36,6 +36,9 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     protected FrameLayout frameLayout;
     protected NavigationView navigationView;
 
+    public String userMail;
+    public int userID;
+
     public FirebaseAuth mAuth;
     public User user;
     public String roleValue;

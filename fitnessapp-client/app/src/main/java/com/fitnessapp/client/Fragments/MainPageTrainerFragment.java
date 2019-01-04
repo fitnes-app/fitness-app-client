@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.fitnessapp.client.BaseDrawerActivity;
+import com.fitnessapp.client.BaseDrawerActivityTrainer;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.TrainerUserList;
 import com.fitnessapp.client.Utils.StaticStrings;
@@ -33,6 +35,7 @@ public class MainPageTrainerFragment extends Fragment {
 
     private String trainerMail;
     private int trainerID;
+    private BaseDrawerActivity activity;
     ArrayList<String> assignedUsers = new ArrayList<String>();
     ArrayList<Integer> userIds = new ArrayList<Integer>();
     ArrayList<String> userMails = new ArrayList<String>();
@@ -49,13 +52,15 @@ public class MainPageTrainerFragment extends Fragment {
         ucgte = new UrlConnectorGetTrainerEmail();
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Trainer Main Page");
-        trainerMail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.fragment_main_page_trainer, container, false);
+        activity = (BaseDrawerActivity) getActivity();
+        activity.userMail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
+        trainerMail = activity.userMail;
         ucgte.execute();
         lw = (ListView) RootView.findViewById(R.id.lis1);
         adapter = new ArrayAdapter<String>(getActivity(),
@@ -100,6 +105,7 @@ public class MainPageTrainerFragment extends Fragment {
                     JSONObject tra = arr.getJSONObject(0);
 
                     trainerID = tra.getInt("id");
+                    activity.userID = trainerID;
                     System.out.println(trainerID);
                 }
 

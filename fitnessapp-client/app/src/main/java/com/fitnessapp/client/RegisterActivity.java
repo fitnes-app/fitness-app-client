@@ -1,5 +1,6 @@
 package com.fitnessapp.client;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,10 +40,13 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private EditText username,password,email,address, telNum, speciality;
-    private Spinner role;
+    private EditText username, password, email, address, telNum;
+    private Spinner role, speciality;
     private UrlConnectorCreateClient uccc;
-    private HttpURLConnection conn, conn2, getConn;
+    private SpinnerConnector sp;
+    private HttpURLConnection conn, getConn;
+    ArrayList<String> specs = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +59,11 @@ public class RegisterActivity extends AppCompatActivity {
         address = findViewById(R.id.editTextAddres);
         telNum = findViewById(R.id.editTextTelNum);
         role = findViewById(R.id.spinnerRoles);
-        speciality = findViewById(R.id.editTextSpec);
+        speciality = findViewById(R.id.spinnerSpec);
+
+        sp = new SpinnerConnector();
+        sp.execute();
+
         ArrayAdapter<CharSequence> adapterRoles = ArrayAdapter.createFromResource(this, R.array.rolesOptions, android.R.layout.simple_spinner_item);
 
         adapterRoles.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -122,6 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     Intent i = new Intent(RegisterActivity.this, BaseDrawerActivity.class);
                                     Bundle b = new Bundle();
                                     b.putSerializable("userType", userObj2.getRole());
+                                    b.putString("userEmail",emailText);
                                     i.putExtra("bundle", b);
                                     startActivity(i);
                                     finish();
@@ -167,39 +176,62 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-    private class UrlConnectorCreateClient extends AsyncTask<Void,Void,Void> {
+    private class SpinnerConnector extends AsyncTask<Void, Void, Void>{
 
+        ArrayAdapter<String> dataSpecAdapter;
 
         @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                // Create Spec in the DB
-                JSONObject rec = new JSONObject();
-                URL url = new URL(StaticStrings.ipserver + "/speciality/");
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestProperty("Accept", "application/json");
-                conn.setDoOutput(true);
-
-
-                String subjson = new JSONObject()
-                        .put("specialityName", speciality.getText())
-                        .toString();
-                OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream());
-                os.write(subjson);
-                os.flush();
-                os.close();
-
-                System.out.println(subjson);
-                System.out.println("CONNECTION CODE: " + conn.getResponseCode());
-
-
-                url = new URL(StaticStrings.ipserver  + "/speciality/findBySpecialityName/" + speciality.getText());
+        protected Void doInBackground(Void... voids) {
+            try{
+                URL url = new URL(StaticStrings.ipserver  + "/speciality/");
                 getConn = (HttpURLConnection) url.openConnection();
                 getConn.setRequestMethod("GET");
                 getConn.setRequestProperty("Accept", "application/json");
                 System.out.println(url);
+                System.out.println(getConn.getResponseCode());
+
+                if(getConn.getResponseCode() == 200 || getConn.getResponseCode() == 204) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(getConn.getInputStream()));
+                    String output = br.readLine();
+                    JSONArray arr = new JSONArray(output);
+
+                    for(int i = 0; i < arr.length(); i++){
+                        JSONObject obj = arr.getJSONObject(i);
+                        specs.add(obj.getString("specialityName"));
+                    }
+                }
+
+                dataSpecAdapter = new ArrayAdapter<String>(RegisterActivity.this,
+                        android.R.layout.simple_spinner_item, specs);
+                dataSpecAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            speciality.setAdapter(dataSpecAdapter);
+            super.onPostExecute(result);
+        }
+    }
+
+    private class UrlConnectorCreateClient extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                JSONObject rec = new JSONObject();
+
+                // Get trainer spec's JSON
+                URL url = new URL(StaticStrings.ipserver  + "/speciality/findBySpecialityName/" + speciality.getSelectedItem().toString());
+                getConn = (HttpURLConnection) url.openConnection();
+                getConn.setRequestMethod("GET");
+                getConn.setRequestProperty("Accept", "application/json");
+                System.out.println(url);
+                System.out.println(getConn.getResponseCode());
 
                 if(getConn.getResponseCode() == 200 || getConn.getResponseCode() == 204) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(getConn.getInputStream()));
@@ -207,15 +239,15 @@ public class RegisterActivity extends AppCompatActivity {
                     JSONArray arr = new JSONArray(output);
 
                     rec = arr.getJSONObject(0);
+                    System.out.println(rec);
                 }
-
 
                 // Create trainer in the DB
                 URL url2 = new URL(StaticStrings.ipserver + "/trainer/");
-                conn2 = (HttpURLConnection) url2.openConnection();
-                conn2.setRequestMethod("POST");
-                conn2.setRequestProperty("Content-Type", "application/json");
-                conn2.setDoOutput(true);
+                conn = (HttpURLConnection) url2.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
                 String jsonString = new JSONObject()
                         .put("userName", username.getText())
                         .put("userPassword", password.getText())
@@ -225,7 +257,7 @@ public class RegisterActivity extends AppCompatActivity {
                         .put("address", address.getText())
                         .toString();
 
-                OutputStreamWriter os2 = new OutputStreamWriter(conn2.getOutputStream());
+                OutputStreamWriter os2 = new OutputStreamWriter(conn.getOutputStream());
                 os2.write(jsonString);
                 os2.flush();
                 os2.close();
