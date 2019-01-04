@@ -73,7 +73,8 @@
     <string name="password">Contrassenya</string>
     <string name="email">Email</string>
     <string name="role">Rol:</string>
-    <string name="speciality">Specialidad:</string>
+    <string name="speciality">Especialidad:</string>
+    <string name="spec">Especialidad</string>
     <string name="height">Altura: </string>
     <string name="weight">Peso: </string>
     <string name="body_type">Tipo de cuerpo: </string>

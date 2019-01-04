@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -37,8 +39,10 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private EditText username,password,email,address, telNum;
+    private EditText username,password,email,address, telNum, speciality;
     private Spinner role;
+    private UrlConnectorCreateClient uccc;
+    private HttpURLConnection conn, conn2, getConn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         address = findViewById(R.id.editTextAddres);
         telNum = findViewById(R.id.editTextTelNum);
         role = findViewById(R.id.spinnerRoles);
+        speciality = findViewById(R.id.editTextSpec);
         ArrayAdapter<CharSequence> adapterRoles = ArrayAdapter.createFromResource(this, R.array.rolesOptions, android.R.layout.simple_spinner_item);
 
         adapterRoles.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -107,6 +112,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                                     mDatabase.child("Users").child(user.getUid()).setValue(userObj2);
+                                    uccc = new UrlConnectorCreateClient();
+                                    uccc.execute();
                                     try {
                                         Thread.sleep(1000);
                                     } catch (InterruptedException e) {
@@ -158,5 +165,83 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private class UrlConnectorCreateClient extends AsyncTask<Void,Void,Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                // Create Spec in the DB
+                JSONObject rec = new JSONObject();
+                URL url = new URL(StaticStrings.ipserver + "/speciality/");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+
+
+                String subjson = new JSONObject()
+                        .put("specialityName", speciality.getText())
+                        .toString();
+                OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream());
+                os.write(subjson);
+                os.flush();
+                os.close();
+
+                System.out.println(subjson);
+                System.out.println("CONNECTION CODE: " + conn.getResponseCode());
+
+
+                url = new URL(StaticStrings.ipserver  + "/speciality/findBySpecialityName/" + speciality.getText());
+                getConn = (HttpURLConnection) url.openConnection();
+                getConn.setRequestMethod("GET");
+                getConn.setRequestProperty("Accept", "application/json");
+                System.out.println(url);
+
+                if(getConn.getResponseCode() == 200 || getConn.getResponseCode() == 204) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(getConn.getInputStream()));
+                    String output = br.readLine();
+                    JSONArray arr = new JSONArray(output);
+
+                    rec = arr.getJSONObject(0);
+                }
+
+
+                // Create trainer in the DB
+                URL url2 = new URL(StaticStrings.ipserver + "/trainer/");
+                conn2 = (HttpURLConnection) url2.openConnection();
+                conn2.setRequestMethod("POST");
+                conn2.setRequestProperty("Content-Type", "application/json");
+                conn2.setDoOutput(true);
+                String jsonString = new JSONObject()
+                        .put("userName", username.getText())
+                        .put("userPassword", password.getText())
+                        .put("mail", email.getText())
+                        .put("specialityId", rec)
+                        .put("telephone", telNum.getText())
+                        .put("address", address.getText())
+                        .toString();
+
+                OutputStreamWriter os2 = new OutputStreamWriter(conn2.getOutputStream());
+                os2.write(jsonString);
+                os2.flush();
+                os2.close();
+                System.out.println(jsonString);
+                System.out.println("CONNECTION CODE: " + conn.getResponseCode());
+                conn.disconnect();
+            } catch (Exception e) {
+                System.out.println("User could not be created: ");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
     }
 }

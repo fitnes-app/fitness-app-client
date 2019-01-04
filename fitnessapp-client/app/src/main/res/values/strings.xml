@@ -72,6 +72,7 @@
     <string name="email" translatable="false">Email</string>
     <string name="role" translatable="false">Role:</string>
     <string name="speciality" translatable="false">Speciality:</string>
+    <string name="spec" translatable="false">Speciality</string>
     <string name="height" translatable="false">Height: </string>
     <string name="weight" translatable="false">Weight: </string>
     <string name="body_type" translatable="false">Body type: </string>
