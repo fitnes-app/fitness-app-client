@@ -97,7 +97,7 @@
     <string name="coach" translatable="false">Coach</string>
     <string name="become_premium" translatable="false">Become Premium</string>
     <string name="input_training" translatable="false">Input training</string>
-    <string name="routine_picker" translatable="false">Choose today routine: </string>
+    <string name="routine_picker" translatable="false">Choose todays exercice: </string>
     <string name="notifications" translatable="false">Notifications</string>
     <string name="trainer_header">Here you can see all your assigned users</string>
     <string name="coachInfo" translatable="false">Coach Information</string>

@@ -91,7 +91,7 @@
     <string name="coach">Entrenador</string>
     <string name="become_premium">Hazte premium</string>
     <string name="input_training">Introducir entrenamiento</string>
-    <string name="routine_picker">Escoge tu rutina: </string>
+    <string name="routine_picker">Escoge tu ejercicio: </string>
     <string name="notifications">Notificaciones</string>
     <string name="coachInfo">Informacion del entrenador</string>
     <string name="contractCoach">Contratar un entrenador</string>
