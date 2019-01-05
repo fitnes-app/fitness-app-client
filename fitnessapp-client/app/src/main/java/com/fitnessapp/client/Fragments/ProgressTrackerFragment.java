@@ -39,8 +39,11 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
     private LineChart mChart;
     private Boolean isPremium;
     private String workoutId = "", workoutDuration = "";
-    private ArrayList<String> exercicesNames = new ArrayList<>();
+    private ArrayList<String> exercicesNames;
+    private ArrayList<JSONObject> dailyExercices;
     private UrlConnectorGetProgress ucgp;
+    private UrlConnectorGetExercices ucge;
+    private boolean isBasicWorkout;
     private URL url;
     private HttpURLConnection conn;
     private BaseDrawerActivity activity;
@@ -50,6 +53,9 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Progress Tracker");
+        dailyExercices = new ArrayList<>();
+        exercicesNames = new ArrayList<>();
+        isBasicWorkout = true;
     }
 
     @Override
@@ -57,6 +63,8 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_progress_tracker, container, false);
         activity = (BaseDrawerActivity)getActivity();
+        ucge.execute();
+        ucgp.execute();
         loadData(rootView);
         return rootView;
     }
@@ -66,13 +74,14 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
         mChart = rootView.findViewById(R.id.linechart);
         // add data
         setData();
-
         // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
         mChart.setDescription("");
-        Spinner spinner = rootView.findViewById(R.id.spinnerRoutines);
-        String[] letra = {"Routine1","Routine2","Routine3","Routine4","Routine5"};
-        spinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, letra));
+        Spinner repsSpinner = rootView.findViewById(R.id.spinnerReps);
+        Spinner setsSpinner = rootView.findViewById(R.id.spinnerSets);
+
+        setsSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.setsArray)));
+        repsSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.repsArray)));
     }
 
     private void setData() {
@@ -123,7 +132,7 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
         return yVals;
     }
 
-    public void setSpinnerData(View rootView){
+    public void setExerciceSpinnerData(View rootView){
         Spinner exercices = rootView.findViewById(R.id.spinnerRoutines);
         exercices.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, this.exercicesNames));
         exercices.setOnItemSelectedListener(this);
@@ -139,7 +148,7 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
 
     }
 
-    private class UrlConnectorGetProgress extends AsyncTask<Void,Void,Void> {
+    private class UrlConnectorGetExercices extends AsyncTask<Void,Void,Void> {
 
 
         @Override
@@ -164,11 +173,13 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                     System.out.println("USER: " + user);
 
                     if (user.has("basicWorkout")) {
+                        isBasicWorkout = false;
                         workout = user.getJSONObject("basicWorkout");
                         workoutDuration = workout.getString("duration");
                         workoutId = workout.getString("id");
                         setBasicWorkout();
                     } else if (user.has("advancedWorkout")) {
+                        isBasicWorkout = false;
                         workout = user.getJSONObject("advancedWorkout");
                         workoutDuration = workout.getString("duration");
                         workoutId = workout.getString("id");
@@ -237,13 +248,14 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
 
                         for (int i = 0; i < currentDailyExercises.length(); i++) {
                             exercicesNames.add(currentDailyExercises.getJSONObject(i).getString("exerciseName"));
+                            dailyExercices.add(currentDailyExercises.getJSONObject(i));
                         }
                     }
                     getActivity().runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {
-                            setSpinnerData(rootView);
+                            setExerciceSpinnerData(rootView);
                         }
                     });
 
@@ -305,7 +317,7 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
 
                         @Override
                         public void run() {
-                            setSpinnerData(rootView);
+                            setExerciceSpinnerData(rootView);
                         }
                     });
                     br.close();
@@ -317,6 +329,20 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                 System.out.println("ERROR: Something went wrong");
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class UrlConnectorGetProgress extends AsyncTask<Void,Void,Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
         }
     }
 }
