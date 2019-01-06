@@ -120,5 +120,18 @@
     <string name="dailiesListTitle">Entrenamientos diarios: </string>
     <string name="assignButtonLabel">Escógela!</string>
     <string name="noUsersAssignedMessage">TODAVÍA NO TIENES NINGÚN USUARIO ASIGNADO!</string>
-
+    <string name="userDetailsAssignRoutineBut">ASIGNAR RUTINA PERSONALIZADA</string>
+    <string name="continueLabel">CONTINUAR</string>
+    <string name="newRoutineBodyTypeLabel">Tipo de cuerpo del usuario: </string>
+    <string name="newRoutineNameLabel">Nombre de la nueva rutina: </string>
+    <string name="emptyFields">Hay campos vacíos!</string>
+    <string name="createDailiesTitle">Aquí puede añadir los ejercicios que compondran cada uno de los entrenamientos diarios que forman su rutina: </string>
+    <string name="day1">LUNES</string>
+    <string name="day2">MARTES</string>
+    <string name="day3">MIÉRCOLES</string>
+    <string name="day4">JUEVES</string>
+    <string name="day5">VIERNES</string>
+    <string name="done">Terminé!</string>
+    <string name="add">AÑADIR EJERCICIOS</string>
+    <string name="filterByMuscularGroup">Filtrar por Grupo Muscular</string>
 </resources>

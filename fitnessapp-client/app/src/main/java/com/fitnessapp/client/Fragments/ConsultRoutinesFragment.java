@@ -70,18 +70,22 @@ public class ConsultRoutinesFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (isPremium && position == 1) {
                     workoutDuration = 5;
+                    routinesIdLog.clear();
                     filterAdvancedWorkoutsByDuration filterAdvancedWorkout = new filterAdvancedWorkoutsByDuration();
                     filterAdvancedWorkout.execute();
                 } else if (isPremium && position == 2) {
                     workoutDuration = 3;
+                    routinesIdLog.clear();
                     filterAdvancedWorkoutsByDuration filterAdvancedWorkout = new filterAdvancedWorkoutsByDuration();
                     filterAdvancedWorkout.execute();
                 } else if (!isPremium && position == 1) {
                     workoutDuration = 5;
+                    routinesIdLog.clear();
                     filterBasicWorkoutsByDuration filterBasicWorkout = new filterBasicWorkoutsByDuration();
                     filterBasicWorkout.execute();
                 } else if (!isPremium && position == 2) {
                     workoutDuration = 3;
+                    routinesIdLog.clear();
                     filterBasicWorkoutsByDuration filterBasicWorkout = new filterBasicWorkoutsByDuration();
                     filterBasicWorkout.execute();
                 }

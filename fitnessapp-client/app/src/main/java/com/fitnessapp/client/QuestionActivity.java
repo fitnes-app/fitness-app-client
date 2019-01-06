@@ -59,6 +59,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private int mesoScore = 0;
     private int ectoScore = 0;
     private int bodyTypeId = 0;
+    private String bodyTypeValue="";
     private int questionsAnswered = 0;
     private String userEmail="";
     private Boolean isPremium=false;
@@ -128,10 +129,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             //bodyTypeId = bdyTypes.indexOf(maxVal);
             if(maxVal==mesoScore){
                 bodyTypeId=1;
+                bodyTypeValue = "Mesomorph";
             }else if(maxVal==endoScore){
                 bodyTypeId=2;
+                bodyTypeValue = "Endomorph";
             }else if(maxVal==ectoScore){
                 bodyTypeId=3;
+                bodyTypeValue = "Ectomorph";
             }
             mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -216,7 +220,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
                 JSONObject subjson = new JSONObject()
                         .put("id", bodyTypeId)
-                        .put("body_type_value", bodyTypeId);
+                        .put("body_type_value", bodyTypeValue);
 /*{"userName":"asdf3", "userPassword":"asdf2", "mail":"asdf@asdf.com","weight":2,"height":2,"bodyTypeId":{"id":1,"body_type_value":1},"telephone":"asdf", "address":"asdfdsd"}*/
                 String jsonString = new JSONObject()
                         .put("userName", user.getName())

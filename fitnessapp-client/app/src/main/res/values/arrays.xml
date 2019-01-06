@@ -59,4 +59,9 @@
         <item>Thursday</item>
         <item>Friday</item>
     </string-array>
+    <string-array name="routinesDurationPicker">
+        <item>-- Pick one --</item>
+        <item> 5 days </item>
+        <item> 3 days </item>
+    </string-array>
 </resources>
