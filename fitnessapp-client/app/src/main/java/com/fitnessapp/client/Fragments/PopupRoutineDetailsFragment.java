@@ -1,17 +1,15 @@
-package com.fitnessapp.client;
+package com.fitnessapp.client.Fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.Table;
 

@@ -1,32 +1,21 @@
 package com.fitnessapp.client.Fragments;
 
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.fitnessapp.client.BaseDrawerActivity;
-import com.fitnessapp.client.PopupRoutineDetailsFragment;
 import com.fitnessapp.client.R;
-import com.fitnessapp.client.RoutinesActivity;
 import com.fitnessapp.client.Utils.StaticStrings;
-import com.fitnessapp.client.Utils.Table;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,12 +25,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class RoutineDetailFragment extends Fragment {
 

@@ -121,5 +121,21 @@
     <string name="title_activity_coach_list" translatable="false">CoachList</string>
     <string name="title_activity_trainer_user_list" translatable="false">TrainerUserList</string>
     <string name="noUsersAssignedMessage">YOU HAVE NO USERS ASSIGNED YET!</string>
+    <string name="userDetailsAssignRoutineBut">ASSIGN CUSTOM ROUTINE</string>
+    <string name="continueLabel">CONTINUE</string>
+    <string name="newRoutineBodyTypeLabel">User body type: </string>
+    <string name="newRoutineNameLabel">New routine name: </string>
+    <string name="emptyFields">There are empty fields!</string>
+    <string name="createDailiesTitle">Here you may add the exercises that will compose each daily workout from your routine:</string>
+    <string name="day1">MONDAY</string>
+    <string name="day2">TUESDAY</string>
+    <string name="day3">WEDNESDAY</string>
+    <string name="day4">THURSDAY</string>
+    <string name="day5">FRIDAY</string>
+    <string name="done">Done!</string>
+    <string name="add">ADD EXERCISES</string>
+    <string name="filterByMuscularGroup">Filter by Muscular Group</string>
+
+
 
 </resources>

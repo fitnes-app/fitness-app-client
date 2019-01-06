@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class UserDetailsFragment extends Fragment {
@@ -36,6 +37,7 @@ public class UserDetailsFragment extends Fragment {
     private URL url;
 
     private int clientId;
+    private int bodyTypeId;
     private String username ="";
     private String email="";
     private String telephone="";
@@ -71,6 +73,13 @@ public class UserDetailsFragment extends Fragment {
             }
         });
 
+        Button userDetailsCreateWorkout = RootView.findViewById(R.id.userDetailsCreateWorkout);
+        userDetailsCreateWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goCreateRoutinePage(v);
+            }
+        });
         userDetails = new UrlConnectorGetClientDetails();
         userDetails.execute();
 
@@ -83,7 +92,16 @@ public class UserDetailsFragment extends Fragment {
         BaseDrawerActivity bda = (BaseDrawerActivity)getActivity();
         bda.displaySelectedFragment(fragment);
     }
+    public void goCreateRoutinePage(View w){
+        Fragment fragment = new CreateNewRoutineFragment();
 
+        Bundle b = new Bundle();
+        b.putInt("clientId",clientId);
+        b.putInt("bodyTypeId",bodyTypeId);
+        fragment.setArguments(b);
+        BaseDrawerActivity bda = (BaseDrawerActivity) getActivity();
+        bda.displaySelectedFragment(fragment);
+    }
     private class UrlConnectorGetClientDetails extends AsyncTask<Void,Void,Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -108,6 +126,7 @@ public class UserDetailsFragment extends Fragment {
                         weight= client.getDouble("weight");
                         JSONObject subjson = client.getJSONObject("bodyTypeId");
                         bodyType= subjson.getString("bodyTypeValue");
+                        bodyTypeId = subjson.getInt("id");
 
                         getActivity().runOnUiThread(new Runnable() {
 
