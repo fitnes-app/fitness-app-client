@@ -421,7 +421,7 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                     conn.setDoOutput(true);
 
                     /*{"userName":"asdf3", "userPassword":"asdf2", "mail":"asdf@asdf.com","weight":2,"height":2,"bodyTypeId":{"id":1,"body_type_value":1},"telephone":"asdf", "address":"asdfdsd"}*/
-                    String jsonString = new JSONObject()
+                    /*String jsonString = new JSONObject()
                             .put("userName", user.getName())
                             .put("userPassword", user.getPassword())
                             .put("mail", user.getEmail())
@@ -432,9 +432,9 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                             .put("address", user.getAddress())
                             .put("is_Premium", isPremium)
                             .toString();
-
+*/
                     OutputStream os = conn.getOutputStream();
-                    os.write(jsonString.getBytes());
+                    //os.write(jsonString.getBytes());
                     os.flush();
                     os.close();
                     System.out.println("CONNECTION CODE: " + conn.getResponseCode());
