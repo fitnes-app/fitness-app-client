@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.fitnessapp.client.BaseDrawerActivity;
@@ -34,34 +35,45 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class ProgressTrackerFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class ProgressTrackerFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private LineChart mChart;
     private Boolean isPremium;
     private String workoutId = "", workoutDuration = "";
     private ArrayList<String> exercicesNames;
-    private ArrayList<JSONObject> dailyExercices;
+    private ArrayList<JSONObject> dailyExercices, dailyTrackers;
     private UrlConnectorGetProgress ucgp;
     private UrlConnectorGetExercices ucge;
-    private boolean isBasicWorkout;
+    private UrlConnectorPostTracker ucpt;
+    private boolean isAdvancedWorkout;
     private URL url;
     private HttpURLConnection conn;
     private BaseDrawerActivity activity;
     private View rootView;
+    private Button itButton;
+
+
     public ProgressTrackerFragment(){}
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Progress Tracker");
         dailyExercices = new ArrayList<>();
         exercicesNames = new ArrayList<>();
-        isBasicWorkout = true;
+        dailyTrackers = new ArrayList<>();
+        ucgp = new UrlConnectorGetProgress();
+        ucge = new UrlConnectorGetExercices();
+        ucpt = new UrlConnectorPostTracker();
+        isAdvancedWorkout = false;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_progress_tracker, container, false);
+        itButton = rootView.findViewById(R.id.itButton);
+        itButton.setOnClickListener(this);
         activity = (BaseDrawerActivity)getActivity();
         ucge.execute();
         ucgp.execute();
@@ -148,6 +160,11 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
 
     }
 
+    @Override
+    public void onClick(View view) {
+        ucpt.execute();
+    }
+
     private class UrlConnectorGetExercices extends AsyncTask<Void,Void,Void> {
 
 
@@ -173,13 +190,13 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                     System.out.println("USER: " + user);
 
                     if (user.has("basicWorkout")) {
-                        isBasicWorkout = false;
+                        isAdvancedWorkout = false;
                         workout = user.getJSONObject("basicWorkout");
                         workoutDuration = workout.getString("duration");
                         workoutId = workout.getString("id");
                         setBasicWorkout();
                     } else if (user.has("advancedWorkout")) {
-                        isBasicWorkout = false;
+                        isAdvancedWorkout = true;
                         workout = user.getJSONObject("advancedWorkout");
                         workoutDuration = workout.getString("duration");
                         workoutId = workout.getString("id");
@@ -214,6 +231,8 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                 JSONArray currentDailyExercises = new JSONArray();
                 url = new URL(StaticStrings.ipserver + "/dailyadvancedworkout/findByAdvancedWorkoutId/" + workoutId);
                 conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
 
                 if (conn.getResponseCode() == 200) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -337,6 +356,110 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
 
         @Override
         protected Void doInBackground(Void... params) {
+
+            try {
+                if(isAdvancedWorkout) {
+                    url = new URL(StaticStrings.ipserver + "/advancedClientTracking/findByClientId/" + activity.userId);
+                    conn = (HttpURLConnection) url.openConnection();
+
+                    if (conn.getResponseCode() == 200) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String output = br.readLine();
+                        JSONArray arr = new JSONArray(output);
+                        if (null != arr && arr.length() > 0) {
+
+                            for (int i = 0; i < arr.length(); i++) {
+                                dailyTrackers.add(arr.getJSONObject(i));
+                            }
+                        }
+                        br.close();
+                    }
+                } else {
+                    url = new URL(StaticStrings.ipserver + "/basicClientTracking/findByClientId/" + activity.userId);
+                    conn = (HttpURLConnection) url.openConnection();
+
+                    if (conn.getResponseCode() == 200) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String output = br.readLine();
+                        JSONArray arr = new JSONArray(output);
+                        if (null != arr && arr.length() > 0) {
+
+                            for (int i = 0; i < arr.length(); i++) {
+                                dailyTrackers.add(arr.getJSONObject(i));
+                            }
+                        }
+                        br.close();
+                    }
+                }
+                conn.disconnect();
+            }catch(Exception e){
+                System.out.println("ERROR: Something went wrong");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+    }
+
+
+    private class UrlConnectorPostTracker extends AsyncTask<Void,Void,Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            try {
+                if(isAdvancedWorkout) {
+                    url = new URL(StaticStrings.ipserver + "/dailyadvancedworkout/findByAdvancedWorkoutId/" + workoutId);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+
+                    /*{"userName":"asdf3", "userPassword":"asdf2", "mail":"asdf@asdf.com","weight":2,"height":2,"bodyTypeId":{"id":1,"body_type_value":1},"telephone":"asdf", "address":"asdfdsd"}*/
+                    String jsonString = new JSONObject()
+                            .put("userName", user.getName())
+                            .put("userPassword", user.getPassword())
+                            .put("mail", user.getEmail())
+                            .put("weight", user.getWeigth())
+                            .put("height", user.getHeight())
+                            .put("bodyTypeId", subjson)
+                            .put("telephone", user.getTelNum())
+                            .put("address", user.getAddress())
+                            .put("is_Premium", isPremium)
+                            .toString();
+
+                    OutputStream os = conn.getOutputStream();
+                    os.write(jsonString.getBytes());
+                    os.flush();
+                    os.close();
+                    System.out.println("CONNECTION CODE: " + conn.getResponseCode());
+                } else {
+                    url = new URL(StaticStrings.ipserver + "/dailybasicworkout/findByAdvancedWorkoutId/" + workoutId);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+
+
+                    /*{"userName":"asdf3", "userPassword":"asdf2", "mail":"asdf@asdf.com","weight":2,"height":2,"bodyTypeId":{"id":1,"body_type_value":1},"telephone":"asdf", "address":"asdfdsd"}*/
+                    String jsonString = new JSONObject().toString();
+
+                    OutputStream os = conn.getOutputStream();
+                    os.write(jsonString.getBytes());
+                    os.flush();
+                    os.close();
+                    System.out.println("CONNECTION CODE: " + conn.getResponseCode());
+                }
+                conn.disconnect();
+            }catch(Exception e){
+                System.out.println("ERROR: Something went wrong");
+                e.printStackTrace();
+            }
             return null;
         }
 
