@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/layouts_top_margin"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:paddingTop="@dimen/layouts_top_margin"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:gravity="center"
@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -35,128 +35,141 @@
                 android:layout_weight="5"
                 android:text="" />
         </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/emailLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/email"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
             <TextView
-                android:id="@+id/emailLabel"
+                android:id="@+id/emailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/telephoneLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/telNum"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/telephoneText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="" />
+
+            </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/heightLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/email"
-                android:textColor="@color/black"
+                android:text="@string/height"
+                android:textColor="@android:color/black"
                 android:textSize="20sp" />
-        <TextView
-            android:id="@+id/emailText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:text="" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/telephoneLabel"
+                android:id="@+id/heightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/telNum"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/telephoneText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:text="" />
-
+                android:layout_weight="5"
+                android:text="" />
         </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/heightLabel"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/height"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/heightText"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/weightLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/weight"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/weightText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:text="" />
-    </LinearLayout>
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="horizontal">
+            <TextView
+                android:id="@+id/bodyTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/body_type"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/weightLabel"
+            <TextView
+                android:id="@+id/bodyTypeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="15"
+                android:text="" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/weight"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/userDetailsCreateWorkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/userDetailsAssignRoutineBut"/>
 
-        <TextView
-            android:id="@+id/weightText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:text="" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/bodyTypeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/body_type"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/bodyTypeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="15"
-            android:text="" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/userDetailsBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btl"/>
+        </LinearLayout>
         <Button
-            android:id="@+id/userDetailsCreateWorkout"
+            android:id="@+id/contactButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/userDetailsAssignRoutineBut"/>
-
-    <Button
-        android:id="@+id/userDetailsBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btl"/>
+            android:text="@string/contact"/>
     </LinearLayout>
 </LinearLayout>

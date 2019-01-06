@@ -1,7 +1,10 @@
 package com.fitnessapp.client.Fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class UserDetailsFragment extends Fragment {
+public class UserDetailsFragment extends Fragment implements View.OnClickListener {
 
     private View RootView;
     private TextView usernameText;
@@ -72,7 +75,8 @@ public class UserDetailsFragment extends Fragment {
                 back(v);
             }
         });
-
+        Button contactButton = RootView.findViewById(R.id.contactButton);
+        contactButton.setOnClickListener(this);
         Button userDetailsCreateWorkout = RootView.findViewById(R.id.userDetailsCreateWorkout);
         userDetailsCreateWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +88,25 @@ public class UserDetailsFragment extends Fragment {
         userDetails.execute();
 
         return RootView;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.contactButton:
+                if(!("").equals(email)) {
+                    Intent mailIntent = new Intent(Intent.ACTION_VIEW);
+                    Uri data = Uri.parse("mailto:&to=" + email);
+                    mailIntent.setData(data);
+                    startActivity(Intent.createChooser(mailIntent, "Send mail..."));
+                }
+                break;
+
+            default:
+                break;
+        }
     }
 
     public void back(View view) {
@@ -102,6 +125,7 @@ public class UserDetailsFragment extends Fragment {
         BaseDrawerActivity bda = (BaseDrawerActivity) getActivity();
         bda.displaySelectedFragment(fragment);
     }
+
     private class UrlConnectorGetClientDetails extends AsyncTask<Void,Void,Void> {
         @Override
         protected Void doInBackground(Void... params) {
