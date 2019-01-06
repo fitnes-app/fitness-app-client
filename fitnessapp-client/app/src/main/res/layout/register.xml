@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
+        android:layout_margin="0dp"
         android:text="@string/register"
         android:textColor="@android:color/black"
         android:textSize="25sp"
@@ -139,12 +139,13 @@
             android:hint="@string/telNum"
             android:textSize="14sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/textViewRole"
@@ -153,12 +154,33 @@
             android:layout_weight="10"
             android:text="@string/role"
             android:textColor="@android:color/black" />
+
         <Spinner
             android:id="@+id/spinnerRoles"
             android:layout_width="143dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:entries="@array/rolesOptions" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/textSpec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:text="@string/speciality"
+            android:textColor="@android:color/black" />
+        <Spinner
+            android:id="@+id/spinnerSpec"
+            android:layout_width="143dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout

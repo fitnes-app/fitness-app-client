@@ -13,7 +13,6 @@ import android.widget.ListView;
 
 import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
-import com.fitnessapp.client.TrainerUserList;
 import com.fitnessapp.client.Utils.StaticStrings;
 
 import org.json.JSONArray;
@@ -36,6 +35,7 @@ public class MainPageTrainerFragment extends Fragment {
     ArrayList<String> clientNames;
     private String trainerMail;
     private int trainerID;
+    private BaseDrawerActivity activity;
     ArrayList<String> assignedUsers = new ArrayList<String>();
     ArrayList<Integer> userIds = new ArrayList<Integer>();
     ArrayList<String> userMails = new ArrayList<String>();
@@ -51,7 +51,6 @@ public class MainPageTrainerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Trainer Main Page");
-        trainerMail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
     }
 
     @Override
@@ -59,6 +58,9 @@ public class MainPageTrainerFragment extends Fragment {
                              Bundle savedInstanceState) {
         RootView = inflater.inflate(R.layout.fragment_main_page_trainer, container, false);
         ucgte = new UrlConnectorGetTrainerEmail();
+        activity = (BaseDrawerActivity) getActivity();
+        activity.userMail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
+        trainerMail = activity.userMail;
         ucgte.execute();
 
         return RootView;
@@ -120,6 +122,7 @@ public class MainPageTrainerFragment extends Fragment {
                     JSONObject tra = arr.getJSONObject(0);
 
                     trainerID = tra.getInt("id");
+                    activity.userId = trainerID;
                     System.out.println(trainerID);
                     br.close();
                 }
