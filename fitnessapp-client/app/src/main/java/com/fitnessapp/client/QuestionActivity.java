@@ -234,6 +234,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         .put("is_Premium", isPremium)
                         .toString();
 
+                System.out.println(jsonString);
                 OutputStream os = conn.getOutputStream();
                 os.write(jsonString.getBytes());
                 os.flush();

@@ -108,8 +108,11 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                 float clientWeight;
                 float clientHeight;
                 JSONObject clientBody;
+                JSONObject clientBasW;
+                JSONObject clientAdvW;
                 String clientTel;
                 String clientAdd;
+                boolean clientPrem;
 
                 if(conn.getResponseCode() == 200){
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -126,6 +129,9 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                     clientBody = cli.getJSONObject("bodyTypeId");
                     clientTel = cli.getString("telephone");
                     clientAdd = cli.getString("address");
+                    clientAdvW = cli.getJSONObject("advancedWorkout");
+                    clientBasW = cli.getJSONObject("basicWorkout");
+                    clientPrem = cli.getBoolean("is_Premium");
 
                     System.out.println("CLIENT ID: " + clientID);
                     br.close();
@@ -235,7 +241,10 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                     .put("height", clientHeight)
                     .put("bodyTypeId", clientBody)
                     .put("telephone", clientTel)
-                    .put("address", clientAdd);
+                    .put("address", clientAdd)
+                    .put("advancedWorkout", clientAdvW)
+                    .put("basicWorkout", clientBasW)
+                    .put("is_Premium", clientPrem);
 
                 System.out.println("Client Json: " + clientJson);
 
