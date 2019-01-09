@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -31,17 +32,24 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 
-public class ProgressTrackerFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class ProgressTrackerFragment extends Fragment implements View.OnClickListener {
 
     private LineChart mChart;
     private Boolean isPremium;
     private String workoutId = "", workoutDuration = "";
     private ArrayList<String> exercicesNames;
     private ArrayList<JSONObject> dailyExercices, dailyTrackers;
+    private JSONObject user,workout;
     private UrlConnectorGetProgress ucgp;
     private UrlConnectorGetExercices ucge;
     private UrlConnectorPostTracker ucpt;
@@ -51,7 +59,8 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
     private BaseDrawerActivity activity;
     private View rootView;
     private Button itButton;
-
+    private Integer setsValue, repsValue;
+    private Spinner repsSpinner,setsSpinner,exercicesSpinner;
 
     public ProgressTrackerFragment(){}
 
@@ -89,8 +98,8 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
         // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
         mChart.setDescription("");
-        Spinner repsSpinner = rootView.findViewById(R.id.spinnerReps);
-        Spinner setsSpinner = rootView.findViewById(R.id.spinnerSets);
+        repsSpinner = rootView.findViewById(R.id.spinnerReps);
+        setsSpinner = rootView.findViewById(R.id.spinnerSets);
 
         setsSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.setsArray)));
         repsSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.repsArray)));
@@ -124,40 +133,54 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
 
     private ArrayList<String> setXAxisValues(){
         ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add("10");
-        xVals.add("20");
-        xVals.add("30");
-        xVals.add("30.5");
-        xVals.add("40");
+        for(JSONObject tracker : dailyTrackers){
+
+            try {
+                String date = tracker.getString("date");
+                if(!xVals.contains(date))
+                    xVals.add(date);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         return xVals;
     }
 
     private ArrayList<Entry> setYAxisValues(){
         ArrayList<Entry> yVals = new ArrayList<Entry>();
-        yVals.add(new Entry(60, 0));
-        yVals.add(new Entry(48, 1));
-        yVals.add(new Entry(70.5f, 2));
-        yVals.add(new Entry(100, 3));
-        yVals.add(new Entry(180.9f, 4));
+        HashMap<String, Integer> trackersByDay = new HashMap<>();
+        for(JSONObject tracker : dailyTrackers){
+            try{
+                String date = tracker.getString("date");
+                if(trackersByDay.containsKey(date)){
+                    int actualValue = trackersByDay.get(date);
+                    trackersByDay.put(date, actualValue + tracker.getInt("kcal"));
+                }else {
+                    trackersByDay.put(date, tracker.getInt("kcal"));
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+
+        Iterator it = trackersByDay.entrySet().iterator();
+        int counter = 0;
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            yVals.add(new Entry(Integer.parseInt(pair.getValue().toString()), counter));
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+            counter++;
+            it.remove(); // avoids a ConcurrentModificationException
+        }
 
         return yVals;
     }
 
     public void setExerciceSpinnerData(View rootView){
-        Spinner exercices = rootView.findViewById(R.id.spinnerRoutines);
-        exercices.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, this.exercicesNames));
-        exercices.setOnItemSelectedListener(this);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+        exercicesSpinner = rootView.findViewById(R.id.spinnerRoutines);
+        exercicesSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, this.exercicesNames));
     }
 
     @Override
@@ -177,7 +200,6 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Accept", "application/json");
-                JSONObject workout, user;
                 int userID = -1;
 
                 if (conn.getResponseCode() == 200) {
@@ -259,7 +281,6 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                     for (int i = 0; i < arr.length(); i++) {
                         Integer weekDay = arr.getJSONObject(i).getInt("week_day");
                         if (dayOfWeek == weekDay) {
-                            //currentDailyId = arr.getJSONObject(i).getString("id");
                             currentDailyExercises = arr.getJSONObject(i).getJSONArray("advancedExercises");
                         }
                     }
@@ -329,6 +350,7 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
 
                         for (int i = 0; i < currentDailyExercises.length(); i++) {
                             exercicesNames.add(currentDailyExercises.getJSONObject(i).getString("exerciseName"));
+                            dailyExercices.add(currentDailyExercises.getJSONObject(i));
                         }
                     }
 
@@ -359,7 +381,7 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
 
             try {
                 if(isAdvancedWorkout) {
-                    url = new URL(StaticStrings.ipserver + "/advancedClientTracking/findByClientId/" + activity.userId);
+                    url = new URL(StaticStrings.ipserver + "/advancedclienttracking/findByClientId/" + activity.userId);
                     conn = (HttpURLConnection) url.openConnection();
 
                     if (conn.getResponseCode() == 200) {
@@ -375,14 +397,14 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
                         br.close();
                     }
                 } else {
-                    url = new URL(StaticStrings.ipserver + "/basicClientTracking/findByClientId/" + activity.userId);
+                    url = new URL(StaticStrings.ipserver + "/basicclienttracking/findByClientId/" + activity.userId);
                     conn = (HttpURLConnection) url.openConnection();
 
                     if (conn.getResponseCode() == 200) {
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                         String output = br.readLine();
                         JSONArray arr = new JSONArray(output);
-                        if (null != arr && arr.length() > 0) {
+                        if (arr != null && arr.length() > 0) {
 
                             for (int i = 0; i < arr.length(); i++) {
                                 dailyTrackers.add(arr.getJSONObject(i));
@@ -401,6 +423,13 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
 
         @Override
         protected void onPostExecute(Void result) {
+            getActivity().runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    setData();
+                }
+            });
             super.onPostExecute(result);
         }
     }
@@ -413,48 +442,57 @@ public class ProgressTrackerFragment extends Fragment implements AdapterView.OnI
         protected Void doInBackground(Void... params) {
 
             try {
+                Calendar cal = Calendar. getInstance();
+                Date date=cal. getTime();
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                String formattedDate=dateFormat. format(date);
+
+                JSONObject trackedExercice = new JSONObject();
+                for(JSONObject exercice : dailyExercices){
+                    if(exercice.getString("name").equals(exercicesSpinner.getSelectedItem().toString())) trackedExercice = exercice;
+                }
+
                 if(isAdvancedWorkout) {
-                    url = new URL(StaticStrings.ipserver + "/dailyadvancedworkout/findByAdvancedWorkoutId/" + workoutId);
+                    url = new URL(StaticStrings.ipserver + "/advancedclienttracking");
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.setDoOutput(true);
 
-                    /*{"userName":"asdf3", "userPassword":"asdf2", "mail":"asdf@asdf.com","weight":2,"height":2,"bodyTypeId":{"id":1,"body_type_value":1},"telephone":"asdf", "address":"asdfdsd"}*/
-                    /*String jsonString = new JSONObject()
-                            .put("userName", user.getName())
-                            .put("userPassword", user.getPassword())
-                            .put("mail", user.getEmail())
-                            .put("weight", user.getWeigth())
-                            .put("height", user.getHeight())
-                            .put("bodyTypeId", subjson)
-                            .put("telephone", user.getTelNum())
-                            .put("address", user.getAddress())
-                            .put("is_Premium", isPremium)
+                    String jsonString = new JSONObject()
+                            .put("advanced_exercice_id", trackedExercice)
+                            .put("client_id", user)
+                            .put("tracking_sets", setsValue)
+                            .put("repetitions", repsValue)
+                            .put("kcal", trackedExercice.get("kcal"))
+                            .put("date", formattedDate)
                             .toString();
-*/
-                    OutputStream os = conn.getOutputStream();
-                    //os.write(jsonString.getBytes());
-                    os.flush();
-                    os.close();
-                    System.out.println("CONNECTION CODE: " + conn.getResponseCode());
-                } else {
-                    url = new URL(StaticStrings.ipserver + "/dailybasicworkout/findByAdvancedWorkoutId/" + workoutId);
-                    conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setDoOutput(true);
-
-
-                    /*{"userName":"asdf3", "userPassword":"asdf2", "mail":"asdf@asdf.com","weight":2,"height":2,"bodyTypeId":{"id":1,"body_type_value":1},"telephone":"asdf", "address":"asdfdsd"}*/
-                    String jsonString = new JSONObject().toString();
 
                     OutputStream os = conn.getOutputStream();
                     os.write(jsonString.getBytes());
                     os.flush();
                     os.close();
-                    System.out.println("CONNECTION CODE: " + conn.getResponseCode());
+                } else {
+                    url = new URL(StaticStrings.ipserver + "/basicclienttracking/");
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+                    String jsonString = new JSONObject()
+                            .put("basic_exercice_id", trackedExercice)
+                            .put("client_id", user)
+                            .put("tracking_sets", setsValue)
+                            .put("repetitions", repsValue)
+                            .put("kcal", trackedExercice.get("kcal"))
+                            .put("date", formattedDate)
+                            .toString();
+
+                    OutputStream os = conn.getOutputStream();
+                    os.write(jsonString.getBytes());
+                    os.flush();
+                    os.close();
                 }
+                System.out.println("CONNECTION CODE: " + conn.getResponseCode());
                 conn.disconnect();
             }catch(Exception e){
                 System.out.println("ERROR: Something went wrong");

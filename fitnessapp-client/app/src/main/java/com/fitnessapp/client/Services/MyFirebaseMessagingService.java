@@ -1,25 +1,45 @@
 package com.fitnessapp.client.Services;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 
 import com.fitnessapp.client.LoginActivity;
 import com.fitnessapp.client.R;
+import com.fitnessapp.client.Utils.StaticStrings;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONObject;
+
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
+    public static final String DEFAULT_CHANNEL_ID = "cat.eps.jgervas.messagingkk.DEFAULT";
+    public static final String DEFAULT_CHANNEL_NAME = "DEFAULT CHANNEL";
+    public static final int NOTIFICATION_ID = 1;
+    private String token;
 
     @Override
     public void onNewToken(String s) {
-        super.onNewToken(s);
         System.out.println("NEW_TOKEN:" + s);
+        this.token = s;
+        sendRegistrationTokenToServer(s);
+        super.onNewToken(s);
+    }
+
+    private void sendRegistrationTokenToServer(String s) {
+        UrlConnectorSubmitToken ucst = new UrlConnectorSubmitToken();
+        ucst.execute();
     }
 
     // [START receive_message]
@@ -64,10 +84,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String channelId = getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this)
+                new NotificationCompat.Builder(this, DEFAULT_CHANNEL_ID)
                         .setSmallIcon(R.drawable.info_icon)
-                        .setContentTitle("FCM Message")
-                        .setContentText("HOLA BEBE")
+                        .setContentTitle("Fit4u Notification")
+                        .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
@@ -75,6 +95,51 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            // create android channel
+            NotificationChannel androidChannel = new
+                    NotificationChannel(DEFAULT_CHANNEL_ID,
+                    DEFAULT_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(androidChannel);
+        }
+
+        notificationManager.notify(NOTIFICATION_ID , notificationBuilder.build());
+    }
+
+    private class UrlConnectorSubmitToken extends AsyncTask<Void,Void,Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                //CREATE CLIENT IN DB
+                URL url = new URL(StaticStrings.ipserver + "/token/");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                String jsonString = new JSONObject()
+                        .put("token", token)
+                        .toString();
+
+                OutputStream os = conn.getOutputStream();
+                os.write(jsonString.getBytes());
+                os.flush();
+                os.close();
+                System.out.println("CONNECTION CODE: " + conn.getResponseCode());
+                conn.disconnect();
+            } catch (Exception e) {
+                System.out.println("User could not be created: ");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
     }
 }
