@@ -38,7 +38,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendRegistrationTokenToServer(String s) {
-
+        UrlConnectorSubmitToken ucst = new UrlConnectorSubmitToken();
+        ucst.execute();
     }
 
     // [START receive_message]
@@ -85,8 +86,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, DEFAULT_CHANNEL_ID)
                         .setSmallIcon(R.drawable.info_icon)
-                        .setContentTitle("FCM Message")
-                        .setContentText("HOLA BEBE")
+                        .setContentTitle("Fit4u Notification")
+                        .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
@@ -106,7 +107,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(NOTIFICATION_ID , notificationBuilder.build());
     }
 
-    private class UrlConnectorCreateClient extends AsyncTask<Void,Void,Void> {
+    private class UrlConnectorSubmitToken extends AsyncTask<Void,Void,Void> {
 
 
         @Override
@@ -120,7 +121,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 conn.setDoOutput(true);
 
                 String jsonString = new JSONObject()
-                        .put("registrationToken", token)
+                        .put("token", token)
                         .toString();
 
                 OutputStream os = conn.getOutputStream();
