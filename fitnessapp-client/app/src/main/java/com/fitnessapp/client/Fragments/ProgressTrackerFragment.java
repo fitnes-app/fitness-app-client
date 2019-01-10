@@ -133,6 +133,7 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
 
     private ArrayList<String> setXAxisValues(){
         ArrayList<String> xVals = new ArrayList<String>();
+        xVals.add("0");
         for(JSONObject tracker : dailyTrackers){
 
             try {
@@ -164,12 +165,11 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
                 e.printStackTrace();
             }
         }
-
+        yVals.add(new Entry(0,0));
         Iterator it = trackersByDay.entrySet().iterator();
-        int counter = 0;
+        int counter = 1;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            yVals.add(new Entry(Integer.parseInt(pair.getValue().toString()), counter));
             System.out.println(pair.getKey() + " = " + pair.getValue());
             counter++;
             it.remove(); // avoids a ConcurrentModificationException
@@ -205,8 +205,7 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
                 if (conn.getResponseCode() == 200) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     String output = br.readLine();
-                    JSONArray arr = new JSONArray(output);
-                    user = arr.getJSONObject(0);
+                    user = new JSONObject(output);
                     userID = user.getInt("id");
                     isPremium = user.getBoolean("is_Premium");
                     System.out.println("USER: " + user);
@@ -444,12 +443,12 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
             try {
                 Calendar cal = Calendar. getInstance();
                 Date date=cal. getTime();
-                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-                String formattedDate=dateFormat. format(date);
+                DateFormat dateFormat = new SimpleDateFormat("dd:mm:yyyy");
+                String formattedDate=dateFormat.format(date);
 
                 JSONObject trackedExercice = new JSONObject();
                 for(JSONObject exercice : dailyExercices){
-                    if(exercice.getString("name").equals(exercicesSpinner.getSelectedItem().toString())) trackedExercice = exercice;
+                    if(exercice.getString("exerciseName").equals(exercicesSpinner.getSelectedItem().toString())) trackedExercice = exercice;
                 }
 
                 if(isAdvancedWorkout) {
@@ -460,14 +459,14 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
                     conn.setDoOutput(true);
 
                     String jsonString = new JSONObject()
-                            .put("advanced_exercice_id", trackedExercice)
-                            .put("client_id", user)
-                            .put("tracking_sets", setsValue)
+                            .put("advancedExerciseId", trackedExercice)
+                            .put("clientId", user)
+                            .put("trackingSets", setsValue)
                             .put("repetitions", repsValue)
                             .put("kcal", trackedExercice.get("kcal"))
                             .put("date", formattedDate)
                             .toString();
-
+                    System.out.println(jsonString);
                     OutputStream os = conn.getOutputStream();
                     os.write(jsonString.getBytes());
                     os.flush();
@@ -478,10 +477,12 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.setDoOutput(true);
+                    setsValue = Integer.parseInt(setsSpinner.getSelectedItem().toString());
+                    repsValue = Integer.parseInt(repsSpinner.getSelectedItem().toString());
                     String jsonString = new JSONObject()
-                            .put("basic_exercice_id", trackedExercice)
-                            .put("client_id", user)
-                            .put("tracking_sets", setsValue)
+                            .put("basicExerciseId", trackedExercice)
+                            .put("clientId", user)
+                            .put("trackingSets", setsValue)
                             .put("repetitions", repsValue)
                             .put("kcal", trackedExercice.get("kcal"))
                             .put("date", formattedDate)
