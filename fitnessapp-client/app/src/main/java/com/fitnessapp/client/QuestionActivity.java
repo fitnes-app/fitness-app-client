@@ -2,16 +2,27 @@ package com.fitnessapp.client;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fitnessapp.client.Utils.QuestionLibrary;
+import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,12 +40,14 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
     private QuestionLibrary mQuestionLibrary = new QuestionLibrary();
 
+    private FirebaseAuth mAuth;
     private TextView mQuestionView;
     private Button mButtonChoice1;
     private Button mButtonChoice2;
     private Button mButtonChoice3;
     private Button mButtonTransient;
-    private String ipserver = "http://localhost:8080/fitness-app-api-web/api";
+    private UrlConnectorCreateClient uccc;
+    private HttpURLConnection conn;
     private User user;
     private LinearLayout questionary, lastData;
     private EditText weightET, heightET;
@@ -46,12 +59,16 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private int mesoScore = 0;
     private int ectoScore = 0;
     private int bodyTypeId = 0;
+    private String bodyTypeValue="";
     private int questionsAnswered = 0;
+    private String userEmail="";
+    private Boolean isPremium=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_questionnaire);
+        mAuth = FirebaseAuth.getInstance();
         Intent i = getIntent();
         if(i!=null){
             Bundle b = i.getBundleExtra("b");
@@ -109,12 +126,50 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             bdyTypes.add(endoScore);
             bdyTypes.add(ectoScore);
             Integer maxVal = Collections.max(bdyTypes);
-            bodyTypeId = bdyTypes.indexOf(maxVal);
-            UrlConnectorCreateClient uccc = new UrlConnectorCreateClient();
-            uccc.execute();
-            Intent i = new Intent(this,LoginActivity.class);
-            startActivity(i);
+            //bodyTypeId = bdyTypes.indexOf(maxVal);
+            if(maxVal==mesoScore){
+                bodyTypeId=1;
+                bodyTypeValue = "Mesomorph";
+            }else if(maxVal==endoScore){
+                bodyTypeId=2;
+                bodyTypeValue = "Endomorph";
+            }else if(maxVal==ectoScore){
+                bodyTypeId=3;
+                bodyTypeValue = "Ectomorph";
+            }
+            mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("REGISTER: ", "createUserWithEmail:success");
+                                FirebaseUser fbUser = mAuth.getCurrentUser();
+                                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                                mDatabase.child("Users").child(fbUser.getUid()).setValue(user);
+                                uccc = new UrlConnectorCreateClient();
+                                uccc.execute();
+                                toBaseDrawerActivity();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("REGISTER: ", "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(QuestionActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
+    }
+
+    private void toBaseDrawerActivity() {
+        Intent i = new Intent(this, BaseDrawerActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable("userType", user.getRole());
+        b.putString("userEmail",user.getEmail());
+        b.putBoolean("isPremium",isPremium);
+        i.putExtra("bundle", b);
+        startActivity(i);
+        finish();
     }
 
     private void updateScores(Button mButtonChoice) {
@@ -141,7 +196,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         mAnswer3 = mQuestionLibrary.getAnswerEndo(mQuestionNumber);
         mQuestionNumber++;
     }
-
+    @Override
+    public void onDestroy(){
+        if(!uccc.isCancelled()){
+            uccc.cancel(true);
+        }
+        super.onDestroy();
+    }
 
     private class UrlConnectorCreateClient extends AsyncTask<Void,Void,Void> {
 
@@ -150,8 +211,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         protected Void doInBackground(Void... params) {
             try {
                 //CREATE CLIENT IN DB
-                URL url = new URL(ipserver  + "/client/");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                URL url = new URL(StaticStrings.ipserver + "/client/");
+                conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
@@ -159,7 +220,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
                 JSONObject subjson = new JSONObject()
                         .put("id", bodyTypeId)
-                        .put("body_type_value", bodyTypeId);
+                        .put("body_type_value", bodyTypeValue);
 /*{"userName":"asdf3", "userPassword":"asdf2", "mail":"asdf@asdf.com","weight":2,"height":2,"bodyTypeId":{"id":1,"body_type_value":1},"telephone":"asdf", "address":"asdfdsd"}*/
                 String jsonString = new JSONObject()
                         .put("userName", user.getName())
@@ -170,7 +231,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         .put("bodyTypeId", subjson)
                         .put("telephone", user.getTelNum())
                         .put("address", user.getAddress())
+                        .put("is_Premium", isPremium)
                         .toString();
+
                 System.out.println(jsonString);
                 OutputStream os = conn.getOutputStream();
                 os.write(jsonString.getBytes());
@@ -179,7 +242,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 System.out.println("CONNECTION CODE: " + conn.getResponseCode());
                 conn.disconnect();
             } catch (Exception e) {
-                System.out.println("User could not be created:" + e);
+                System.out.println("User could not be created: ");
+                e.printStackTrace();
             }
             return null;
         }

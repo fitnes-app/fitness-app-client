@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.fitnessapp.client.Fragments.UserDetailsFragment;
+
 public class UserInfo extends BaseDrawerActivityTrainer{
 
     @Override
@@ -41,7 +43,7 @@ public class UserInfo extends BaseDrawerActivityTrainer{
     }
     public void openUserDetails(View view) {
         // Prepare el moviment dsde la clase que estas fins a DisplayMessage...
-        Intent intent = new Intent(this, UserDetailsActivity.class);
+        Intent intent = new Intent(this, UserDetailsFragment.class);
         //Efectua el cambi de activity
         startActivity(intent);
     }

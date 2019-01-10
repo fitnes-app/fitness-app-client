@@ -26,7 +26,11 @@ import com.fitnessapp.client.Fragments.ProfileTrainerFragment;
 import com.fitnessapp.client.Fragments.ProgressTrackerFragment;
 import com.fitnessapp.client.Fragments.SettingsFragment;
 import com.fitnessapp.client.Fragments.SizeTrackerFragment;
+import com.fitnessapp.client.Utils.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,13 +38,22 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     protected Toolbar toolbar;
     protected FrameLayout frameLayout;
     protected NavigationView navigationView;
-    protected FirebaseAuth mAuth;
-
+    public int userId;
+    public String userMail;
+    public FirebaseAuth mAuth;
+    public User user;
     public String roleValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( BaseDrawerActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+                System.out.println("newToken:" + newToken);
 
+            }
+        });
         Intent i = getIntent();
         if(i != null){
             Bundle b = i.getBundleExtra("bundle");
@@ -70,6 +83,8 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         displaySelectedFragment(f);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
@@ -145,5 +160,6 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     @Override
     public void onDestroy(){
         super.onDestroy();
+        mAuth.signOut();
     }
 }

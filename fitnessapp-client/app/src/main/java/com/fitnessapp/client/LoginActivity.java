@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
-
+                                            goUserMainPage();
                                             FirebaseUser user = mAuth.getCurrentUser();
                                             myRef.child("Users").child(user.getUid()).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
@@ -102,22 +102,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void goUserMainPage() {
         Bundle b = new Bundle();
         b.putString("userType","Simple User");
-        Intent intent = new Intent(this, BaseDrawerActivity.class);
-        intent.putExtra("bundle",b);
-        startActivity(intent);
+        createBaseDrawerActivity(b);
     }
 
     private void goTrainerMainPage() {
         Bundle b = new Bundle();
         b.putString("userType","Trainer");
+        createBaseDrawerActivity(b);
+    }
+
+    private void createBaseDrawerActivity(Bundle b) {
+        b.putString("userEmail",emailET.getText().toString());
         Intent intent = new Intent(this, BaseDrawerActivity.class);
         intent.putExtra("bundle",b);
         startActivity(intent);
+        finish();
     }
 
     private void register() {
 
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        finish();
     }
 }
