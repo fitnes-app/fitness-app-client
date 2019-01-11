@@ -2,8 +2,10 @@ package com.fitnessapp.client.Fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,6 +37,7 @@ public class BecomePremiumFragment extends Fragment {
     private URL url;
     private boolean userIsPremium;
 
+
     public BecomePremiumFragment() {
     }
 
@@ -54,7 +57,6 @@ public class BecomePremiumFragment extends Fragment {
         userEmail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
         getUser = new UrlConnectorGetUser();
         getUser.execute();
-
         buttonBecome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +100,8 @@ public class BecomePremiumFragment extends Fragment {
             if(userIsPremium == true) {
                 txt.setText("You're already Premium! Congratulations!");
                 buttonBecome.setVisibility(View.GONE);
+                //NavigationView navView = getActivity().findViewById(R.id.nav_view);
+                //BaseDrawerActivity.hideItem(navView);
             }
             super.onPostExecute(result);
         }
@@ -141,6 +145,8 @@ public class BecomePremiumFragment extends Fragment {
             if(userIsPremium == true) {
                 txt.setText("You're already Premium! Congratulations!");
                 buttonBecome.setVisibility(View.GONE);
+                //NavigationView navView = getActivity().findViewById(R.id.nav_view);
+                //BaseDrawerActivity.hideItem(navView);
             }
             super.onPostExecute(result);
         }

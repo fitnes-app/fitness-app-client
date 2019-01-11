@@ -18,6 +18,7 @@ import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -36,14 +37,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 public class ProgressTrackerFragment extends Fragment implements View.OnClickListener {
 
+    private int nDays = 0;
     private LineChart mChart;
     private Boolean isPremium;
     private String workoutId = "", workoutDuration = "";
@@ -96,8 +101,8 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
         // add data
         setData();
         // get the legend (only possible after setting data)
-        Legend l = mChart.getLegend();
-        mChart.setDescription("");
+        //Legend l = mChart.getLegend();
+        //mChart.setDescription("");
         repsSpinner = rootView.findViewById(R.id.spinnerReps);
         setsSpinner = rootView.findViewById(R.id.spinnerSets);
 
@@ -106,75 +111,69 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
     }
 
     private void setData() {
-        ArrayList<String> xVals = setXAxisValues();
-
         ArrayList<Entry> yVals = setYAxisValues();
 
-        LineDataSet set1;
+        ArrayList<String> xVals = setXAxisValues();
 
-        set1 = new LineDataSet(yVals, "Burnt kcal");
-        set1.setFillAlpha(110);
+        LineDataSet set1 = new LineDataSet(yVals, "Burnt kcal");;
+        set1.setLineWidth(3F);
         set1.setColor(Color.BLACK);
-        set1.setCircleColor(Color.BLACK);
-        set1.setLineWidth(1f);
-        set1.setCircleRadius(3f);
-        set1.setDrawCircleHole(false);
-        set1.setValueTextSize(9f);
-        set1.setDrawFilled(true);
+        set1.setValueTextColor(Color.BLACK);
+        set1.setValueTextSize(15f);
 
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(set1); // add the datasets
+        ArrayList<ILineDataSet> ld = new ArrayList<>();
+        ld.add(set1);
+
         // create a data object with the datasets
-        LineData data = new LineData(xVals, dataSets);
+        LineData data = new LineData(xVals, ld);
+        System.out.println(data.toString());
         // set data
         mChart.setData(data);
-
+        //mChart.invalidate();
     }
 
     private ArrayList<String> setXAxisValues(){
-        ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add("0");
-        for(JSONObject tracker : dailyTrackers){
-
-            try {
-                String date = tracker.getString("date");
-                if(!xVals.contains(date))
-                    xVals.add(date);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        ArrayList xVals = new ArrayList();
+        for (int i = 0; i < nDays;i++){
+            xVals.add(Integer.toString(i));
         }
-
+        System.out.println("xVal size: " + xVals.size());
         return xVals;
     }
 
     private ArrayList<Entry> setYAxisValues(){
         ArrayList<Entry> yVals = new ArrayList<Entry>();
-        HashMap<String, Integer> trackersByDay = new HashMap<>();
+        String tmpDate = "";
+        String date = "";
+        TreeMap<String, Integer> trackersByDay = new TreeMap<>();
+        int totalKcal = 0;
         for(JSONObject tracker : dailyTrackers){
             try{
-                String date = tracker.getString("date");
-                if(trackersByDay.containsKey(date)){
-                    int actualValue = trackersByDay.get(date);
-                    trackersByDay.put(date, actualValue + tracker.getInt("kcal"));
+                date = tracker.getString("date");
+                totalKcal += tracker.getInt("kcal");
+                if(date.equals(tmpDate)){
+                    trackersByDay.put(tmpDate, totalKcal);
+                    System.out.println("Added kcal EQUAL: " + totalKcal);
+                    tmpDate = tracker.getString("date");
                 }else {
+                    totalKcal = 0;
                     trackersByDay.put(date, tracker.getInt("kcal"));
+                    System.out.println("Added kcal NO Equal: " + tracker.getInt("kcal"));
+                    tmpDate = date;
+                    totalKcal += tracker.getInt("kcal");
+                    nDays++;
                 }
             }catch (JSONException e){
                 e.printStackTrace();
             }
         }
-        yVals.add(new Entry(0,0));
-        Iterator it = trackersByDay.entrySet().iterator();
-        int counter = 1;
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
+        int counter = 0;
+        //NavigableMap<String, Integer> nmap = trackersByDay.descendingMap();
+        for(TreeMap.Entry<String, Integer> entry : trackersByDay.entrySet() ){
+            yVals.add(new Entry(Float.parseFloat(entry.getValue().toString()), counter));
             counter++;
-            it.remove(); // avoids a ConcurrentModificationException
         }
-
+        System.out.println("yVal size:" + yVals.size());
         return yVals;
     }
 
@@ -422,13 +421,7 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
 
         @Override
         protected void onPostExecute(Void result) {
-            getActivity().runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    setData();
-                }
-            });
+            setData();
             super.onPostExecute(result);
         }
     }
@@ -443,7 +436,7 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
             try {
                 Calendar cal = Calendar. getInstance();
                 Date date=cal. getTime();
-                DateFormat dateFormat = new SimpleDateFormat("dd:mm:yyyy");
+                DateFormat dateFormat = new SimpleDateFormat("dd:MM:yyyy");
                 String formattedDate=dateFormat.format(date);
 
                 JSONObject trackedExercice = new JSONObject();
@@ -458,6 +451,8 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.setDoOutput(true);
 
+                    setsValue = Integer.parseInt(setsSpinner.getSelectedItem().toString());
+                    repsValue = Integer.parseInt(repsSpinner.getSelectedItem().toString());
                     String jsonString = new JSONObject()
                             .put("advancedExerciseId", trackedExercice)
                             .put("clientId", user)
@@ -504,6 +499,7 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
 
         @Override
         protected void onPostExecute(Void result) {
+            setData();
             super.onPostExecute(result);
         }
     }

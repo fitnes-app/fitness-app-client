@@ -1,6 +1,7 @@
 package com.fitnessapp.client;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,7 +12,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.fitnessapp.client.Fragments.AssignedUsersFragment;
@@ -26,11 +29,20 @@ import com.fitnessapp.client.Fragments.ProfileTrainerFragment;
 import com.fitnessapp.client.Fragments.ProgressTrackerFragment;
 import com.fitnessapp.client.Fragments.SettingsFragment;
 import com.fitnessapp.client.Fragments.SizeTrackerFragment;
+import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,6 +55,12 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     public FirebaseAuth mAuth;
     public User user;
     public String roleValue;
+    private boolean userIsPremium;
+    private UrlConnectorGetUser getUser;
+    private HttpURLConnection conn;
+    private JSONObject client;
+    private String userEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +83,9 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         mAuth = FirebaseAuth.getInstance();
         frameLayout = findViewById(R.id.content_frame);
         drawer = findViewById(R.id.drawer_layout);
+        userEmail = getIntent().getExtras().getBundle("bundle").getString("userEmail");
+        getUser = new UrlConnectorGetUser();
+        getUser.execute();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -80,10 +101,20 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
             navigationView.setCheckedItem(R.id.main_page_it);
             f = new MainPageFragment();
         }
+
+        if(userIsPremium){
+            hideItem(navigationView);
+        }
+
         displaySelectedFragment(f);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    public static void hideItem(NavigationView navigationView)
+    {
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.bec_premium_it).setVisible(false);
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -108,7 +139,7 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
             fragment = new SettingsFragment();
             displaySelectedFragment(fragment);
 
-        } else if (id == R.id.bec_premium_it) {
+        } else if (id == R.id.bec_premium_it && !userIsPremium) {
             fragment = new BecomePremiumFragment();
             displaySelectedFragment(fragment);
 
@@ -161,5 +192,40 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     public void onDestroy(){
         super.onDestroy();
         mAuth.signOut();
+    }
+
+    private class UrlConnectorGetUser extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                URL url = new URL(StaticStrings.ipserver + "/client/findByEmail/" + userEmail);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+
+                if (conn.getResponseCode() == 200) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String output = br.readLine();
+                    JSONArray arr = new JSONArray(output);
+
+                    client = arr.getJSONObject(0);
+                    userId = client.getInt("id");
+                    userIsPremium = client.getBoolean("is_Premium");
+
+                    System.out.println("The user is premium? " + userIsPremium);
+                    System.out.println(client);
+
+                    br.close();
+                } else {
+                    System.out.println("COULD NOT FIND THE CLIENT");
+                    System.out.println("ERROR CODE -> " + conn.getResponseCode());
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
     }
 }
