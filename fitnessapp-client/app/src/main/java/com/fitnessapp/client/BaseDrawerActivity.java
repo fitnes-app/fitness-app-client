@@ -98,10 +98,6 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         if (id == R.id.cons_rout_it) {
             fragment = new ConsultRoutinesFragment();
             displaySelectedFragment(fragment);
-        } else if (id == R.id.size_tr_it) {
-            fragment = new SizeTrackerFragment();
-            displaySelectedFragment(fragment);
-
         } else if (id == R.id.prog_tr_it) {
             fragment = new ProgressTrackerFragment();
             displaySelectedFragment(fragment);
@@ -171,13 +167,12 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     public void setUserInformation(){
         TextView userName = findViewById(R.id.userNameHeader);
         TextView userEmail = findViewById(R.id.userEmailHeader);
-        try {
-            userName.setText(this.client.getString("userName"));
+        //try {
+            //userName.setText(this.client.getString("userName"));
+            userName.setText("asdfnigger");
             userEmail.setText(userMail);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }/*userNameHeader  userEmailHeader
-
-    */
+        //} catch (JSONException e) {
+        //    e.printStackTrace();
+        //}
+    }
 }
