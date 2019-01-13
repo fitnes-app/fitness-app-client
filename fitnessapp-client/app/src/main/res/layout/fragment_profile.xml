@@ -152,6 +152,7 @@
             android:text="@string/confChanges"
             app:layout_constraintBottom_toBottomOf="@+id/scrollID"
             app:layout_constraintRight_toLeftOf="parent"
-            app:layout_constraintLeft_toRightOf="parent"/>
+            app:layout_constraintLeft_toRightOf="parent"
+            android:textColor="@color/black"/>
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

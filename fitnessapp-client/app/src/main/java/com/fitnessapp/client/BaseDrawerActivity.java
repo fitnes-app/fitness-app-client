@@ -14,6 +14,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fitnessapp.client.Fragments.AssignedUsersFragment;
@@ -77,13 +78,16 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         toggle.syncState();
         Fragment f = null;
         navigationView = findViewById(R.id.nav_view);
+        ImageView profilephoto = navigationView.getHeaderView(0).findViewById(R.id.profileImage);
         if(("Trainer").equals(roleValue)){
             navigationView.inflateMenu(R.menu.activity_trainer_drawer);
             navigationView.setCheckedItem(R.id.tr_main_page_it);
+            profilephoto.setImageResource(R.mipmap.trainer);
             f = new MainPageTrainerFragment();
         }else{
             navigationView.inflateMenu(R.menu.activity_user_drawer);
             navigationView.setCheckedItem(R.id.main_page_it);
+            profilephoto.setImageResource(R.mipmap.user);
             f = new MainPageFragment();
         }
         displaySelectedFragment(f);
@@ -167,12 +171,11 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     public void setUserInformation(){
         TextView userName = findViewById(R.id.userNameHeader);
         TextView userEmail = findViewById(R.id.userEmailHeader);
-        //try {
-            //userName.setText(this.client.getString("userName"));
-            userName.setText("asdfnigger");
+        try {
+            userName.setText(this.client.getString("userName"));
             userEmail.setText(userMail);
-        //} catch (JSONException e) {
-        //    e.printStackTrace();
-        //}
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

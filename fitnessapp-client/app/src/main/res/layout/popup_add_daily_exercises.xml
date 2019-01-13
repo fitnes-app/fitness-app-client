@@ -42,11 +42,13 @@
         android:id="@+id/assignDailyExercisesAddButton"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="@string/add"/>
+        android:text="@string/add"
+        android:textColor="@color/black"/>
     <Button
         android:id="@+id/doneButtonLabel"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="@string/done"/>
+        android:text="@string/done"
+        android:textColor="@color/black"/>
 
 </LinearLayout>
