@@ -6,7 +6,14 @@ public class User implements Serializable {
 
     private String name, email, password, role, speciality,address,bodyType, telNum;
     private float height, weigth;
+
     public User(){}
+
+    public User(String name, String email, String telNum){
+        this.name = name;
+        this.email = email;
+        this.telNum = telNum;
+    }
     public User(String name,String email,String password,String role,String speciality){
         this.name = name;
         this.email = email;
