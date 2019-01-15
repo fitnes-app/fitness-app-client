@@ -11,7 +11,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:exported="true"
         android:layout_marginTop="@dimen/layouts_top_margin">
 
@@ -28,7 +27,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.453" />
+            app:layout_constraintVertical_bias="0.453"
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -56,7 +56,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:text="@string/language"
-                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <Spinner
@@ -81,7 +80,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:text="@string/notificate"
-                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <TextView
@@ -91,7 +89,6 @@
                     android:layout_marginLeft="219dp"
                     android:layout_marginTop="30dp"
                     android:text="Date picked"
-                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
                 <Button
@@ -101,6 +98,7 @@
                     android:layout_marginLeft="220dp"
                     android:layout_marginTop="-92dp"
                     android:text="@string/Pick"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0.501"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -116,7 +114,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0.501"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:textColor="@color/black"/>
             </LinearLayout>
         </LinearLayout>
 

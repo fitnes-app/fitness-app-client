@@ -11,9 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.fitnessapp.client.ArrayAdapters.UserArrayAdapter;
 import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
+import com.fitnessapp.client.Utils.User;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +35,7 @@ public class MainPageTrainerFragment extends Fragment {
     private URL url;
     private HashMap<String, Integer> clientsIdLog = new HashMap<String, Integer>();
     ArrayList<String> clientNames;
+    private ArrayList<User> usersAssigned;
     private String trainerMail;
     private int trainerID;
     private BaseDrawerActivity activity;
@@ -51,6 +54,7 @@ public class MainPageTrainerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Trainer Main Page");
+        usersAssigned = new ArrayList<>();
     }
 
     @Override
@@ -66,9 +70,9 @@ public class MainPageTrainerFragment extends Fragment {
         return RootView;
     }
     private void loadClients(View rootView) {
-        lw = (ListView) rootView.findViewById(R.id.assignedUsersList);
+        lw = rootView.findViewById(R.id.assignedUsersList);
         setClientNames();
-        ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, clientNames);
+        UserArrayAdapter aa = new UserArrayAdapter(getActivity(), usersAssigned);
         lw.setAdapter(aa);
         lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -145,8 +149,11 @@ public class MainPageTrainerFragment extends Fragment {
                         for (int i = 0; i < arr.length(); i++) {
                             JSONObject client = arr.getJSONObject(i).getJSONObject("clientId");
                             String clientName = client.getString("userName");
+                            String clientMail = client.getString("mail");
+                            String clientPhone = client.getString("telephone");
                             int clientId = client.getInt("id");
                             clientsIdLog.put(clientName, clientId);
+                            usersAssigned.add(new User(clientName,clientMail,clientPhone));
                         }
                             getActivity().runOnUiThread(new Runnable() {
 

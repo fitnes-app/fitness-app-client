@@ -19,20 +19,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_weight="1" />
+            android:layout_weight="1.5" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="0.25">
 
             <TextView
                 android:id="@+id/textView29"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/routine_picker"
-                android:textColor="@android:color/black" />
+                android:text="@string/routine_picker" />
 
             <Spinner
                 android:id="@+id/spinnerRoutines"
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_weight="0"
+            android:layout_weight="0.25"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -82,7 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/input_training" />
+                android:text="@string/input_training"
+                android:textColor="@color/black"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

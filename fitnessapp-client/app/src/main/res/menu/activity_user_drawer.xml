@@ -7,27 +7,23 @@
 
         <item
             android:id="@+id/profile_it"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_mood_black_24dp"
             android:title="@string/profile" />
         <item
             android:id="@+id/main_page_it"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/main_page"
             android:title="@string/main_page" />
         <item
             android:id="@+id/cons_rout_it"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/routines"
             android:title="@string/consu_rout" />
         <item
-            android:id="@+id/size_tr_it"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/size_tracker" />
-        <item
             android:id="@+id/prog_tr_it"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/progres_tracker"
             android:title="@string/progress_tracker" />
         <item
             android:id="@+id/coach_it"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/coach"
             android:title="@string/coach" />
         <item
             android:id="@+id/settings_it"
@@ -35,11 +31,11 @@
             android:title="@string/title_activity_settings" />
         <item
             android:id="@+id/bec_premium_it"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/star"
             android:title="@string/become_premium" />
         <item
             android:id="@+id/contact_it"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/contact"
             android:title="@string/contactwithus" />
     </group>
 

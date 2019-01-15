@@ -1,6 +1,7 @@
 package com.fitnessapp.client;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.fitnessapp.client.Fragments.AssignedUsersFragment;
 import com.fitnessapp.client.Fragments.BecomePremiumFragment;
@@ -32,6 +35,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     protected DrawerLayout drawer;
@@ -40,6 +46,7 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     protected NavigationView navigationView;
     public int userId;
     public String userMail;
+    public JSONObject client;
     public FirebaseAuth mAuth;
     public User user;
     public String roleValue;
@@ -71,13 +78,16 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         toggle.syncState();
         Fragment f = null;
         navigationView = findViewById(R.id.nav_view);
+        ImageView profilephoto = navigationView.getHeaderView(0).findViewById(R.id.profileImage);
         if(("Trainer").equals(roleValue)){
             navigationView.inflateMenu(R.menu.activity_trainer_drawer);
             navigationView.setCheckedItem(R.id.tr_main_page_it);
+            profilephoto.setImageResource(R.mipmap.trainer);
             f = new MainPageTrainerFragment();
         }else{
             navigationView.inflateMenu(R.menu.activity_user_drawer);
             navigationView.setCheckedItem(R.id.main_page_it);
+            profilephoto.setImageResource(R.mipmap.user);
             f = new MainPageFragment();
         }
         displaySelectedFragment(f);
@@ -92,10 +102,6 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         if (id == R.id.cons_rout_it) {
             fragment = new ConsultRoutinesFragment();
             displaySelectedFragment(fragment);
-        } else if (id == R.id.size_tr_it) {
-            fragment = new SizeTrackerFragment();
-            displaySelectedFragment(fragment);
-
         } else if (id == R.id.prog_tr_it) {
             fragment = new ProgressTrackerFragment();
             displaySelectedFragment(fragment);
@@ -161,5 +167,15 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     public void onDestroy(){
         super.onDestroy();
         mAuth.signOut();
+    }
+    public void setUserInformation(){
+        TextView userName = findViewById(R.id.userNameHeader);
+        TextView userEmail = findViewById(R.id.userEmailHeader);
+        try {
+            userName.setText(this.client.getString("userName"));
+            userEmail.setText(userMail);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

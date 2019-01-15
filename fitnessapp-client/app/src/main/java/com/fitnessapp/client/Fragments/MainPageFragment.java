@@ -59,6 +59,7 @@ public class MainPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         RootView = inflater.inflate(R.layout.fragment_main_page, container, false);
         activity = (BaseDrawerActivity) getActivity();
+        tabla = new Table(activity, (TableLayout) RootView.findViewById(R.id.tabla));
         welcome = RootView.findViewById(R.id.welcomeuser);
         dailyTipLabel = RootView.findViewById(R.id.dailyTipLabel);
         activity.userMail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
@@ -69,8 +70,7 @@ public class MainPageFragment extends Fragment {
         return RootView;
     }
 
-    public void setTable(View rootView){
-        tabla = new Table(getActivity(), (TableLayout) rootView.findViewById(R.id.tabla));
+    public void setTable(){
         tabla.agregarCabecera(R.array.mainPageTable_headers);
         for(int i = 0; i < exercises_names.size() ; i++)
         {
@@ -81,13 +81,11 @@ public class MainPageFragment extends Fragment {
             tabla.agregarFilaTabla(elementos);
         }
     }
-    public void setRestDayLabel(View rootView){
-        tabla = new Table(getActivity(), (TableLayout) rootView.findViewById(R.id.tabla));
+    public void setRestDayLabel(){
         tabla.agregarCabecera(R.array.mainPageTable_restDayLabel);
 
     }
-    public void setNoWorkoutLabel(View rootView){
-        tabla = new Table(getActivity(), (TableLayout) rootView.findViewById(R.id.tabla));
+    public void setNoWorkoutLabel(){
         tabla.agregarCabecera(R.array.mainPageTable_noWorkoutLabel);
 
     }
@@ -115,6 +113,7 @@ public class MainPageFragment extends Fragment {
                         JSONArray arr = new JSONArray(output);
 
                         client = arr.getJSONObject(0);
+                        activity.client = client;
                         clientUsername = client.getString("userName");
                         welcome.setText("Welcome, " + clientUsername);
                         activity.userId = client.getInt("id");
@@ -150,7 +149,7 @@ public class MainPageFragment extends Fragment {
                                 @Override
                                 public void run() {
 
-                                    setNoWorkoutLabel(RootView);
+                                    setNoWorkoutLabel();
 
                                 }
                             });
@@ -225,6 +224,7 @@ public class MainPageFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
+            activity.setUserInformation();
             super.onPostExecute(result);
         }
 
@@ -277,7 +277,7 @@ public class MainPageFragment extends Fragment {
                             @Override
                             public void run() {
 
-                                setTable(RootView);
+                                setTable();
 
                             }
                         });
@@ -288,7 +288,7 @@ public class MainPageFragment extends Fragment {
                             @Override
                             public void run() {
 
-                                setRestDayLabel(RootView);
+                                setRestDayLabel();
 
                             }
                         });
@@ -354,7 +354,7 @@ public class MainPageFragment extends Fragment {
                              @Override
                              public void run() {
 
-                                 setTable(RootView);
+                                 setTable();
 
                              }
                          });
@@ -365,7 +365,7 @@ public class MainPageFragment extends Fragment {
                              @Override
                              public void run() {
 
-                                 setRestDayLabel(RootView);
+                                 setRestDayLabel();
 
                              }
                          });
