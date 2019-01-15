@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.fitnessapp.client.ArrayAdapters.RoutineArrayAdapter;
+import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.Routine;
 import com.fitnessapp.client.Utils.StaticStrings;

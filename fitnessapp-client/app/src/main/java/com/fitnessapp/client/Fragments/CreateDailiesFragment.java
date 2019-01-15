@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
 

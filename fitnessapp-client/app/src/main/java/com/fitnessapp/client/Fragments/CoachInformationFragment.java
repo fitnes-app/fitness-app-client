@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
 

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
 

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
 import com.github.mikephil.charting.charts.LineChart;
