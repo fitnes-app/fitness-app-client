@@ -1,5 +1,7 @@
 package com.fitnessapp.client.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,17 +9,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
 import com.fitnessapp.client.BaseDrawerActivity;
-import com.fitnessapp.client.QuestionActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -37,13 +37,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
-import java.util.Map;
+import java.util.TreeMap;
 
 public class ProgressTrackerFragment extends Fragment implements View.OnClickListener {
 
+    private int nDays = 0;
     private LineChart mChart;
     private Boolean isPremium;
     private String workoutId = "", workoutDuration = "";
@@ -86,18 +85,20 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
         activity = (BaseDrawerActivity)getActivity();
         ucge.execute();
         ucgp.execute();
-        loadData(rootView);
+        try {
+            loadData(rootView);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return rootView;
     }
 
 
-    private void loadData(View rootView) {
+    private void loadData(View rootView) throws JSONException {
         mChart = rootView.findViewById(R.id.linechart);
-        // add data
+
         setData();
-        // get the legend (only possible after setting data)
-        Legend l = mChart.getLegend();
-        mChart.setDescription("");
+
         repsSpinner = rootView.findViewById(R.id.spinnerReps);
         setsSpinner = rootView.findViewById(R.id.spinnerSets);
 
@@ -105,76 +106,82 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
         repsSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.repsArray)));
     }
 
-    private void setData() {
-        ArrayList<String> xVals = setXAxisValues();
+    private void setData() throws JSONException {
+        mChart.invalidate();
+        mChart.clear();
 
         ArrayList<Entry> yVals = setYAxisValues();
 
-        LineDataSet set1;
+        ArrayList<String> xVals = setXAxisValues();
 
-        set1 = new LineDataSet(yVals, "Burnt kcal");
-        set1.setFillAlpha(110);
+        LineDataSet set1 = new LineDataSet(yVals, "Burnt kcal");;
+        set1.setLineWidth(3F);
         set1.setColor(Color.BLACK);
-        set1.setCircleColor(Color.BLACK);
-        set1.setLineWidth(1f);
-        set1.setCircleRadius(3f);
-        set1.setDrawCircleHole(false);
-        set1.setValueTextSize(9f);
-        set1.setDrawFilled(true);
+        set1.setValueTextColor(Color.BLACK);
+        set1.setValueTextSize(15f);
 
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(set1); // add the datasets
+        ArrayList<ILineDataSet> ld = new ArrayList<>();
+        ld.add(set1);
+
         // create a data object with the datasets
-        LineData data = new LineData(xVals, dataSets);
+        LineData data = new LineData(xVals, ld);
         // set data
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        mChart.setDescription("");
         mChart.setData(data);
-
+        mChart.invalidate();
     }
 
-    private ArrayList<String> setXAxisValues(){
-        ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add("0");
-        for(JSONObject tracker : dailyTrackers){
-
-            try {
-                String date = tracker.getString("date");
-                if(!xVals.contains(date))
-                    xVals.add(date);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+    private ArrayList<String> setXAxisValues() throws JSONException {
+        ArrayList xVals = new ArrayList();
+        String tmpDate = "";
+        for (int j = 0; j < dailyTrackers.size(); j++){
+            if(!dailyTrackers.get(j).getString("date").equals(tmpDate)){
+                xVals.add(dailyTrackers.get(j).getString("date"));
+                tmpDate = dailyTrackers.get(j).getString("date");
             }
         }
-
+        System.out.println("xVal size: " + xVals.size());
         return xVals;
     }
 
+
     private ArrayList<Entry> setYAxisValues(){
         ArrayList<Entry> yVals = new ArrayList<Entry>();
-        HashMap<String, Integer> trackersByDay = new HashMap<>();
+        String tmpDate = "";
+        String date = "";
+        int tmpRep;
+        int tmpSer;
+        TreeMap<String, Integer> trackersByDay = new TreeMap<>();
+        int totalKcal = 0;
         for(JSONObject tracker : dailyTrackers){
             try{
-                String date = tracker.getString("date");
-                if(trackersByDay.containsKey(date)){
-                    int actualValue = trackersByDay.get(date);
-                    trackersByDay.put(date, actualValue + tracker.getInt("kcal"));
+                date = tracker.getString("date");
+                tmpSer = tracker.getInt("trackingSets");
+                tmpRep = tracker.getInt("repetitions");
+                totalKcal += (((tracker.getInt("kcal")*tmpSer)/4)/2)+(((tracker.getInt("kcal")*tmpRep)/10)/2);
+
+                if(date.equals(tmpDate)){
+                    trackersByDay.put(tmpDate, totalKcal);
+                    tmpDate = tracker.getString("date");
                 }else {
+                    totalKcal = 0;
                     trackersByDay.put(date, tracker.getInt("kcal"));
+                    tmpDate = date;
+                    totalKcal += (((tracker.getInt("kcal")*tmpSer)/4)/2)+(((tracker.getInt("kcal")*tmpRep)/10)/2);
+                    nDays++;
                 }
             }catch (JSONException e){
                 e.printStackTrace();
             }
         }
-        yVals.add(new Entry(0,0));
-        Iterator it = trackersByDay.entrySet().iterator();
-        int counter = 1;
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
+        int counter = 0;
+        for(TreeMap.Entry<String, Integer> entry : trackersByDay.entrySet() ){
+            yVals.add(new Entry(Float.parseFloat(entry.getValue().toString()), counter));
             counter++;
-            it.remove(); // avoids a ConcurrentModificationException
         }
-
+        System.out.println("yVal size:" + yVals.size());
         return yVals;
     }
 
@@ -185,7 +192,23 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        ucpt.execute();
+        if(dailyExercices.size() > 0) {
+            ucpt = new UrlConnectorPostTracker();
+            ucpt.execute();
+        }else{
+            //REST DAY
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Today is a rest day!")
+                    .setMessage("You can not add any training if today is a rest day.")
+                    .setNegativeButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
     private class UrlConnectorGetExercices extends AsyncTask<Void,Void,Void> {
@@ -422,13 +445,11 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
 
         @Override
         protected void onPostExecute(Void result) {
-            getActivity().runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    setData();
-                }
-            });
+            try {
+                setData();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             super.onPostExecute(result);
         }
     }
@@ -443,7 +464,7 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
             try {
                 Calendar cal = Calendar. getInstance();
                 Date date=cal. getTime();
-                DateFormat dateFormat = new SimpleDateFormat("dd:mm:yyyy");
+                DateFormat dateFormat = new SimpleDateFormat("dd:MM:yyyy");
                 String formattedDate=dateFormat.format(date);
 
                 JSONObject trackedExercice = new JSONObject();
@@ -458,6 +479,8 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.setDoOutput(true);
 
+                    setsValue = Integer.parseInt(setsSpinner.getSelectedItem().toString());
+                    repsValue = Integer.parseInt(repsSpinner.getSelectedItem().toString());
                     String jsonString = new JSONObject()
                             .put("advancedExerciseId", trackedExercice)
                             .put("clientId", user)
@@ -504,6 +527,11 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
 
         @Override
         protected void onPostExecute(Void result) {
+            try {
+                setData();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             super.onPostExecute(result);
         }
     }
