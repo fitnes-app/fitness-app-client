@@ -138,6 +138,7 @@
     <string name="add">ADD EXERCISES</string>
     <string name="filterByMuscularGroup">Filter by Muscular Group</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="days">days</string>
 
 
 </resources>

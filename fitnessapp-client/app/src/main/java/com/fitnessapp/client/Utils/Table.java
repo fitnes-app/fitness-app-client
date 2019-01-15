@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -24,7 +25,7 @@ public class Table {
     {
         this.actividad = actividad;
         this.table = table;
-        rs = this.actividad.getResources();
+        rs = actividad.getResources();
         ROWS = COLUMNS = 0;
         row = new ArrayList<>();
     }
@@ -37,7 +38,7 @@ public class Table {
     {
         TableRow.LayoutParams layoutCelda;
         TableRow fila = new TableRow(actividad);
-        TableRow.LayoutParams layoutFila = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        TableRow.LayoutParams layoutFila = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
         fila.setLayoutParams(layoutFila);
 
         String[] arraycabecera = rs.getStringArray(recursocabecera);
@@ -49,12 +50,12 @@ public class Table {
             layoutCelda = new TableRow.LayoutParams(obtenerAnchoPixelesTexto(arraycabecera[i]), TableRow.LayoutParams.WRAP_CONTENT);
             texto.setText(arraycabecera[i]);
             texto.setGravity(Gravity.CENTER_HORIZONTAL);
-            texto.setBackgroundResource(R.color.grey);
+            texto.setBackgroundResource(R.drawable.tabla_celda_cabecera);
+            texto.setTypeface(null, Typeface.BOLD);
             texto.setLayoutParams(layoutCelda);
 
             fila.addView(texto);
         }
-
         table.addView(fila);
         row.add(fila);
 
@@ -68,7 +69,7 @@ public class Table {
     public void agregarFilaTabla(ArrayList<String> elementos)
     {
         TableRow.LayoutParams layoutCelda;
-        TableRow.LayoutParams layoutFila = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        TableRow.LayoutParams layoutFila = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
         TableRow fila = new TableRow(actividad);
         fila.setLayoutParams(layoutFila);
 
@@ -79,7 +80,8 @@ public class Table {
             texto.setGravity(Gravity.CENTER_HORIZONTAL);
             layoutCelda = new TableRow.LayoutParams(obtenerAnchoPixelesTexto(texto.getText().toString()), TableRow.LayoutParams.WRAP_CONTENT);
             texto.setLayoutParams(layoutCelda);
-
+            texto.setBackgroundResource(R.drawable.tabla_celda);
+            texto.setTextColor(rs.getColor(R.color.black));
             fila.addView(texto);
         }
 
@@ -98,7 +100,7 @@ public class Table {
     {
         Paint p = new Paint();
         Rect bounds = new Rect();
-        p.setTextSize(50);
+        p.setTextSize(70);
 
         p.getTextBounds(texto, 0, texto.length(), bounds);
         return bounds.width();

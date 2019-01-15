@@ -18,7 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="40dp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -27,34 +28,6 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/trainer" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="166dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Name text"/>
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mail text" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="31" />
-            </LinearLayout>
-
         </LinearLayout>
 
         <TextView
@@ -63,15 +36,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/experience" />
+            android:text="Speciality text" />
 
         <TextView
             android:id="@+id/textUsers"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:text="AssignedUsers" />
+            android:text="AssignedUsers text" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Name text"/>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Mail text" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,7 +73,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/contact" />
+                android:text="@string/contact"
+                android:textColor="@color/black"/>
         </LinearLayout>
 
     </LinearLayout>

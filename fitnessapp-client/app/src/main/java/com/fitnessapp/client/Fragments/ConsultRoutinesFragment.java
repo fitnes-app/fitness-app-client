@@ -14,10 +14,12 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.fitnessapp.client.ArrayAdapters.RoutineArrayAdapter;
 import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.CreateNewRoutine;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.RoutineDetailActivity;
+import com.fitnessapp.client.Utils.Routine;
 import com.fitnessapp.client.Utils.StaticStrings;
 
 import org.json.JSONArray;
@@ -40,6 +42,7 @@ public class ConsultRoutinesFragment extends Fragment {
     private Boolean isPremium;
     private String userEmail="";
     private HashMap<String, Integer> routinesIdLog = new HashMap<String, Integer>();
+    private ArrayList<Routine> routinesOBJ;
     private int workoutDuration;
 
     private URL url;
@@ -53,6 +56,7 @@ public class ConsultRoutinesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Routines");
+        routinesOBJ = new ArrayList<>();
     }
 
     @Override
@@ -98,17 +102,16 @@ public class ConsultRoutinesFragment extends Fragment {
 
         });
         isPremium = getActivity().getIntent().getExtras().getBundle("bundle").getBoolean("isPremium");
-
         routinesData = new UrlConnectorGetRoutinesData();
         routinesData.execute();
-        //loadRoutines(RootView);
+
         return RootView;
     }
 
     private void loadRoutines(View rootView) {
         gv = rootView.findViewById(R.id.gv);
         setRoutines();
-        ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, routines);
+        RoutineArrayAdapter aa = new RoutineArrayAdapter(getActivity(), routinesOBJ);
         gv.setAdapter(aa);
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -141,7 +144,7 @@ public class ConsultRoutinesFragment extends Fragment {
 
     private void setNoResultsMessage(View rootView) {
         gv = rootView.findViewById(R.id.gv);
-        routines = new ArrayList<String>();
+        routines = new ArrayList<>();
         routines.add(getActivity().getResources().getString(R.string.noResultsMessage));
         ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, routines);
         gv.setAdapter(aa);
@@ -168,6 +171,8 @@ private class filterAdvancedWorkoutsByDuration extends AsyncTask<Void,Void,Void>
                                 for (int i = 0; i < arr.length(); i++) {
                                     String workoutName = arr.getJSONObject(i).getString("name");
                                     Integer workoutId = arr.getJSONObject(i).getInt("id");
+                                    Integer workoutDuration = arr.getJSONObject(i).getInt("duration");
+                                    routinesOBJ.add(new Routine(workoutName,workoutDuration));
                                     routinesIdLog.put(workoutName, workoutId);
                                 }
                                 getActivity().runOnUiThread(new Runnable() {
@@ -231,6 +236,8 @@ private class filterAdvancedWorkoutsByDuration extends AsyncTask<Void,Void,Void>
                                 for (int i = 0; i < arr.length(); i++) {
                                     String workoutName = arr.getJSONObject(i).getString("name");
                                     Integer workoutId = arr.getJSONObject(i).getInt("id");
+                                    Integer workoutDuration = arr.getJSONObject(i).getInt("duration");
+                                    routinesOBJ.add(new Routine(workoutName,workoutDuration));
                                     routinesIdLog.put(workoutName, workoutId);
                                 }
                                 getActivity().runOnUiThread(new Runnable() {
@@ -314,6 +321,8 @@ private class filterAdvancedWorkoutsByDuration extends AsyncTask<Void,Void,Void>
                             for (int i = 0; i < arr.length(); i++) {
                                 String workoutName = arr.getJSONObject(i).getString("name");
                                 Integer workoutId = arr.getJSONObject(i).getInt("id");
+                                Integer workoutDuration = arr.getJSONObject(i).getInt("duration");
+                                routinesOBJ.add(new Routine(workoutName,workoutDuration));
                                 routinesIdLog.put(workoutName, workoutId);
                             }
                             getActivity().runOnUiThread(new Runnable() {
@@ -369,6 +378,8 @@ private class filterAdvancedWorkoutsByDuration extends AsyncTask<Void,Void,Void>
                             for (int i = 0; i < arr.length(); i++) {
                                 String workoutName = arr.getJSONObject(i).getString("name");
                                 Integer workoutId = arr.getJSONObject(i).getInt("id");
+                                Integer workoutDuration = arr.getJSONObject(i).getInt("duration");
+                                routinesOBJ.add(new Routine(workoutName,workoutDuration));
                                 routinesIdLog.put(workoutName, workoutId);
                             }
                             getActivity().runOnUiThread(new Runnable() {

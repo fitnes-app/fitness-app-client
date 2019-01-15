@@ -27,34 +27,40 @@
             android:id="@+id/Daily1But"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/day1"/>
+            android:text="@string/day1"
+            android:textColor="@color/black"/>
         <Button
             android:id="@+id/Daily2But"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/day2"/>
+            android:text="@string/day2"
+            android:textColor="@color/black"/>
         <Button
             android:id="@+id/Daily3But"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/day3"/>
+            android:text="@string/day3"
+            android:textColor="@color/black"/>
         <Button
             android:id="@+id/Daily4But"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/day4"/>
+            android:text="@string/day4"
+            android:textColor="@color/black"/>
 
-            <Button
-                android:id="@+id/Daily5But"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/day5"/>
+        <Button
+            android:id="@+id/Daily5But"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/day5"
+            android:textColor="@color/black"/>
 
         <Button
             android:id="@+id/doneButtonLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/done"/>
+            android:text="@string/done"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 </LinearLayout>

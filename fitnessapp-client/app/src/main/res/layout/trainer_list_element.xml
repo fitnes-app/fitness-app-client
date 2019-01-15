@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/username"
-                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="20sp" />
             <TextView
                 android:id="@+id/usernameText"
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/email"
-                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textSize="20sp" />
             <TextView
                 android:id="@+id/emailText"
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/telNum"
-                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textSize="20sp" />
 
             <TextView
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/height"
-                android:textColor="@android:color/black"
+                android:textStyle="bold"
                 android:textSize="20sp" />
 
             <TextView
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/weight"
-                android:textColor="@android:color/black"
+                android:textStyle="bold"
                 android:textSize="20sp" />
 
             <TextView
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/body_type"
-                android:textColor="@android:color/black"
+                android:textStyle="bold"
                 android:textSize="20sp" />
 
             <TextView
@@ -158,18 +158,21 @@
                 android:id="@+id/userDetailsCreateWorkout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/userDetailsAssignRoutineBut"/>
+                android:text="@string/userDetailsAssignRoutineBut"
+                android:textColor="@color/black"/>
 
             <Button
                 android:id="@+id/userDetailsBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btl"/>
+                android:text="@string/btl"
+                android:textColor="@color/black"/>
         </LinearLayout>
         <Button
             android:id="@+id/contactButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/contact"/>
+            android:text="@string/contact"
+            android:textColor="@color/black"/>
     </LinearLayout>
 </LinearLayout>
