@@ -75,6 +75,7 @@
     <string name="save" translatable="false">Save</string>
     <string name="currently" translatable="false">Currently</string>
     <string name="otherRoutines" translatable="false">Other Routines</string>
+    <string name="userIsPremium">You\'re not premium yet!</string>
     <string name="username" translatable="false">Username: </string>
     <string name="password" translatable="false">Password</string>
     <string name="email" translatable="false">Email: </string>

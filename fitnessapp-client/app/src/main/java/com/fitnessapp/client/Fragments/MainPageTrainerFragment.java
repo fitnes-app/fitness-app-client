@@ -1,6 +1,5 @@
 package com.fitnessapp.client.Fragments;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.fitnessapp.client.ArrayAdapters.UserArrayAdapter;
-import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.User;

@@ -43,14 +43,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BaseDrawerActivity"
-            android:label="@string/main_page"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".QuestionActivity"
             android:label="@string/str_questionnaire"
             android:screenOrientation="portrait">

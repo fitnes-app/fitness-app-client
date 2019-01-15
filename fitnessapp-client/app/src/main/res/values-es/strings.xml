@@ -82,6 +82,7 @@
     <string name="navigation_drawer_open">Abrir navigation drawer</string>
     <string name="navigation_drawer_close">Cerrar navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
+    <string name="userIsPremium">Aún no eres premium!</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Propiedades</string>

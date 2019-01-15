@@ -1,29 +1,22 @@
 package com.fitnessapp.client.Fragments;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.fitnessapp.client.ArrayAdapters.RoutineArrayAdapter;
-import com.fitnessapp.client.BaseDrawerActivity;
-import com.fitnessapp.client.CreateNewRoutine;
 import com.fitnessapp.client.R;
-import com.fitnessapp.client.RoutineDetailActivity;
 import com.fitnessapp.client.Utils.Routine;
 import com.fitnessapp.client.Utils.StaticStrings;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
