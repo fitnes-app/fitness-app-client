@@ -61,7 +61,7 @@ public class ConsultRoutinesFragment extends Fragment {
         userEmail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
         durationSpinner = RootView.findViewById(R.id.durationFilter);
         ArrayAdapter<CharSequence> adapterRoles = ArrayAdapter.createFromResource(getActivity(), R.array.routinesDurationFilter, android.R.layout.simple_spinner_item);
-        adapterRoles.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapterRoles.setDropDownViewResource(R.layout.spinner_item);
         durationSpinner.setAdapter(adapterRoles);
         durationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -69,21 +69,25 @@ public class ConsultRoutinesFragment extends Fragment {
                 if (isPremium && position == 1) {
                     workoutDuration = 5;
                     routinesIdLog.clear();
+                    routinesOBJ.clear();
                     filterAdvancedWorkoutsByDuration filterAdvancedWorkout = new filterAdvancedWorkoutsByDuration();
                     filterAdvancedWorkout.execute();
                 } else if (isPremium && position == 2) {
                     workoutDuration = 3;
                     routinesIdLog.clear();
+                    routinesOBJ.clear();
                     filterAdvancedWorkoutsByDuration filterAdvancedWorkout = new filterAdvancedWorkoutsByDuration();
                     filterAdvancedWorkout.execute();
                 } else if (!isPremium && position == 1) {
                     workoutDuration = 5;
                     routinesIdLog.clear();
+                    routinesOBJ.clear();
                     filterBasicWorkoutsByDuration filterBasicWorkout = new filterBasicWorkoutsByDuration();
                     filterBasicWorkout.execute();
                 } else if (!isPremium && position == 2) {
                     workoutDuration = 3;
                     routinesIdLog.clear();
+                    routinesOBJ.clear();
                     filterBasicWorkoutsByDuration filterBasicWorkout = new filterBasicWorkoutsByDuration();
                     filterBasicWorkout.execute();
                 }
@@ -106,6 +110,7 @@ public class ConsultRoutinesFragment extends Fragment {
         gv = rootView.findViewById(R.id.gv);
         setRoutines();
         RoutineArrayAdapter aa = new RoutineArrayAdapter(getActivity(), routinesOBJ);
+        gv.clearChoices();
         gv.setAdapter(aa);
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -100,7 +100,7 @@ public class Table {
     {
         Paint p = new Paint();
         Rect bounds = new Rect();
-        p.setTextSize(70);
+        p.setTextSize(80);
 
         p.getTextBounds(texto, 0, texto.length(), bounds);
         return bounds.width();

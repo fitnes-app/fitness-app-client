@@ -102,8 +102,8 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
         repsSpinner = rootView.findViewById(R.id.spinnerReps);
         setsSpinner = rootView.findViewById(R.id.spinnerSets);
 
-        setsSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.setsArray)));
-        repsSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.repsArray)));
+        setsSpinner.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item, getResources().getStringArray(R.array.setsArray)));
+        repsSpinner.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item, getResources().getStringArray(R.array.repsArray)));
     }
 
     private void setData() throws JSONException {
@@ -187,7 +187,7 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
 
     public void setExerciceSpinnerData(View rootView){
         exercicesSpinner = rootView.findViewById(R.id.spinnerRoutines);
-        exercicesSpinner.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, this.exercicesNames));
+        exercicesSpinner.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item, this.exercicesNames));
     }
 
     @Override

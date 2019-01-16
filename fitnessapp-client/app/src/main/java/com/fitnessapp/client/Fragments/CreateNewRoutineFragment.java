@@ -70,7 +70,7 @@ public class CreateNewRoutineFragment extends Fragment{
         createNewRoutineContinueBut = RootView.findViewById(R.id.createNewRoutineContinueBut);
 
         ArrayAdapter<CharSequence> adapterRoles = ArrayAdapter.createFromResource(getActivity(), R.array.routinesDurationPicker, android.R.layout.simple_spinner_item);
-        adapterRoles.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapterRoles.setDropDownViewResource(R.layout.spinner_item);
         newRoutineSpinner.setAdapter(adapterRoles);
         newRoutineSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

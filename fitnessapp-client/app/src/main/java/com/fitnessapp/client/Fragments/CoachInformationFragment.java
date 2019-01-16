@@ -108,8 +108,8 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                 float clientWeight;
                 float clientHeight;
                 JSONObject clientBody;
-                JSONObject clientBasW;
-                JSONObject clientAdvW;
+                JSONObject clientBasW = new JSONObject();
+                JSONObject clientAdvW = new JSONObject();
                 String clientTel;
                 String clientAdd;
                 boolean clientPrem;
@@ -129,8 +129,14 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                     clientBody = cli.getJSONObject("bodyTypeId");
                     clientTel = cli.getString("telephone");
                     clientAdd = cli.getString("address");
-                    clientAdvW = cli.getJSONObject("advancedWorkout");
-                    clientBasW = cli.getJSONObject("basicWorkout");
+                    if(cli.has("advancedWorkout")){
+                        clientAdvW = cli.getJSONObject("advancedWorkout");
+
+                    }
+                    if(cli.has("basicWorkout")){
+                        clientAdvW = cli.getJSONObject("basicWorkout");
+
+                    }
                     clientPrem = cli.getBoolean("is_Premium");
 
                     System.out.println("CLIENT ID: " + clientID);
@@ -242,9 +248,15 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
                     .put("bodyTypeId", clientBody)
                     .put("telephone", clientTel)
                     .put("address", clientAdd)
-                    .put("advancedWorkout", clientAdvW)
-                    .put("basicWorkout", clientBasW)
                     .put("is_Premium", clientPrem);
+
+
+                    if(clientAdvW != null){
+                        clientJson.put("advancedWorkout", clientAdvW);
+                    }
+                    if(clientBasW != null){
+                        clientJson.put("basicWorkout", clientBasW);
+                    }
 
                 System.out.println("Client Json: " + clientJson);
 

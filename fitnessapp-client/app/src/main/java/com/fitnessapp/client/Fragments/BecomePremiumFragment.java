@@ -2,6 +2,7 @@ package com.fitnessapp.client.Fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fitnessapp.client.BaseDrawerActivity;
 import com.fitnessapp.client.R;
 import com.fitnessapp.client.Utils.StaticStrings;
 
@@ -77,7 +79,7 @@ public class BecomePremiumFragment extends Fragment {
 
 
                 client.put("is_Premium", true);
-
+                userIsPremium = true;
                 String jsonString = client.toString();
                 OutputStream os = conn.getOutputStream();
                 os.write(jsonString.getBytes());
@@ -97,8 +99,8 @@ public class BecomePremiumFragment extends Fragment {
             if(userIsPremium == true) {
                 txt.setText("You're already Premium! Congratulations!");
                 buttonBecome.setVisibility(View.GONE);
-                //NavigationView navView = getActivity().findViewById(R.id.nav_view);
-                //BaseDrawerActivity.hideItem(navView);
+                NavigationView navView = getActivity().findViewById(R.id.nav_view);
+                BaseDrawerActivity.hideItem(navView);
             }
             super.onPostExecute(result);
         }
@@ -142,8 +144,8 @@ public class BecomePremiumFragment extends Fragment {
             if(userIsPremium == true) {
                 txt.setText("You're already Premium! Congratulations!");
                 buttonBecome.setVisibility(View.GONE);
-                //NavigationView navView = getActivity().findViewById(R.id.nav_view);
-                //BaseDrawerActivity.hideItem(navView);
+                NavigationView navView = getActivity().findViewById(R.id.nav_view);
+                BaseDrawerActivity.hideItem(navView);
             }
             super.onPostExecute(result);
         }

@@ -44,10 +44,10 @@ public class BaseDrawerActivityTrainer extends AppCompatActivity implements Navi
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
         Intent i;
-        if (id == R.id.asg_users_it) {
-            i = new Intent(this, AssignedUsers.class);
-            startActivity(i);
-        } else if (id == R.id.profile_it) {
+        //if (id == R.id.asg_users_it) {
+          //  i = new Intent(this, AssignedUsers.class);
+            //startActivity(i);
+        if (id == R.id.profile_it) {
             i = new Intent(this, ProfileTrainer.class);
             startActivity(i);
 

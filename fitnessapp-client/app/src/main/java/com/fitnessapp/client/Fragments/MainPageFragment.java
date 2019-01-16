@@ -163,10 +163,9 @@ public class MainPageFragment extends Fragment {
                 }
                 conn.disconnect();
 
-                int dailyTipCount=0;
-                int randomDailyTipId=0;
+                JSONArray dailyTips;
 
-                url = new URL(StaticStrings.ipserver  + "/dailytip/count");
+                url = new URL(StaticStrings.ipserver  + "/dailytip/");
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Content-Type", "text/plain; charset=utf-8");
@@ -175,34 +174,11 @@ public class MainPageFragment extends Fragment {
                     if (conn.getResponseCode() == 200) {
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                         String output = br.readLine();
-                        dailyTipCount = Integer.parseInt(output);
-                        Random rand = new Random();
-                        randomDailyTipId = rand.nextInt((dailyTipCount - 1) + 1) + 1;
-                    } else {
-                        System.out.println("COULD NOT FIND ANY daily_tip");
-                        System.out.println("ERROR CODE -> "+ conn.getResponseCode());
-                        return null;
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-                conn.disconnect();
-
-                url = new URL(StaticStrings.ipserver  + "/dailytip/" + randomDailyTipId);
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Accept", "application/json");
-
-                try {
-                    if (conn.getResponseCode() == 200) {
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                        String output = br.readLine();
-
-                        JSONObject dailyTipJSON = new JSONObject(output);
-
-                        dailyTipLabel.setText(dailyTipJSON.getString("text"));
-
-                        br.close();
+                        dailyTips = new JSONArray(output);
+                        Random rn = new Random();
+                        int index = rn.nextInt(dailyTips.length());
+                        JSONObject dailyTip = (JSONObject) dailyTips.get(index);
+                        dailyTipLabel.setText(dailyTip.getString("text"));
                     } else {
                         System.out.println("COULD NOT FIND ANY daily_tip");
                         System.out.println("ERROR CODE -> "+ conn.getResponseCode());
@@ -216,7 +192,7 @@ public class MainPageFragment extends Fragment {
                 System.out.println("Something went wrong");
                 e.printStackTrace();
             }
-            return null;
+        return null;
         }
 
         @Override

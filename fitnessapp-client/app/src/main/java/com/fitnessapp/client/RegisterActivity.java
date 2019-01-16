@@ -69,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> adapterRoles = ArrayAdapter.createFromResource(this, R.array.rolesOptions, android.R.layout.simple_spinner_item);
 
-        adapterRoles.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapterRoles.setDropDownViewResource(R.layout.spinner_item);
         role.setAdapter(adapterRoles);
 
         Button buttonBack = findViewById(R.id.buttonBack);
@@ -299,7 +299,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     dataSpecAdapter = new ArrayAdapter<String>(RegisterActivity.this,
                             android.R.layout.simple_spinner_item, specs);
-                    dataSpecAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dataSpecAdapter.setDropDownViewResource(R.layout.spinner_item);
                 }catch(Exception e){
                     e.printStackTrace();
                 }
