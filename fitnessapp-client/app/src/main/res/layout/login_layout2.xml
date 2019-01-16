@@ -54,9 +54,8 @@
         android:layout_height="wrap_content"
         android:text="@string/register"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="170dp"
-        app:layout_constraintLeft_toRightOf="@id/loginButton"
         app:layout_constraintTop_toBottomOf="@id/loginPasswrdET"
-        android:layout_marginStart="170dp"
+        app:layout_constraintRight_toRightOf="parent"
         android:textColor="@color/black" />
+
 </android.support.constraint.ConstraintLayout>

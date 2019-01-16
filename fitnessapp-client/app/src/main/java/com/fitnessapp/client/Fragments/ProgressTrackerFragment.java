@@ -97,8 +97,6 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
     private void loadData(View rootView) throws JSONException {
         mChart = rootView.findViewById(R.id.linechart);
 
-        setData();
-
         repsSpinner = rootView.findViewById(R.id.spinnerReps);
         setsSpinner = rootView.findViewById(R.id.spinnerSets);
 
@@ -107,7 +105,6 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
     }
 
     private void setData() throws JSONException {
-        mChart.invalidate();
         mChart.clear();
 
         ArrayList<Entry> yVals = setYAxisValues();
@@ -130,7 +127,6 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         mChart.setDescription("");
         mChart.setData(data);
-        mChart.invalidate();
     }
 
     private ArrayList<String> setXAxisValues() throws JSONException {
@@ -233,13 +229,13 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
                     isPremium = user.getBoolean("is_Premium");
                     System.out.println("USER: " + user);
 
-                    if (user.has("basicWorkout")) {
+                    if (!user.getBoolean("is_Premium")) {
                         isAdvancedWorkout = false;
                         workout = user.getJSONObject("basicWorkout");
                         workoutDuration = workout.getString("duration");
                         workoutId = workout.getString("id");
                         setBasicWorkout();
-                    } else if (user.has("advancedWorkout")) {
+                    } else if (user.getBoolean("is_Premium")) {
                         isAdvancedWorkout = true;
                         workout = user.getJSONObject("advancedWorkout");
                         workoutDuration = workout.getString("duration");

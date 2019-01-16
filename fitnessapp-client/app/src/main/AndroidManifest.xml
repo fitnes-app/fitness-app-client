@@ -12,6 +12,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         android:theme="@style/AppTheme.NoActionBar"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         >
 
         <meta-data

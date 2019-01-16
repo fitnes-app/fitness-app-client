@@ -15,6 +15,7 @@ import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.Table;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -38,10 +39,11 @@ public class MainPageFragment extends Fragment {
     private HttpURLConnection conn;
     private URL url;
     private BaseDrawerActivity activity;
-
+    private String clientUsername = "";
     private String userEmail;
     private String workoutId = "";
     private Boolean isPremium;
+    private JSONObject dailyTip;
 
     public MainPageFragment(){}
     @Override
@@ -66,7 +68,6 @@ public class MainPageFragment extends Fragment {
 
         return RootView;
     }
-
     public void setTable(){
         tabla.agregarCabecera(R.array.mainPageTable_headers);
         for(int i = 0; i < exercises_names.size() ; i++)
@@ -100,7 +101,7 @@ public class MainPageFragment extends Fragment {
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Accept", "application/json");
 
-                String clientUsername = "";
+
                 String workoutDuration = "";
 
                 try {
@@ -112,13 +113,13 @@ public class MainPageFragment extends Fragment {
                         client = arr.getJSONObject(0);
                         activity.client = client;
                         clientUsername = client.getString("userName");
-                        welcome.setText("Welcome, " + clientUsername);
                         activity.userId = client.getInt("id");
                         isPremium = client.getBoolean("is_Premium");
                         getActivity().runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {
+                                welcome.setText("Welcome, " + clientUsername);
                                 Bundle b = getActivity().getIntent().getExtras().getBundle("bundle");
                                 b.putBoolean("isPremium",isPremium);
                                 getActivity().getIntent().putExtra("bundle",b);
@@ -177,8 +178,19 @@ public class MainPageFragment extends Fragment {
                         dailyTips = new JSONArray(output);
                         Random rn = new Random();
                         int index = rn.nextInt(dailyTips.length());
-                        JSONObject dailyTip = (JSONObject) dailyTips.get(index);
-                        dailyTipLabel.setText(dailyTip.getString("text"));
+                        dailyTip = (JSONObject) dailyTips.get(index);
+                        getActivity().runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                try {
+                                    dailyTipLabel.setText(dailyTip.getString("text"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
                     } else {
                         System.out.println("COULD NOT FIND ANY daily_tip");
                         System.out.println("ERROR CODE -> "+ conn.getResponseCode());

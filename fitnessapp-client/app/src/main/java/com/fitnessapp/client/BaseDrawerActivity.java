@@ -143,9 +143,9 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
             fragment = new MainPageFragment();
             displaySelectedFragment(fragment);
 
-        } else if (id == R.id.profile_it) {
-            fragment = new ProfileFragment();
-            displaySelectedFragment(fragment);
+            //} //else if (id == R.id.profile_it) {
+        //  fragment = new ProfileFragment();
+        // displaySelectedFragment(fragment);
 
             //} else if (id == R.id.profile_trainer_it) {
           //  fragment = new ProfileTrainerFragment();

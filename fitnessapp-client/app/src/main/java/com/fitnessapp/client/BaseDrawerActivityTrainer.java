@@ -47,11 +47,7 @@ public class BaseDrawerActivityTrainer extends AppCompatActivity implements Navi
         //if (id == R.id.asg_users_it) {
           //  i = new Intent(this, AssignedUsers.class);
             //startActivity(i);
-        if (id == R.id.profile_it) {
-            i = new Intent(this, ProfileTrainer.class);
-            startActivity(i);
-
-        } else if (id == R.id.settings_it) {
+        if (id == R.id.settings_it) {
             i = new Intent(this, Settings.class);
             startActivity(i);
 
