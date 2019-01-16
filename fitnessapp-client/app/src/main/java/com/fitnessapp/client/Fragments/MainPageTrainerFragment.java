@@ -190,6 +190,7 @@ public class MainPageTrainerFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
+            activity.setUserInformation();
             super.onPostExecute(result);
         }
     }

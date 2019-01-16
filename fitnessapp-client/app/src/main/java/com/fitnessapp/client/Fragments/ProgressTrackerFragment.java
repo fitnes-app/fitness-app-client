@@ -430,6 +430,7 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
 
                             for (int i = 0; i < arr.length(); i++) {
                                 dailyTrackers.add(arr.getJSONObject(i));
+                                System.out.println("Ho faig");
                             }
                         }
                         br.close();
