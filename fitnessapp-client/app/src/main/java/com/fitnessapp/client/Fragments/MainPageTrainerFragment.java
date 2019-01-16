@@ -1,6 +1,5 @@
 package com.fitnessapp.client.Fragments;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -191,6 +190,7 @@ public class MainPageTrainerFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
+            activity.setUserInformation();
             super.onPostExecute(result);
         }
     }

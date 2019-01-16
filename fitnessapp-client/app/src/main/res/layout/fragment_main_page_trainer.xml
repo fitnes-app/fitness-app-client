@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="15dp"
-            android:text="@string/trainer_header"
-            android:textColor="@android:color/black" />
+            android:text="@string/trainer_header" />
 
         <ListView
             android:layout_width="match_parent"

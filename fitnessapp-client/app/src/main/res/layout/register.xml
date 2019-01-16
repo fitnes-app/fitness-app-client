@@ -30,8 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="@string/username"
-            android:textColor="@android:color/black" />
+            android:text="@string/username"/>
 
         <EditText
             android:id="@+id/editTextUser"
@@ -54,8 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="@string/password"
-            android:textColor="@android:color/black" />
+            android:text="@string/password" />
 
         <EditText
             android:id="@+id/editTextPwd"
@@ -79,8 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="12"
-            android:text="@string/email"
-            android:textColor="@android:color/black" />
+            android:text="@string/email" />
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -104,8 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="12"
-            android:text="@string/address"
-            android:textColor="@android:color/black" />
+            android:text="@string/address" />
 
         <EditText
             android:id="@+id/editTextAddres"
@@ -127,8 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="12"
-            android:text="@string/telNum"
-            android:textColor="@android:color/black" />
+            android:text="@string/telNum" />
 
         <EditText
             android:id="@+id/editTextTelNum"
@@ -152,15 +147,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="@string/role"
-            android:textColor="@android:color/black" />
+            android:text="@string/role" />
 
         <Spinner
             android:id="@+id/spinnerRoles"
             android:layout_width="143dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/rolesOptions" />
+            android:entries="@array/rolesOptions"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -174,13 +168,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:text="@string/speciality"
-            android:textColor="@android:color/black" />
+            android:text="@string/speciality"/>
         <Spinner
             android:id="@+id/spinnerSpec"
             android:layout_width="143dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <LinearLayout
@@ -194,14 +187,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:textColor="@color/black"/>
 
         <Button
             android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/register" />
+            android:text="@string/register"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
 </LinearLayout>

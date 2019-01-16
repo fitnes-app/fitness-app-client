@@ -185,7 +185,7 @@ public class PopupCreateDailiesFragment extends DialogFragment {
                             public void run() {
 
                                 ArrayAdapter<String> adapterMuscularGroup = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, spinnerOptions);
-                                adapterMuscularGroup.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                                adapterMuscularGroup.setDropDownViewResource(R.layout.spinner_item);
                                 assignDailyExercisesSpinner.setAdapter(adapterMuscularGroup);
 
                             }

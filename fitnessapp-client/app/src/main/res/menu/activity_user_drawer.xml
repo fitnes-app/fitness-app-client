@@ -35,8 +35,11 @@
             android:title="@string/become_premium" />
         <item
             android:id="@+id/contact_it"
-            android:icon="@drawable/contact"
+            android:icon="@drawable/info_icon"
             android:title="@string/contactwithus" />
+        <item
+            android:id="@+id/logout"
+            android:title="@string/logout" />
     </group>
 
 </menu>

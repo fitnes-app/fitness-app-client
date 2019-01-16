@@ -15,12 +15,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.fitnessapp.client.Fragments.AssignedUsersFragment;
 import com.fitnessapp.client.Fragments.BecomePremiumFragment;
 import com.fitnessapp.client.Fragments.CoachInformationFragment;
 import com.fitnessapp.client.Fragments.ConsultRoutinesFragment;
@@ -28,10 +26,8 @@ import com.fitnessapp.client.Fragments.ContactWithUsFragment;
 import com.fitnessapp.client.Fragments.MainPageFragment;
 import com.fitnessapp.client.Fragments.MainPageTrainerFragment;
 import com.fitnessapp.client.Fragments.ProfileFragment;
-import com.fitnessapp.client.Fragments.ProfileTrainerFragment;
 import com.fitnessapp.client.Fragments.ProgressTrackerFragment;
 import com.fitnessapp.client.Fragments.SettingsFragment;
-import com.fitnessapp.client.Fragments.SizeTrackerFragment;
 import com.fitnessapp.client.Utils.StaticStrings;
 import com.fitnessapp.client.Utils.User;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,13 +57,12 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     private boolean userIsPremium;
     private UrlConnectorGetUser getUser;
     private HttpURLConnection conn;
-    private JSONObject client;
     private String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( BaseDrawerActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(BaseDrawerActivity.this, new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String newToken = instanceIdResult.getToken();
@@ -76,7 +71,7 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
             }
         });
         Intent i = getIntent();
-        if(i != null){
+        if (i != null) {
             Bundle b = i.getBundleExtra("bundle");
             roleValue = b.getString("userType");
         }
@@ -96,28 +91,23 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         Fragment f = null;
         navigationView = findViewById(R.id.nav_view);
         ImageView profilephoto = navigationView.getHeaderView(0).findViewById(R.id.profileImage);
-        if(("Trainer").equals(roleValue)){
+        if (("Trainer").equals(roleValue)) {
             navigationView.inflateMenu(R.menu.activity_trainer_drawer);
             navigationView.setCheckedItem(R.id.tr_main_page_it);
             profilephoto.setImageResource(R.mipmap.trainer);
             f = new MainPageTrainerFragment();
-        }else{
+        } else if(("Simple User").equals(roleValue)){
             navigationView.inflateMenu(R.menu.activity_user_drawer);
             navigationView.setCheckedItem(R.id.main_page_it);
             profilephoto.setImageResource(R.mipmap.user);
             f = new MainPageFragment();
         }
 
-        if(userIsPremium){
-            hideItem(navigationView);
-        }
-
         displaySelectedFragment(f);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public static void hideItem(NavigationView navigationView)
-    {
+    public static void hideItem(NavigationView navigationView) {
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.bec_premium_it).setVisible(false);
     }
@@ -125,7 +115,7 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
-        Fragment fragment  = null;
+        Fragment fragment = null;
         if (id == R.id.cons_rout_it) {
             fragment = new ConsultRoutinesFragment();
             displaySelectedFragment(fragment);
@@ -141,11 +131,11 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
             fragment = new SettingsFragment();
             displaySelectedFragment(fragment);
 
-        } else if (id == R.id.bec_premium_it && !userIsPremium) {
+        } else if (id == R.id.bec_premium_it) {
             fragment = new BecomePremiumFragment();
             displaySelectedFragment(fragment);
 
-        }else if (id == R.id.contact_it) {
+        } else if (id == R.id.contact_it) {
             fragment = new ContactWithUsFragment();
             displaySelectedFragment(fragment);
 
@@ -156,21 +146,23 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         } else if (id == R.id.profile_it) {
             fragment = new ProfileFragment();
             displaySelectedFragment(fragment);
-        } else if (id == R.id.asg_users_it) {
-            fragment = new AssignedUsersFragment();
-            displaySelectedFragment(fragment);
 
-        } else if (id == R.id.profile_trainer_it) {
-            fragment = new ProfileTrainerFragment();
-            displaySelectedFragment(fragment);
+            //} else if (id == R.id.profile_trainer_it) {
+          //  fragment = new ProfileTrainerFragment();
+          //  displaySelectedFragment(fragment);
 
         } else if (id == R.id.tr_main_page_it) {
             fragment = new MainPageTrainerFragment();
             displaySelectedFragment(fragment);
 
-        }else if (id == R.id.asg_users_it) {
-            fragment = new AssignedUsersFragment();
-            displaySelectedFragment(fragment);
+        //} else if (id == R.id.asg_users_it) {
+        //    fragment = new AssignedUsersFragment();
+        //    displaySelectedFragment(fragment);
+        } else if (id == R.id.logout){
+            Intent i = new Intent(this, LoginActivity.class);
+            mAuth.signOut();
+            startActivity(i);
+            finish();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -182,6 +174,7 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         fragmentTransaction.replace(R.id.content_frame, fragment);
         fragmentTransaction.commit();
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -191,51 +184,82 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         mAuth.signOut();
     }
-  
+
     private class UrlConnectorGetUser extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                URL url = new URL(StaticStrings.ipserver + "/client/findByEmail/" + userEmail);
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Accept", "application/json");
+                if(roleValue.equals("Simple User")) {
+                    URL url = new URL(StaticStrings.ipserver + "/client/findByEmail/" + userEmail);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setRequestProperty("Accept", "application/json");
 
-                if (conn.getResponseCode() == 200) {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    String output = br.readLine();
-                    JSONArray arr = new JSONArray(output);
+                    if (conn.getResponseCode() == 200) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String output = br.readLine();
+                        JSONArray arr = new JSONArray(output);
 
-                    client = arr.getJSONObject(0);
-                    userId = client.getInt("id");
-                    userIsPremium = client.getBoolean("is_Premium");
+                        client = arr.getJSONObject(0);
+                        userId = client.getInt("id");
+                        userIsPremium = client.getBoolean("is_Premium");
 
-                    System.out.println("The user is premium? " + userIsPremium);
-                    System.out.println(client);
+                        System.out.println("The user is premium? " + userIsPremium);
+                        System.out.println(client);
 
-                    br.close();
-                } else {
-                    System.out.println("COULD NOT FIND THE CLIENT");
-                    System.out.println("ERROR CODE -> " + conn.getResponseCode());
+                        br.close();
+                    } else {
+                        System.out.println("COULD NOT FIND THE CLIENT");
+                        System.out.println("ERROR CODE -> " + conn.getResponseCode());
 
+                    }
+                } else if(roleValue.equals("Trainer")){
+                    URL url = new URL(StaticStrings.ipserver + "/trainer/findByEmail/" + userEmail);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setRequestProperty("Accept", "application/json");
+
+                    if (conn.getResponseCode() == 200) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String output = br.readLine();
+                        JSONArray arr = new JSONArray(output);
+
+                        client = arr.getJSONObject(0);
+                        userId = client.getInt("id");
+
+                        br.close();
+                    } else {
+                        System.out.println("COULD NOT FIND THE TRAINER");
+                        System.out.println("ERROR CODE -> " + conn.getResponseCode());
+
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
         }
-    public void setUserInformation(){
-        TextView userName = findViewById(R.id.userNameHeader);
-        TextView userEmail = findViewById(R.id.userEmailHeader);
-        try {
-            userName.setText(this.client.getString("userName"));
-            userEmail.setText(userMail);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        @Override
+        protected void onPostExecute(Void result){
+            if(userIsPremium){
+                hideItem(navigationView);
+            }
         }
     }
-}
+
+        public void setUserInformation() {
+            TextView userName = findViewById(R.id.userNameHeader);
+            TextView userEmail = findViewById(R.id.userEmailHeader);
+            try {
+                userName.setText(client.getString("userName"));
+                userEmail.setText(userMail);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+

@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/newRoutineNameLabel"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                />
             <EditText
                 android:id="@+id/newRoutineNameText"
                 android:layout_width="wrap_content"
@@ -33,7 +34,8 @@
                 android:layout_weight="5"
                 android:ems="10"
                 android:hint="@string/name"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
         <LinearLayout
