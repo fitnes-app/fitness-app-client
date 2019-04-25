@@ -48,7 +48,8 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Client Detail");
+        getActivity().setTitle(R.string.client_detail
+        );
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

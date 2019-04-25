@@ -108,14 +108,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="swimming" />
+                android:text="@string/swimming" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="type1" />
+                android:text="@string/type1" />
         </TableRow>
 
         <TableRow
@@ -134,14 +134,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="thriatlon" />
+                android:text="@string/thriatlon" />
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="type 2" />
+                android:text="@string/type2" />
         </TableRow>
 
         <TableRow
@@ -160,14 +160,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="personal challenge" />
+                android:text="@string/pchallenge" />
 
             <TextView
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="type 3" />
+                android:text="@string/type3" />
         </TableRow>
     </TableLayout>
 

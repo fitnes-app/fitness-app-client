@@ -16,7 +16,7 @@
     <string name="routines_management">Administrar las rutinas del usuario</string>
     <string name="Pick">Escoge una fecha</string>
     <string name="contact">Contacto</string>
-    <string name="MainMenu">MENU PRINCIPAL</string>
+    <string name="MainMenu">MENÚ PRINCIPAL</string>
     <string name="Share">Comparte nuestra aplicación</string>
     <string name="type">Escribe aqui</string>
     <string name="trainer_list_header">Aqui podrás ver toda la información del usuario</string>
@@ -24,7 +24,7 @@
     <string name="register">Registrar</string>
     <string name="contactwithus">Contacta con el equipo :)</string>
     <string name="youremail">Tu E-mail</string>
-    <string name="whatyouwant">Sobre que quieres hablar?\n Recibiars un email con tu respuesta lo antes posible</string>
+    <string name="whatyouwant">Sobre que quieres hablar?\n Recibiarás un email con tu respuesta lo antes posible</string>
     <string name="title_activity_settings">Propiedades</string>
     <string name="sendemail">ENVIA UN EMAIL</string>
     <string name="welcomeuser">BIENVENIDO, USERNAME!</string>
@@ -39,19 +39,19 @@
     <string name="titleActivityRoutineDetail">Detalle de la rutina</string>
     <string name="titleActivityContactWithUs">Contacta con el equipo</string>
     <string name="kclBurnt">Media de KCal quemadas:                   5Kcl</string>
-    <string name="btl">BACK TO LIST</string>
+    <string name="btl">Volver a la lista</string>
     <string-array name="languages">
-        <item>Spanish</item>
-        <item>Catalan</item>
-        <item>English</item>
+        <item>Español</item>
+        <item>Catalán</item>
+        <item>Inglés</item>
     </string-array>
     <string name="contractCoachTerms">
         Bienvenido querido usuario.\n\nEsta pagina esta hecha para escoger un entrenador que se adapte a tus necesidades.\n\nNuestro selector de entrenadores escogera el mas indicado de entre un grupo de elegidos!.\n\nEl coste son solo 20€, mas barato que un gimnasio!.\n\n Seras capaz de contactar con tu entrenador para consejos personales!.
     </string>
     <string name="becomePremium">
-        Bienvenido querido usuario.\n\nBy becoming premium you\'ll be able to have access to different features. \n\nYou\'ll be able to select more advanced routines, you\'ll be able to use the size tracker (which allows you to track the size of your muscles, seeing if they\'ve increased or decreased, depending on your objectives), and the most important thing, you\'ll be helping us with the maintenance costs. \n\nThe cost is only 10€.
+        Bienvenido querido usuario.\n\n Convirtiéndote en premium podrás tener acceso a diferentes funciones. \n\nPodrás seleccionar rutinas más avanzadas, podrás usar el rastreador de tamaño (que te permite rastrear el tamaño de tus músculos, ver si han aumentado o disminuido, dependiendo de tus objetivos), y lo más importante, nos ayudarás con los costos de mantenimiento. \n\nEl coste es de sólo 10€..
     </string>
-    <string name="back">back</string>
+    <string name="back">Atrás</string>
     <string name="contract">Contrato</string>
     <string name="experience">Experiencia</string>
     <string name="outAppCV">CV fuera de la app</string>
@@ -70,7 +70,7 @@
     <string name="currently">Actualmente</string>
     <string name="otherRoutines">Otras Rutinas</string>
     <string name="username">User</string>
-    <string name="password">Contrassenya</string>
+    <string name="password">Contraseña</string>
     <string name="email">Email</string>
     <string name="role">Rol:</string>
     <string name="speciality">Especialidad:</string>
@@ -84,7 +84,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="userIsPremium">Aún no eres premium!</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_desc">Cabecera de navegación</string>
     <string name="action_settings">Propiedades</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="consu_rout">Consulta rutinas</string>
@@ -105,13 +105,13 @@
     <string name="inputData">INPUT MISSING DATA</string>
     <string name="invalidEmail">Email invalido.</string>
     <string name="shortPassword">Password muy corta.</string>
-    <string name="login">Log in</string>
+    <string name="login">Entrar</string>
     <string name="name">Nombre </string>
     <string name="address">Dirección</string>
-    <string name="telNum">Numero de telefono</string>
+    <string name="telNum">Numero de teléfono</string>
     <string name="confChanges">Confirmar cambios</string>
-    <string name="trainerProfile">Name: Juan López Rating : 3/5 E-mail: juanlopez@gmail.com Phone number: 600592832 Education: Nutrition and Health at University of Abeerden</string>
-    <string name="needSmt">Aun necesitamos mas información, ahora procederemos a realizar un questionario.</string>
+    <string name="trainerProfile">Nombre: Juan López Rating: 3/5 E-mail: juanlopez@gmail.com Teléfono: 600592832 Educaciónn: Nutrición y salud en la Universidad de Abeerden</string>
+    <string name="needSmt">Aun necesitamos mas información, ahora procederemos a realizar un cuestionario.</string>
     <string name="subject"> Tema </string>
     <string name="noResultsMessage">NO SE ENCONTRARON RESULTADOS</string>
     <string name="consultRoutinesDuration">Duración</string>
@@ -137,6 +137,29 @@
     <string name="add">AÑADIR EJERCICIOS</string>
     <string name="filterByMuscularGroup">Filtrar por Grupo Muscular</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
-    <string name="days">dias</string>
+    <string name="days">días</string>
     <string name="logout">Salir </string>
+    <string name="area">Área</string>
+    <string name="from">Desde</string>
+    <string name="to">Hacia</string>
+    <string name="quadriceps">Cuadriceps</string>
+    <string name="abduptors">Abudctores</string>
+    <string name="swimming">Natación</string>
+    <string name="type1">Tipo 1</string>
+    <string name="thriatlon">Triatlón</string>
+    <string name="type2">Tipo 2</string>
+    <string name="pchallenge">Desafío personal</string>
+    <string name="type3">Tipo 3</string>
+    <string name="exercise1">Ejercicio 1</string>
+    <string name="leg">Pierna</string>
+    <string name="exercise_duration">Duración del ejercicio</string>
+    <string name="exercise_name">Nombre del ejercicio</string>
+    <string name="date_picked">Fecha elegida</string>
+    <string name="yearsuser1">25 años</string>
+    <string name="endomorph">Endomorfo</string>
+    <string name="trainer_speciality">Especialidad del entrenador: </string>
+    <string name="trainer_assigned">Número de usuarios asignados a él: </string>
+    <string name="rest_day">¡Hoy es un día de descanso! </string>
+    <string name="not_add">No se puede añadir ningún entrenamiento si hoy es un día de descanso. </string>
+    <string name="client_detail">Detalle de cliente </string>
 </resources>

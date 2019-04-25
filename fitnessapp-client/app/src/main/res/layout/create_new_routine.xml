@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Exercise 1"
+                    android:text="@string/exercise1"
                     android:textAlignment="center" />
             </TableRow>
 
@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Leg" />
+                    android:text="@string/leg" />
             </TableRow>
 
             <TableRow

@@ -33,7 +33,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Settings");
+        getActivity().setTitle(R.string.title_activity_settings);
     }
 
     @Override

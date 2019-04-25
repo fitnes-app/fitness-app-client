@@ -19,7 +19,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Profile");
+        getActivity().setTitle(R.string.profile);
     }
 
     @Override

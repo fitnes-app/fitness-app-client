@@ -140,6 +140,32 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="days">days</string>
     <string name="logout">Log out</string>
+    <string name="area">Area</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="quadriceps">Quadriceps</string>
+    <string name="abduptors">Abduptors</string>
+    <string name="swimming">Swimming</string>
+    <string name="type1">Type 1</string>
+    <string name="thriatlon">Thriatlon</string>
+    <string name="type2">Type 2</string>
+    <string name="pchallenge">Personal challenge</string>
+    <string name="type3">Type 3</string>
+    <string name="exercise1">Exercise 1</string>
+    <string name="leg">Leg</string>
+    <string name="exercise_duration">Exercise duration</string>
+    <string name="exercise_name">Exercise name</string>
+    <string name="date_picked">Date picked</string>
+    <string name="yearsuser1">25 years old</string>
+    <string name="endomorph">Endomorph</string>
+    <string name="trainer_speciality">Trainer speciality: </string>
+    <string name="trainer_assigned">Number of assigned users to him: </string>
+    <string name="rest_day">Today is a rest day! </string>
+    <string name="not_add">You can not add any training if today is a rest day. </string>
+    <string name="client_detail">Client detail </string>
+
+
+
 
 
 </resources>

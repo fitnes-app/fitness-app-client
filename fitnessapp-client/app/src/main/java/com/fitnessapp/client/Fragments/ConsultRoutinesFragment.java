@@ -53,7 +53,7 @@ public class ConsultRoutinesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Routines");
+        getActivity().setTitle(R.string.titleActivityRoutines);
         routinesOBJ = new ArrayList<>();
     }
 

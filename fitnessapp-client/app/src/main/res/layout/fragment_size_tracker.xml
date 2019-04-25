@@ -61,7 +61,7 @@
                     android:layout_margin="1dp"
                     android:background="#D3D3D3"
                     android:gravity="center"
-                    android:text="Area"
+                    android:text="@string/area"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/black" />
 
@@ -72,7 +72,7 @@
                     android:layout_margin="1dp"
                     android:background="#D3D3D3"
                     android:gravity="center"
-                    android:text="From"
+                    android:text="@string/from"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/black" />
 
@@ -83,7 +83,7 @@
                     android:layout_margin="1dp"
                     android:background="#D3D3D3"
                     android:gravity="center"
-                    android:text="To"
+                    android:text="@string/to"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/black" />
             </TableRow>
@@ -179,7 +179,7 @@
                     android:layout_margin="1dp"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Quadriceps"
+                    android:text="@string/quadriceps"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/black" />
 
@@ -218,7 +218,7 @@
                     android:layout_margin="1dp"
                     android:background="#FFFFFF"
                     android:gravity="center"
-                    android:text="Abduptors"
+                    android:text="@string/abduptors"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/black" />
 

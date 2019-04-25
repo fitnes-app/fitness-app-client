@@ -55,7 +55,7 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         ucgte = new UrlConnectorGetTrainerEmail();
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Coach Information");
+        getActivity().setTitle(R.string.coachInfo);
         ucgte = new UrlConnectorGetTrainerEmail();
         userEmail = getActivity().getIntent().getExtras().getBundle("bundle").getString("userEmail");
         trainerMail = "";
@@ -297,8 +297,8 @@ public class CoachInformationFragment extends Fragment implements View.OnClickLi
             tw1.setText(trainerName);
             tw2.setText(trainerMail);
             tw3.setText(trainerTel);
-            tw4.setText("Trainer's speciality: " + spec);
-            tw5.setText("Number of assigned users to him: " + assignedUsersToTrainer);
+            tw4.setText(spec);
+            tw5.setText("Usuarios asignados: " + assignedUsersToTrainer);
             super.onPostExecute(result);
         }
     }

@@ -18,7 +18,7 @@ public class SizeTrackerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Size Tracker");
+        getActivity().setTitle(R.string.size_tracker);
     }
 
     @Override

@@ -7,7 +7,7 @@
         android:id="@+id/routineDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exercice_duration"/>
+        android:text="@string/exercise_duration"/>
     <TextView
         android:id="@+id/routineDurationText"
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/routineDuration"
-        android:text="Exercice_name" />
+        android:text="@string/exercise_name" />
 
     <ImageView
         android:layout_width="63dp"

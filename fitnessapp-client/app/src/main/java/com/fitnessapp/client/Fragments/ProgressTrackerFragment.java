@@ -66,7 +66,7 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Progress Tracker");
+        getActivity().setTitle(R.string.progress_tracker);
         dailyExercices = new ArrayList<>();
         exercicesNames = new ArrayList<>();
         dailyTrackers = new ArrayList<>();
@@ -199,8 +199,8 @@ public class ProgressTrackerFragment extends Fragment implements View.OnClickLis
             //REST DAY
             AlertDialog.Builder builder;
             builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Today is a rest day!")
-                    .setMessage("You can not add any training if today is a rest day.")
+            builder.setTitle(R.string.rest_day)
+                    .setMessage(R.string.not_add)
                     .setNegativeButton("ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // do nothing

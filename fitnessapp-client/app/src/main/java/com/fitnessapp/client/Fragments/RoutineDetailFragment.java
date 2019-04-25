@@ -58,7 +58,7 @@ public class RoutineDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Routine Detail");
+        getActivity().setTitle(R.string.titleActivityRoutineDetail);
     }
 
     @Override

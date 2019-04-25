@@ -54,7 +54,7 @@ public class CreateNewRoutineFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Create New Routine");
+        getActivity().setTitle(R.string.addNewRoutine);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

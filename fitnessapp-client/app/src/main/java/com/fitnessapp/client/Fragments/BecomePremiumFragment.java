@@ -43,7 +43,7 @@ public class BecomePremiumFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Become Premium");
+        getActivity().setTitle(R.string.become_premium);
     }
 
     @Override
